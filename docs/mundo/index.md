@@ -1,56 +1,48 @@
 # Mundo
 
-O overworld ganha estruturas do Reino Clover, sites de quest e eventos de **world boss**. Três dimensões extras formam o [Submundo](/mundo/underworld).
+O mundo é a rota prática da progressão: cerimônia e exame no começo, destinos da Jornada para formas e chefes, eventos em grupo e a descida ao [Submundo](/mundo/underworld). Abra a **Jornada** (`K`) para receber o destino da sua própria cadeia.
 
-## Estruturas (worldgen)
+## Para onde ir
 
-| Estrutura | Onde aparece |
-| --- | --- |
-| `hage_village` | Vila inicial, Torre dos Grimórios |
-| `royal_capital` | Capital Real |
-| `black_bulls_hideout` | Esconderijo dos Touros Negros |
-| `squad_hall` | Salão de esquadrão |
-| `exam_colosseum` | Coliseu do exame |
-| `saussey_village` | Vila Saussey |
-| `ancient_dungeon` | Masmorra antiga (primeiro dungeon do anime) |
-| `elf_ruins` | Ruínas élficas |
-
-## Locais de quest
-
-Sites são peças templated (`quest_wind_shrine`, `quest_witch_grove`, `quest_heart_spring`, `quest_volcano_camp`…) plantadas em biomas certos, 300–1500 blocos da origem.
-
-| ID | Tipo | Alvo |
+| Momento | Vá para | O que fazer lá |
 | --- | --- | --- |
-| `black_bulls_hideout` | structure | `clovercraft:black_bulls_hideout` |
-| `royal_capital` | structure | `clovercraft:royal_capital` |
-| `grimoire_tower` | landmark | `grimoire_altar` |
-| `ancient_dungeon` | structure | `clovercraft:ancient_dungeon` |
-| `elf_ruins` | structure | `clovercraft:elf_ruins` |
-| `exam_colosseum` | structure | `clovercraft:exam_colosseum` |
-| `wind_shrine` | site | `clovercraft:quest_wind_shrine` |
-| `witches_forest` | site | `clovercraft:quest_witch_grove` |
-| `heart_sanctuary` | site | `clovercraft:quest_heart_spring` |
-| `seabed_temple` | site | `clovercraft:quest_heart_spring` |
-| `volcano_camp` | site | `clovercraft:quest_volcano_camp` |
-| `spade_fortress` | site | `clovercraft:quest_spade_gate` |
-| `training_ring` | site | `clovercraft:quest_training_ring` |
-| `faust_estate` | site | `clovercraft:quest_shadow_altar` |
-| `shadow_altar` | site | `clovercraft:quest_shadow_altar` |
-| `gravito_zone` | site | `clovercraft:quest_gravito_rocks` |
-| `forgotten_obelisk` | site | `clovercraft:quest_shadow_altar` |
-| `qliphoth_rim` | layer | `1` |
-| `qliphoth_depths` | layer | `2` |
-| `domain_zagred` | domain | `zagred` |
-| `domain_megicula` | domain | `megicula` |
-| `domain_twins` | domain | `twins` |
-| `here` | here | `` |
+| Começo | Vila de Hage e Torre dos Grimórios | Faça a cerimônia e vincule o grimório. |
+| Após o vínculo | Coliseu do Exame | Use `/exam` para iniciar o duelo de admissão; não é uma missão de NPC parada no mapa. |
+| Evolução | Capital, Esconderijo e destinos da Jornada | Complete conversas, provas e chefes exigidos pelas transformações. |
+| Grupo / endgame | Evento de chefe e Submundo | Enfrente conteúdo escalável, obtenha relíquias e abra camadas da Qliphoth. |
 
-## Inimigos de mundo
+## Estruturas permanentes
 
-Factions spawnam via biome modifiers: bandidos, Reino Diamond, Olho do Sol da Meia-Noite, bruxas, elfos, paladinos, bestas, Spade e rogue knights. No Submundo, só demônios (imp → high devil / devil host).
+| Estrutura | Função prática |
+| --- | --- |
+| Vila de Hage / Torre dos Grimórios | Início e cerimônia do grimório. |
+| Capital Real | Destino recorrente de conversas e jornadas. |
+| Esconderijo dos Touros Negros | Destino de cadeias dos Touros, incluindo partes da rota do Asta. |
+| Salão de esquadrão | Estrutura de esquadrão no mundo. |
+| Coliseu do Exame | Arena do `/exam`. |
+| Vila Saussey | Estrutura da história do reino. |
+| Masmorra antiga e Ruínas élficas | Estruturas usadas por rotas de história e jornadas. |
 
-Tiers de foe `A/B/C/S` nas waves de quest. Elites dropam mais méritos.
+## Como funcionam os destinos de jornada
 
-## Proteção
+Sites não têm uma coordenada global fixa. Quando uma jornada precisa de um deles, o servidor escolhe um ponto a partir de quem iniciou a etapa, normalmente entre **300 e 1.500 blocos**, tenta respeitar o terreno preferido e guarda aquela posição para o servidor. O template só é construído quando alguém se aproxima a cerca de **112 blocos**. Portanto, siga o marcador da Jornada — procurar uma coordenada publicada por outro servidor não é confiável.
 
-Áreas de estrutura são `Protected`: grief de vanilla é limitado para não destruir capital/esconderijo. Guard posts invisíveis defendem NPCs.
+| Destino | Terreno preferido | Para que serve |
+| --- | --- | --- |
+| Santuário do Vento | Montanhas, colinas, prados e windswept hills | Ponto de jornada ligado às rotas de vento. |
+| Floresta das Bruxas | Floresta escura, pântano ou floresta | Ponto de jornada da Floresta das Bruxas. |
+| Santuário de Heart | Flower forest, cherry grove, prado ou floresta | Ponto de jornada do Reino Heart. |
+| Templo Submarino | Manguezal, pântano ou costa pedregosa | Ponto de jornada costeiro; usa o template Heart Spring no JAR. |
+| Acampamento do Vulcão | Badlands, deserto ou savana | Acampamento de treino e jornadas de fogo. |
+| Fortaleza de Spade | Biomas nevados, taiga, ice spikes ou grove | Fortaleza usada nas jornadas finais de Spade. |
+| Arena de treino | Planície, sunflower plains ou prado | Arena para provas e treino. |
+| Propriedade Faust | Floresta escura, taiga antiga ou pântano | Ponto de jornada da propriedade Faust. |
+| Altar das Sombras | Floresta escura, pântano ou taiga antiga | Altar e provas de sombra. |
+| Gravito Zone | Montanhas, colinas de cascalho ou picos rochosos | Área de gravidade e rochas. |
+| Forgotten Obelisk | Ponto de site definido pelo servidor | Obelisco usado por etapas específicas. |
+
+## Ameaças e proteção
+
+No overworld, os biome modifiers colocam facções como bandidos, Diamond, Olho do Sol da Meia-Noite, bruxas, elfos, paladinos, bestas, Spade e rogue knights. As waves da Jornada usam tiers `A`, `B`, `C` e `S`; elites rendem mais méritos.
+
+Capital, esconderijos e outras estruturas protegidas limitam grief de vanilla e usam postos de guarda para preservar NPCs. Para eventos, faixas de força e recompensas, veja [Chefes](/mundo/bosses).

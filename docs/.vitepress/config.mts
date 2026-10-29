@@ -21,7 +21,7 @@ export default defineConfig({
       { text: 'Personagens', link: '/personagens/' },
       { text: 'Galeria 3D', link: '/galeria' },
       { text: 'Mundo', link: '/mundo/' },
-      { text: 'Sistemas', link: '/sistemas/squads' },
+      { text: 'Sistemas', link: '/sistemas/' },
       { text: 'Sobre', link: '/sobre' },
     ],
     sidebar: {
@@ -74,6 +74,7 @@ export default defineConfig({
         {
           text: 'Sistemas',
           items: [
+            { text: 'Visão geral', link: '/sistemas/' },
             { text: 'Esquadrões', link: '/sistemas/squads' },
             { text: 'Guildas', link: '/sistemas/guildas' },
             { text: 'Raças', link: '/sistemas/racas' },

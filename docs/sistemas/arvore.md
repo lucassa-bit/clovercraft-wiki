@@ -1,6 +1,6 @@
 # Árvore de skills
 
-Cinco ramos. Pontos = `(força - 1) + cadeias concluídas + firsts de chefe (cap) + rank de mérito`, limitados por config.
+Cinco ramos para escolher uma direção de build: dano, sobrevivência, resistência, subordinados ou recurso. Pontos = `(força - 1) + cadeias concluídas + firsts de chefe (cap) + rank de mérito`, limitados por config.
 
 Tiers abrem com pontos já gastos no ramo: **0 / 6 / 15 / 27 / 42**. Keystone (tier 3, custo 3) muda o playstyle. Capstone (tier 5, custo 12) é **exclusivo** — só um por ramo.
 

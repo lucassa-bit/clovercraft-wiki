@@ -1,105 +1,11 @@
+---
+aside: false
+---
+
 # Luck Voltia
 
-**Magia de Relâmpago** · Touros Negros
+<CharacterProfile v-bind='{"name": "Luck Voltia", "magic": "Magia de Relâmpago", "squad": "Touros Negros", "role": "Assassino elétrico", "description": "Thunder Fiend, Keraunos e Black Lightning.", "color": "#ffe566", "grimoire": "Grimório do Trevo de Luck", "forms": ["Base", "Thunder Fiend", "Black Lightning"], "geo": "/models/geo/character/luck.geo.json", "skins": [{"id": "base", "label": "Base", "texture": "/models/textures/character/luck_base.png"}, {"id": "fiend", "label": "Thunder Fiend", "texture": "/models/textures/character/luck_fiend.png"}, {"id": "black", "label": "Black Lightning", "texture": "/models/textures/character/luck_black.png"}], "progression": ["Jornada: força 28–62. Configuração padrão: 5★ da Base.", "Jornada: força 80–91. Configuração padrão: 5★ da forma anterior."], "peculiar": ""}' />
 
-<ClientOnly>
-<GeoViewer geo="/models/geo/character/luck.geo.json" skins='[{"id": "base", "label": "Base", "texture": "/models/textures/character/luck_base.png"}, {"id": "black", "label": "Black Lightning", "texture": "/models/textures/character/luck_black.png"}, {"id": "fiend", "label": "Thunder Fiend", "texture": "/models/textures/character/luck_fiend.png"}]' />
-</ClientOnly>
+<CharacterDetails v-bind='{"skills": [{"form": "base", "formLabel": "Base", "slot": 1, "name": "Orbe Estrondoso do Trovão", "duration": "1.3 s", "damage": "contra-ataque: 6,0 · contra-ataque: 6,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 5ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 2, "name": "Corrente de Faíscas", "duration": "1.4 s", "damage": "contra-ataque: 9,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 3, "name": "Demônio do Trovão", "duration": "1.5 s", "damage": "contra-ataque: 7,0 · contra-ataque: 7,0 · contra-ataque: 7,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 1ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 4, "name": "Contra-ataque da Imagem Residual", "duration": "1.3 s", "damage": "contra-ataque: 12,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Intermediário de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 5, "name": "Keraunos", "duration": "2.2 s", "damage": "contra-ataque: 68,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 3ª Classe"}, {"form": "fiend", "formLabel": "Thunder Fiend", "slot": 1, "name": "Investida Ricochete", "duration": "1.5 s", "damage": "contra-ataque: 8,8 · contra-ataque: 8,8 · contra-ataque: 8,8", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "fiend", "formLabel": "Thunder Fiend", "slot": 2, "name": "Treliça do Trovão", "duration": "1.7 s", "damage": "contra-ataque: 11,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "fiend", "formLabel": "Thunder Fiend", "slot": 3, "name": "Sobrecarga", "duration": "1.4 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "fiend", "formLabel": "Thunder Fiend", "slot": 4, "name": "Salva de Orbes", "duration": "1.3 s", "damage": "contra-ataque: 15,4", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "fiend", "formLabel": "Thunder Fiend", "slot": 5, "name": "Descida da Tempestade", "duration": "2.6 s", "damage": "contra-ataque: 33,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "black", "formLabel": "Black Lightning", "slot": 1, "name": "Estocada Sobrecarregada", "duration": "1.5 s", "damage": "contra-ataque: 20,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "black", "formLabel": "Black Lightning", "slot": 2, "name": "Barragem de Orbes", "duration": "1.8 s", "damage": "contra-ataque: 2,0 × 8 (até 16,0) · contra-ataque: 2,0 × 8 (até 16,0) · contra-ataque: 2,0 × 8 (até 16,0)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "black", "formLabel": "Black Lightning", "slot": 3, "name": "Chute Machado Aterrador", "duration": "1.8 s", "damage": "contra-ataque: 24,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "black", "formLabel": "Black Lightning", "slot": 4, "name": "Pele Estática", "duration": "1.5 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "black", "formLabel": "Black Lightning", "slot": 5, "name": "Corrente do Raio Negro", "duration": "2.9 s", "damage": "contra-ataque: 14,0 · contra-ataque: 14,0 · contra-ataque: 14,0 · contra-ataque: 26,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}], "unlocks": [{"rank": "Cavaleiro Mágico Júnior de 5ª Classe", "entries": ["Orbe Estrondoso do Trovão"]}, {"rank": "Cavaleiro Mágico Júnior de 3ª Classe", "entries": ["Corrente de Faíscas"]}, {"rank": "Cavaleiro Mágico Júnior de 1ª Classe", "entries": ["Demônio do Trovão"]}, {"rank": "Cavaleiro Mágico Intermediário de 3ª Classe", "entries": ["Contra-ataque da Imagem Residual"]}, {"rank": "Cavaleiro Mágico Sênior de 3ª Classe", "entries": ["Keraunos", "3º dash"]}, {"rank": "Cavaleiro Mágico Sênior de 1ª Classe", "entries": ["Demônio de Batalha Relâmpago (ricochetes, garras, cauda, oito orbes)", "Investida Ricochete", "Treliça do Trovão", "Sobrecarga", "Salva de Orbes", "Descida da Tempestade"]}, {"rank": "Grão-Cavaleiro Mágico", "entries": ["Demônio de Batalha Relâmpago Negro (medidor 70)", "Estocada Sobrecarregada", "Barragem de Orbes", "Chute Machado Aterrador", "Pele Estática", "Corrente do Raio Negro"]}, {"rank": "Rei Mago", "entries": ["Domínio das formas (+15% de poder de forma)"]}], "journeys": [{"name": "Thunder Fiend", "requires": [], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Santuário de Heart", "minimum": 28, "boss": "", "reward": "força +830 · méritos +410"}, {"label": "Etapa 2", "kind": "Derrote", "place": "Santuário de Heart", "minimum": 38, "boss": "Onda de inimigos", "reward": "força +3830 · méritos +1910 · maestria +500"}, {"label": "Etapa 3", "kind": "Converse", "place": "Elf Ruins", "minimum": 46, "boss": "", "reward": "força +1050 · méritos +520"}, {"label": "Etapa 4", "kind": "Converse", "place": "Santuário de Heart", "minimum": 52, "boss": "", "reward": "força +1110 · méritos +560"}, {"label": "Etapa 5", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 58, "boss": "", "reward": "força +6460 · méritos +3230 · maestria +300"}, {"label": "Etapa 6", "kind": "Derrote", "place": "Fortaleza de Spade", "minimum": 62, "boss": "Onda de inimigos", "reward": "força +8490 · méritos +4250 · maestria +500"}]}, {"name": "Black Lightning", "requires": ["Jornada anterior"], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Capital Real", "minimum": 80, "boss": "", "reward": "força +1370 · méritos +690"}, {"label": "Etapa 2", "kind": "Converse", "place": "Esconderijo dos Touros Negros", "minimum": 84, "boss": "", "reward": "força +1410 · méritos +700"}, {"label": "Etapa 3", "kind": "Converse", "place": "Capital Real", "minimum": 87, "boss": "", "reward": "força +1430 · méritos +720"}, {"label": "Etapa 4", "kind": "Conclua a provação", "place": "Capital Real", "minimum": 90, "boss": "", "reward": "força +8010 · méritos +4010 · maestria +300"}, {"label": "Etapa 5", "kind": "Derrote", "place": "Capital Real", "minimum": 91, "boss": "Onda de inimigos", "reward": "força +10250 · méritos +5130 · maestria +500"}]}], "summons": [{"name": "Orbe do Trovão", "role": "Skirmisher", "tier": 1, "unique": false}, {"name": "Magna Swing", "role": "Bruiser", "tier": 2, "unique": true}, {"name": "Gadjah", "role": "Caster", "tier": 3, "unique": true}]}' />
 
-Assassino elétrico. Thunder Fiend, Keraunos e Black Lightning.
-
-- Grimório: **Grimório do Trevo de Luck**
-- Magia de Raio, as Botas e as Luvas do Deus do Trovão e um sorriso que nunca some. Use para se tornar Luck Voltia.
-- Formas: **Base** (`base`), **Thunder Fiend** (`fiend`), **Black Lightning** (`black`)
-- Vincular: use o grimório (mensagem `O grimório escolheu você. Você é Luck Voltia, dos Touros Negros!`)
-
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-### Base
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `thunderclap_orb` | Orbe Estrondoso do Trovão | — | 26 |
-| 2 | `spark_chain` | Corrente de Faíscas | — | 28 |
-| 3 | `thunder_fiend` | Demônio do Trovão | — | 30 |
-| 4 | `afterimage` | Contra-ataque da Imagem Residual | — | 26 |
-| 5 | `keraunos` | Keraunos | — | 44 |
-### Thunder Fiend
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `fiend/ricochet_rush` | Investida Ricochete | — | 30 |
-| 2 | `fiend/thunder_lattice` | Treliça do Trovão | — | 34 |
-| 3 | `fiend/overdrive` | Sobrecarga | — | 28 |
-| 4 | `fiend/orb_salvo` | Salva de Orbes | — | 26 |
-| 5 | `fiend/thunderstorm` | Descida da Tempestade | — | 52 |
-### Black Lightning
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `black/overcharge_lunge` | Estocada Sobrecarregada | — | 30 |
-| 2 | `black/orb_barrage` | Barragem de Orbes | — | 36 |
-| 3 | `black/axe_kick` | Chute Machado Aterrador | — | 36 |
-| 4 | `black/static_skin` | Pele Estática | — | 30 |
-| 5 | `black/black_chain` | Corrente do Raio Negro | — | 58 |
-
-## Desbloqueio por rank
-
-| Rank | Desbloqueios |
-| --- | --- |
-| Aspirante a Cavaleiro Mágico | — |
-| Cavaleiro Mágico Júnior de 5ª Classe | Orbe Estrondoso do Trovão |
-| Cavaleiro Mágico Júnior de 3ª Classe | Corrente de Faíscas |
-| Cavaleiro Mágico Júnior de 1ª Classe | Demônio do Trovão |
-| Cavaleiro Mágico Intermediário de 3ª Classe | Contra-ataque da Imagem Residual |
-| Cavaleiro Mágico Intermediário de 1ª Classe | — |
-| Cavaleiro Mágico Sênior de 3ª Classe | Keraunos, 3º dash |
-| Cavaleiro Mágico Sênior de 1ª Classe | Demônio de Batalha Relâmpago (ricochetes, garras, cauda, oito orbes), Investida Ricochete, Treliça do Trovão, Sobrecarga, Salva de Orbes, Descida da Tempestade |
-| Vice-Capitão | — |
-| Capitão de Esquadrão | — |
-| Grão-Cavaleiro Mágico | Demônio de Batalha Relâmpago Negro (medidor 70), Estocada Sobrecarregada, Barragem de Orbes, Chute Machado Aterrador, Pele Estática, Corrente do Raio Negro |
-| Rei Mago | Domínio das formas (+15% de poder, gasto menor) |
-
-
-
-## Subordinados
-
-| Unidade | Função | Tier | Única |
-| --- | --- | ---: | --- |
-| Orbe do Trovão (`thunder_orb`) | Skirmisher | 1 | não |
-| Magna Swing (`magna_swing`) | Bruiser | 2 | sim |
-| Gadjah (`gadjah`) | Caster | 3 | sim |
-
-## Quests da jornada
-
-### luck_fiend
-
-> canon: Luck trained in the Heart Kingdom with Gadjah (ch. 248, ep. 155-163) and fought Svenkin Gatard when Vanica's Dark Disciples raided it (ch. 247-248); the Black Bulls then asked Patolli for the elves' Ultimate Magic and were sent to Dryad (ch. 265, ep. 169; ch. 283-284); Luck first used the Lightning Battle Fiend on the mid-ranked devils of the Spade raid (ch. 284). The talk beats and the devil trial's staging inv.
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `gadjah` | talk | `heart_sanctuary` | 28 | `—` | strength 830, merits 410 |
-| `svenkin` | boss | `heart_sanctuary` | 38 | `foe:clovercraft:dark_disciple@S` | strength 3830, merits 1910, mastery 500 |
-| `patolli` | talk | `elf_ruins` | 46 | `—` | strength 1050, merits 520 |
-| `dryad` | talk | `heart_sanctuary` | 52 | `—` | strength 1110, merits 560 |
-| `raid` | trial | `spade_fortress` | 58 | `—` | strength 6460, merits 3230, mastery 300 |
-| `gate` | boss | `spade_fortress` | 62 | `foe:clovercraft:spade_soldier@A` | strength 8490, merits 4250, mastery 500 |
-
-### luck_black
-
-> canon: after Lucius' clones attacked the Clover Kingdom the Black Bulls received Anti Magic through Asta (ch. 368-369); Luck destroyed the Guardian Angels with the Black Lightning Battle Fiend (ch. 369); Damnatio Kira defeated the squad one by one in the same arc. The Guardian Angels' stand-in foe and the talk beats inv.
-
-Requer: `luck_fiend`
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `clones` | talk | `royal_capital` | 80 | `—` | strength 1370, merits 690 |
-| `antimagic` | talk | `black_bulls_hideout` | 84 | `—` | strength 1410, merits 700 |
-| `damnatio` | talk | `royal_capital` | 87 | `—` | strength 1430, merits 720 |
-| `angels` | trial | `royal_capital` | 90 | `—` | strength 8010, merits 4010, mastery 300 |
-| `guardian` | boss | `royal_capital` | 91 | `foe:clovercraft:midnight_sun_mage@S/light` | strength 10250, merits 5130, mastery 500 |
-
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.

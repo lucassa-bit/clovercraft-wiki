@@ -1,39 +1,53 @@
 # Controles
 
-Categoria no Minecraft: **Clover Craft**. Rebind no menu vanilla.
+Rebind em **Opções → Controles → Clover Craft**. Abaixo estão os defaults do 0.4.0, definidos em `ClientInput.java`; um servidor não altera essas teclas.
 
-| Tecla (id) | Função |
+Como se luta com essas teclas: [Combate](/guia/combate).
+
+## Clique vanilla
+
+O mod não troca os botões do Minecraft.
+
+| Botão | Uso |
 | --- | --- |
-| `skill_1–5` | Habilidades 1 a 5 (a 5ª é o ultimate da forma) |
-| `transform` | Transformar / avançar forma |
-| `dash` | Dash nas quatro direções |
-| `guard` | Guardar (segurar) / parry (toque no timing) |
-| `lock_on` | Travar alvo |
-| `stance` | Empunhar / embainhar (Asta e espadachins) |
-| `swap` | Trocar espada (Asta) |
-| `fly` | Voar (espada, asas, espírito, etc.) |
-| `meditate` | Meditar para regenerar mana (segurar, fora de combate) |
-| `summon` | Toque: invocar subordinado · Segurar: ordens |
-| `awaken` | Forçar despertar dos subordinados |
-| `journey` | Tela da jornada / missões |
-| `quest_hud` | Minimizar painel de quest |
-| `shoulder_camera` | Câmera no ombro |
+| Clique esquerdo (toque) | Combo |
+| Clique esquerdo (segurar) | Heavy / charge |
+| Clique direito | Usar item — é assim que você **vincula o grimório** |
 
-## Combate básico
+## Combate
 
-- **Ataque básico** — combo de 3–5 hits no chão. No ar, um air attack. Depois de um dash, **dash slash**.
-- **Segurar ataque** — charge / heavy. Soltar no timing faz a versão *release*.
-- **Guard** — reduz dano no arco frontal e gasta stamina. No frame certo, **parry** (atordoa o atacante e gera meter).
-- **Guard break** — stamina zerada: você fica aberto.
-- **Lock-on** — câmera e skills seguem o alvo. Essencial contra chefes.
-- **Clash** — dois golpes pesados se encontram: mini-game de círculos (Perfect / Good / Miss). O vencedor perpassa com dano extra.
+| Tecla | Ação |
+| --- | --- |
+| `Z` `X` `C` `V` | Habilidades 1–4 |
+| `R` | Skill 5 da forma atual — em geral, a ação de maior impacto do kit |
+| `B` | Transformar / avançar forma |
+| `Alt` esquerdo | Dash nas quatro direções |
+| `F` | Guarda (segurar) ou parry (toque no timing) |
+| Botão do meio | Travar alvo (lock-on) |
+| `Y` | Meditar (segurar, fora de combate) |
 
-## Meter (mana / anti-magia)
+## Movimento e câmera
 
-A barra enche com hits, dano sofrido (exceto quem usa escudo de mana) e meditação. Transformar e skills caras gastam a barra. Sem meter, skills recusam (`Out of mana`).
+| Tecla | Ação |
+| --- | --- |
+| `J` | Voar (vassoura, espada, asas, espírito) |
+| `O` | Câmera no ombro |
 
-Asta não tem mana: a barra é **Anti-Magia**. Guard dele **anula magia** em vez de só bloquear.
+## Asta e espadachins
 
-## Câmera e feedback
+| Tecla | Ação |
+| --- | --- |
+| `H` | Sacar / guardar a arma |
+| `G` | Trocar espada (Asta) |
 
-Câmera no ombro, shake e FOV são opções de cliente. Personagens têm braços em primeira pessoa com motion própria.
+## Menus e subordinados
+
+| Tecla | Ação |
+| --- | --- |
+| `K` | Jornada (hub de força, rank, quests, missões, árvore) |
+| `N` | Subordinado: toque invoca, segurar abre ordens |
+| `U` | Forçar despertar dos subordinados |
+
+`N` também está em **minimizar o painel de quest**. As duas ações usam a mesma tecla — rebind uma delas se o summon ou o HUD não responder.
+
+As fichas de [personagens](/personagens/) mostram os cinco slots, seus efeitos e os requisitos relevantes de cada kit.

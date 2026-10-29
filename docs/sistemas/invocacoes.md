@@ -1,6 +1,6 @@
 # Subordinados (summons)
 
-Cada mago tem um pool (`*Units.java`). Precisa do nó **Pact** na árvore (`sum_pact`) para invocar. Toque na tecla Summon chama; segurar abre ordens; Awaken força o próximo estágio.
+Cada mago tem um pool próprio (`*Units.java`). Invocação é uma build: pegue **Pact** na árvore (`sum_pact`), escolha a unidade e use ordens para posicioná-la. Toque na tecla Summon chama; segurar abre ordens; Awaken força o próximo estágio.
 
 Unidades têm estágios 1–3, habilidades por estágio, custo de mana e tempo de permanência. Unique = um só (Liebe, Bell, Undine…). Não-únicas empilham até o cap da config.
 

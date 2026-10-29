@@ -1,104 +1,11 @@
+---
+aside: false
+---
+
 # Zenon Zogratis
 
-**Magia de Ossos / Espacial** · Tríade das Trevas (Spade)
+<CharacterProfile v-bind='{"name": "Zenon Zogratis", "magic": "Magia de Ossos / Espacial", "squad": "Tríade das Trevas (Spade)", "role": "Controle espacial", "description": "Prisão de ossos, Mana Domination e coração demoníaco.", "color": "#cfd8dc", "grimoire": "Grimório de Espadas de Zenon", "forms": ["Base", "Beelzebub", "Manifestação Demoníaca"], "geo": "/models/geo/character/zenon.geo.json", "skins": [{"id": "base", "label": "Base", "texture": "/models/textures/character/zenon_base.png"}, {"id": "beelz", "label": "Beelzebub", "texture": "/models/textures/character/zenon_beelz.png"}, {"id": "devil", "label": "Manifestação Demoníaca", "texture": "/models/textures/character/zenon_devil.png"}], "progression": ["Jornada: força 30–56. Configuração padrão: 5★ da Base.", "Jornada: força 80–91. Configuração padrão: 5★ da forma anterior."], "peculiar": ""}' />
 
-<ClientOnly>
-<GeoViewer geo="/models/geo/character/zenon.geo.json" skins='[{"id": "base", "label": "Base", "texture": "/models/textures/character/zenon_base.png"}, {"id": "beelz", "label": "Beelzebub", "texture": "/models/textures/character/zenon_beelz.png"}, {"id": "devil", "label": "Manifestação Demoníaca", "texture": "/models/textures/character/zenon_devil.png"}]' />
-</ClientOnly>
+<CharacterDetails v-bind='{"skills": [{"form": "base", "formLabel": "Base", "slot": 1, "name": "Presa Infinita de Osso", "duration": "1.5 s", "damage": "golpe espacial: 3,5", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 5ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 2, "name": "Prisão de Ossos", "duration": "1.5 s", "damage": "golpe espacial: 7,7", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 3, "name": "Presas Eternas", "duration": "2.2 s", "damage": "golpe espacial: 24,2", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 1ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 4, "name": "Salto de Osso", "duration": "1.3 s", "damage": "golpe espacial: 8,8", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Intermediário de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 5, "name": "Grande Lança de Osso", "duration": "3.2 s", "damage": "golpe espacial: 72,6", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 3ª Classe"}, {"form": "beelz", "formLabel": "Beelzebub", "slot": 1, "name": "Corte Espacial", "duration": "1.4 s", "damage": "golpe espacial: 18,8", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "beelz", "formLabel": "Beelzebub", "slot": 2, "name": "Domínio Espacial da Mana", "duration": "1.6 s", "damage": "golpe espacial: 9,4", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "beelz", "formLabel": "Beelzebub", "slot": 3, "name": "Rajada de Portais", "duration": "1.8 s", "damage": "golpe espacial: 10,4 × 3 (até 31,1)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "beelz", "formLabel": "Beelzebub", "slot": 4, "name": "Aperto Espacial", "duration": "1.5 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "beelz", "formLabel": "Beelzebub", "slot": 5, "name": "Tempestade de Cubos", "duration": "3.5 s", "damage": "golpe espacial: 12,2 × 8 (até 97,5)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "devil", "formLabel": "Manifestação Demoníaca", "slot": 1, "name": "Chicotes de Osso", "duration": "1.8 s", "damage": "golpe espacial: 5,3 × 4 (até 21,1)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "devil", "formLabel": "Manifestação Demoníaca", "slot": 2, "name": "Cravada da Cauda Tridente", "duration": "1.6 s", "damage": "golpe espacial: 11,9", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "devil", "formLabel": "Manifestação Demoníaca", "slot": 3, "name": "Ruptura Espacial", "duration": "2.2 s", "damage": "golpe espacial: 9,2 · golpe espacial: 9,2 · golpe espacial: 9,2", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "devil", "formLabel": "Manifestação Demoníaca", "slot": 4, "name": "Exoesqueleto de Osso", "duration": "1.5 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "devil", "formLabel": "Manifestação Demoníaca", "slot": 5, "name": "Coração de Demônio", "duration": "3.2 s", "damage": "golpe espacial: 121,4", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}], "unlocks": [{"rank": "Cavaleiro Mágico Júnior de 5ª Classe", "entries": ["Presa Infinita de Osso"]}, {"rank": "Cavaleiro Mágico Júnior de 3ª Classe", "entries": ["Prisão de Ossos"]}, {"rank": "Cavaleiro Mágico Júnior de 1ª Classe", "entries": ["Presas Eternas"]}, {"rank": "Cavaleiro Mágico Intermediário de 3ª Classe", "entries": ["Salto de Osso"]}, {"rank": "Cavaleiro Mágico Sênior de 3ª Classe", "entries": ["Grande Lança de Osso", "3º dash"]}, {"rank": "Cavaleiro Mágico Sênior de 1ª Classe", "entries": ["Belzebu 55% (magia espacial, chifres, asas, cubos de vidro)", "Corte Espacial", "Domínio Espacial da Mana", "Rajada de Portais", "Aperto Espacial", "Tempestade de Cubos"]}, {"rank": "Grão-Cavaleiro Mágico", "entries": ["Belzebu 100% (medidor 70)", "Chicotes de Osso", "Cravada da Cauda Tridente", "Ruptura Espacial", "Exoesqueleto de Osso", "Coração de Demônio"]}, {"rank": "Rei Mago", "entries": ["Domínio das formas (+15% de poder de forma)"]}], "journeys": [{"name": "Beelzebub", "requires": [], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Here", "minimum": 30, "boss": "", "reward": "força +850 · méritos +430"}, {"label": "Etapa 2", "kind": "Vá até", "place": "Capital Real", "minimum": 38, "boss": "", "reward": "força +1440 · méritos +720"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Capital Real", "minimum": 44, "boss": "", "reward": "força +5650 · méritos +2820 · maestria +300"}, {"label": "Etapa 4", "kind": "Converse", "place": "Capital Real", "minimum": 50, "boss": "", "reward": "força +1090 · méritos +550"}, {"label": "Etapa 5", "kind": "Derrote", "place": "Capital Real", "minimum": 56, "boss": "Yuno", "reward": "força +8080 · méritos +4040 · maestria +500"}]}, {"name": "Manifestação Demoníaca", "requires": ["Jornada anterior"], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Fortaleza de Spade", "minimum": 80, "boss": "", "reward": "força +1370 · méritos +690"}, {"label": "Etapa 2", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 84, "boss": "", "reward": "força +7740 · méritos +3870 · maestria +300"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 88, "boss": "", "reward": "força +7920 · méritos +3960 · maestria +300"}, {"label": "Etapa 4", "kind": "Converse", "place": "Fortaleza de Spade", "minimum": 90, "boss": "", "reward": "força +1460 · méritos +730"}, {"label": "Etapa 5", "kind": "Derrote", "place": "Fortaleza de Spade", "minimum": 91, "boss": "Yuno", "reward": "força +10250 · méritos +5130 · maestria +500"}]}], "summons": [{"name": "Soldado de Osso", "role": "Bruiser", "tier": 1, "unique": false}, {"name": "Gaderois Godroc", "role": "Tank", "tier": 2, "unique": true}, {"name": "Foyal Migusteau", "role": "Caster", "tier": 3, "unique": true}]}' />
 
-Controle espacial. Prisão de ossos, Mana Domination e coração demoníaco.
-
-- Grimório: **Grimório de Espadas de Zenon**
-- Magia de Ossos e, quando o portão abre, a Magia Espacial de Belzebu: osso que cresce onde ele quer, cubos de espaço que aprisionam. Use para se tornar Zenon Zogratis.
-- Formas: **Base** (`base`), **Beelzebub** (`beelz`), **Manifestação Demoníaca** (`devil`)
-- Vincular: use o grimório (mensagem `O grimório escolheu você. Você é Zenon Zogratis, da Tríade Sombria!`)
-
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-### Base
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `bone_fang` | Presa Infinita de Osso | — | 30 |
-| 2 | `bone_prison` | Prisão de Ossos | — | 30 |
-| 3 | `eternal_fangs` | Presas Eternas | — | 44 |
-| 4 | `bone_vault` | Salto de Osso | — | 26 |
-| 5 | `grand_bone_spear` | Grande Lança de Osso | — | 64 |
-### Beelzebub
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `beelz/spatial_severance` | Corte Espacial | — | 28 |
-| 2 | `beelz/mana_domination` | Domínio Espacial da Mana | — | 32 |
-| 3 | `beelz/gate_barrage` | Rajada de Portais | — | 36 |
-| 4 | `beelz/spatial_grasp` | Aperto Espacial | — | 30 |
-| 5 | `beelz/cube_storm` | Tempestade de Cubos | — | 70 |
-### Manifestação Demoníaca
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `devil/bone_whips` | Chicotes de Osso | — | 36 |
-| 2 | `devil/tail_pin` | Cravada da Cauda Tridente | — | 32 |
-| 3 | `devil/spatial_rupture` | Ruptura Espacial | — | 44 |
-| 4 | `devil/bone_exoskeleton` | Exoesqueleto de Osso | — | 30 |
-| 5 | `devil/devil_heart` | Coração de Demônio | — | 64 |
-
-## Desbloqueio por rank
-
-| Rank | Desbloqueios |
-| --- | --- |
-| Aspirante a Cavaleiro Mágico | — |
-| Cavaleiro Mágico Júnior de 5ª Classe | Presa Infinita de Osso |
-| Cavaleiro Mágico Júnior de 3ª Classe | Prisão de Ossos |
-| Cavaleiro Mágico Júnior de 1ª Classe | Presas Eternas |
-| Cavaleiro Mágico Intermediário de 3ª Classe | Salto de Osso |
-| Cavaleiro Mágico Intermediário de 1ª Classe | — |
-| Cavaleiro Mágico Sênior de 3ª Classe | Grande Lança de Osso, 3º dash |
-| Cavaleiro Mágico Sênior de 1ª Classe | Belzebu 55% (magia espacial, chifres, asas, cubos de vidro), Corte Espacial, Domínio Espacial da Mana, Rajada de Portais, Aperto Espacial, Tempestade de Cubos |
-| Vice-Capitão | — |
-| Capitão de Esquadrão | — |
-| Grão-Cavaleiro Mágico | Belzebu 100% (medidor 70), Chicotes de Osso, Cravada da Cauda Tridente, Ruptura Espacial, Exoesqueleto de Osso, Coração de Demônio |
-| Rei Mago | Domínio das formas (+15% de poder, gasto menor) |
-
-
-
-## Subordinados
-
-| Unidade | Função | Tier | Única |
-| --- | --- | ---: | --- |
-| Soldado de Osso (`bone_soldier`) | Bruiser | 1 | não |
-| Gaderois Godroc (`gaderois`) | Tank | 2 | sim |
-| Foyal Migusteau (`foyal`) | Caster | 3 | sim |
-
-## Quests da jornada
-
-### zenon_beelz
-
-> canon: Zenon Zogratis, Spatial Magic user of the Dark Triad, host of Beelzebub; his raid on the Golden Dawn base (ch. 234-238) where he took the devil's power to 55 % -- both horns, both wings, dark substance over more than half his body -- and impaled Yuno. Spatial Mana Domination (ch. 276) and the Eternal Fangs (ch. 235) are his. The talks, wave contents and trial staging inv.
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `voice` | talk | `here` | 30 | `—` | strength 850, merits 430 |
-| `base` | goto | `royal_capital` | 38 | `—` | strength 1440, merits 720 |
-| `raid` | trial | `royal_capital` | 44 | `—` | strength 5650, merits 2820, mastery 300 |
-| `pact` | talk | `royal_capital` | 50 | `—` | strength 1090, merits 550 |
-| `yuno` | boss | `royal_capital` | 56 | `npc:yuno` | strength 8080, merits 4040, mastery 500 |
-
-### zenon_devil
-
-> canon: at the Spade raid (ch. 275-282) Zenon, with the Qliphoth Advent Ritual's circle, opens the first gate and takes Beelzebub to 100 % (ch. 280) -- the bone ribcage, the helmet over the left horn and half the face, forehead horns, the trident tail and the whips -- against Yuno and Langris (shared with Yuno's Zephyr chain, which ends on the same fortress). Beelzebub's talks and the trial staging inv.
-
-Requer: `zenon_beelz`
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `demand` | talk | `spade_fortress` | 80 | `—` | strength 1370, merits 690 |
-| `ritual` | trial | `spade_fortress` | 84 | `—` | strength 7740, merits 3870, mastery 300 |
-| `langris` | trial | `spade_fortress` | 88 | `—` | strength 7920, merits 3960, mastery 300 |
-| `devil` | talk | `spade_fortress` | 90 | `—` | strength 1460, merits 730 |
-| `yuno` | boss | `spade_fortress` | 91 | `npc:yuno` | strength 10250, merits 5130, mastery 500 |
-
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.

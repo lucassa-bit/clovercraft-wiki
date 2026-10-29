@@ -1,106 +1,11 @@
+---
+aside: false
+---
+
 # Licht
 
-**Magia de Espada / Luz** · Elfos / Olho do Sol da Meia-Noite
+<CharacterProfile v-bind='{"name": "Licht", "magic": "Magia de Espada / Luz", "squad": "Elfos / Olho do Sol da Meia-Noite", "role": "Espadachim élfico", "description": "Origin Flash, espadas invocadas e forma demoníaca de quatro braços.", "color": "#f2e6a0", "grimoire": "Grimório de Quatro Folhas de Licht", "forms": ["Base", "Licht Desperto", "Forma Demoníaca"], "geo": "/models/geo/character/licht.geo.json", "skins": [{"id": "base", "label": "Base", "texture": "/models/textures/character/licht_base.png"}, {"id": "awakened", "label": "Licht Desperto", "texture": "/models/textures/character/licht_awakened.png"}, {"id": "demon", "label": "Forma Demoníaca", "texture": "/models/textures/character/licht_demon.png"}], "progression": ["Jornada: força 30–60. Configuração padrão: 5★ da Base.", "Jornada: força 80–91. Configuração padrão: 5★ da forma anterior."], "peculiar": ""}' />
 
-<ClientOnly>
-<GeoViewer geo="/models/geo/character/licht.geo.json" skins='[{"id": "base", "label": "Base", "texture": "/models/textures/character/licht_base.png"}, {"id": "awakened", "label": "Licht Desperto", "texture": "/models/textures/character/licht_awakened.png"}, {"id": "demon", "label": "Forma Demoníaca", "texture": "/models/textures/character/licht_demon.png"}]' />
-</ClientOnly>
+<CharacterDetails v-bind='{"skills": [{"form": "base", "formLabel": "Base", "slot": 1, "name": "Fortalecimento das Pernas", "duration": "1.3 s", "damage": "7,0 × 2 golpes (até 14,0)", "mastery": "Base: ×1,00", "effect": "Atinge em combate direto; se reposiciona.", "rank": "Cavaleiro Mágico Júnior de 5ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 2, "name": "Espada Habitante Demoníaca: Absorção", "duration": "2.0 s", "damage": "efeito: 12,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 3, "name": "Cortes Voadores", "duration": "1.7 s", "damage": "efeito: 6,0 · efeito: 6,0 · efeito: 7,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 1ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 4, "name": "Levitação de Mana", "duration": "1.7 s", "damage": "efeito: 12,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Intermediário de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 5, "name": "Clarão da Origem", "duration": "2.2 s", "damage": "efeito: 70,0", "mastery": "Base: ×1,00", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Sênior de 3ª Classe"}, {"form": "awakened", "formLabel": "Licht Desperto", "slot": 1, "name": "Espadas de Luz Invocadas", "duration": "1.5 s", "damage": "efeito: 3,4 · efeito: 3,4 · efeito: 3,4 · efeito: 3,4 · efeito: 3,4 · efeito: 3,4", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "awakened", "formLabel": "Licht Desperto", "slot": 2, "name": "Explosão de Mana", "duration": "1.6 s", "damage": "efeito: 18,9", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "awakened", "formLabel": "Licht Desperto", "slot": 3, "name": "Rajada do Clarão da Origem", "duration": "2.0 s", "damage": "efeito: 10,5 · efeito: 10,5 · efeito: 10,5 · efeito: 10,5 · efeito: 10,5", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "awakened", "formLabel": "Licht Desperto", "slot": 4, "name": "Espada Habitante Demoníaca: Luz Protetora", "duration": "1.7 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "awakened", "formLabel": "Licht Desperto", "slot": 5, "name": "Éon Conquistador", "duration": "3.2 s", "damage": "efeito: 84,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "demon", "formLabel": "Forma Demoníaca", "slot": 1, "name": "Raios das Palmas", "duration": "1.4 s", "damage": "efeito: 6,1 · efeito: 6,1", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "demon", "formLabel": "Forma Demoníaca", "slot": 2, "name": "Asas que Bebem Mana", "duration": "2.0 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "demon", "formLabel": "Forma Demoníaca", "slot": 3, "name": "O Feitiço sobre a Capital", "duration": "2.0 s", "damage": "efeito: 19,8", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "demon", "formLabel": "Forma Demoníaca", "slot": 4, "name": "Esmagamento dos Quatro Braços", "duration": "2.0 s", "damage": "1,5 por golpe · efeito: 15,2", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Avança durante a ação; atinge em combate direto.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "demon", "formLabel": "Forma Demoníaca", "slot": 5, "name": "Rajada Carregada", "duration": "4.2 s", "damage": "efeito: 13,7", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}], "unlocks": [{"rank": "Cavaleiro Mágico Júnior de 5ª Classe", "entries": ["Fortalecimento das Pernas"]}, {"rank": "Cavaleiro Mágico Júnior de 3ª Classe", "entries": ["Espada Habitante Demoníaca: Absorção"]}, {"rank": "Cavaleiro Mágico Júnior de 1ª Classe", "entries": ["Cortes Voadores"]}, {"rank": "Cavaleiro Mágico Intermediário de 3ª Classe", "entries": ["Levitação de Mana"]}, {"rank": "Cavaleiro Mágico Sênior de 3ª Classe", "entries": ["Clarão da Origem", "3º dash"]}, {"rank": "Cavaleiro Mágico Sênior de 1ª Classe", "entries": ["Licht Desperto (voo em mana condensada)", "Espadas de Luz Invocadas", "Explosão de Mana", "Rajada do Clarão da Origem", "Espada Habitante Demoníaca: Luz Protetora", "Éon Conquistador"]}, {"rank": "Grão-Cavaleiro Mágico", "entries": ["O Demônio (uma vez por vida)", "Raios das Palmas", "Asas que Bebem Mana", "O Feitiço sobre a Capital", "Esmagamento dos Quatro Braços", "Rajada Carregada"]}, {"rank": "Rei Mago", "entries": ["Domínio das formas (+15% de poder de forma)"]}], "journeys": [{"name": "Licht Desperto", "requires": [], "steps": [{"label": "Etapa 1", "kind": "Vá até", "place": "Elf Ruins", "minimum": 30, "boss": "", "reward": "força +1280 · méritos +640"}, {"label": "Etapa 2", "kind": "Conclua a provação", "place": "Elf Ruins", "minimum": 36, "boss": "", "reward": "força +5130 · méritos +2560 · maestria +300"}, {"label": "Etapa 3", "kind": "Vá até", "place": "Ancient Dungeon", "minimum": 42, "boss": "", "reward": "força +1510 · méritos +750"}, {"label": "Etapa 4", "kind": "Converse", "place": "Ancient Dungeon", "minimum": 46, "boss": "", "reward": "força +1050 · méritos +520"}, {"label": "Etapa 5", "kind": "Conclua a provação", "place": "Ancient Dungeon", "minimum": 54, "boss": "", "reward": "força +6240 · méritos +3120 · maestria +300"}, {"label": "Etapa 6", "kind": "Derrote", "place": "Ancient Dungeon", "minimum": 60, "boss": "Asta", "reward": "força +8360 · méritos +4180 · maestria +500"}]}, {"name": "Forma Demoníaca", "requires": ["Jornada anterior"], "steps": [{"label": "Etapa 1", "kind": "Vá até", "place": "Elf Ruins", "minimum": 80, "boss": "", "reward": "força +2060 · méritos +1030"}, {"label": "Etapa 2", "kind": "Converse", "place": "Elf Ruins", "minimum": 82, "boss": "", "reward": "força +1390 · méritos +700"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Altar das Sombras", "minimum": 85, "boss": "", "reward": "força +7790 · méritos +3890 · maestria +300"}, {"label": "Etapa 4", "kind": "Converse", "place": "Altar das Sombras", "minimum": 87, "boss": "", "reward": "força +1430 · méritos +720"}, {"label": "Etapa 5", "kind": "Conclua a provação", "place": "Altar das Sombras", "minimum": 89, "boss": "", "reward": "força +7970 · méritos +3980 · maestria +300"}, {"label": "Etapa 6", "kind": "Derrote", "place": "Altar das Sombras", "minimum": 91, "boss": "Julius Novachrono", "reward": "força +10250 · méritos +5130 · maestria +500"}]}], "summons": [{"name": "Guerreiro Elfo", "role": "Soldier", "tier": 1, "unique": false}, {"name": "Patolli", "role": "Caster", "tier": 2, "unique": true}, {"name": "Rhya, o Desleal", "role": "Elite", "tier": 3, "unique": true}]}' />
 
-Espadachim élfico. Origin Flash, espadas invocadas e forma demoníaca de quatro braços.
-
-- Grimório: **Grimório de Quatro Folhas de Licht**
-- A Magia de Espada atende ao rei dos elfos. Use para se tornar Licht.
-- Formas: **Base** (`base`), **Licht Desperto** (`awakened`), **Forma Demoníaca** (`demon`)
-- Vincular: use o grimório (mensagem `O grimório de quatro folhas escolheu você. Você é Licht, rei dos elfos!`)
-
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-### Base
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `leg_strength_boost` | Fortalecimento das Pernas | 7.0 | 26 |
-| 2 | `dweller_absorption` | Espada Habitante Demoníaca: Absorção | — | 40 |
-| 3 | `flying_slashes` | Cortes Voadores | — | 34 |
-| 4 | `mana_levitation` | Levitação de Mana | — | 34 |
-| 5 | `origin_flash` | Clarão da Origem | — | 44 |
-### Licht Desperto
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `awakened/summoned_swords` | Espadas de Luz Invocadas | — | 30 |
-| 2 | `awakened/mana_blast` | Explosão de Mana | — | 32 |
-| 3 | `awakened/origin_flash_barrage` | Rajada do Clarão da Origem | — | 40 |
-| 4 | `awakened/protecting_light` | Espada Habitante Demoníaca: Luz Protetora | — | 34 |
-| 5 | `awakened/conquering_eon` | Éon Conquistador | — | 64 |
-### Forma Demoníaca
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `demon/palm_beams` | Raios das Palmas | — | 28 |
-| 2 | `demon/mana_wings` | Asas que Bebem Mana | — | 40 |
-| 3 | `demon/capital_spell` | O Feitiço sobre a Capital | — | 40 |
-| 4 | `demon/four_arm_crush` | Esmagamento dos Quatro Braços | 1.5 | 40 |
-| 5 | `demon/charged_blast` | Rajada Carregada | — | 84 |
-
-## Desbloqueio por rank
-
-| Rank | Desbloqueios |
-| --- | --- |
-| Aspirante a Cavaleiro Mágico | — |
-| Cavaleiro Mágico Júnior de 5ª Classe | Fortalecimento das Pernas |
-| Cavaleiro Mágico Júnior de 3ª Classe | Espada Habitante Demoníaca: Absorção |
-| Cavaleiro Mágico Júnior de 1ª Classe | Cortes Voadores |
-| Cavaleiro Mágico Intermediário de 3ª Classe | Levitação de Mana |
-| Cavaleiro Mágico Intermediário de 1ª Classe | — |
-| Cavaleiro Mágico Sênior de 3ª Classe | Clarão da Origem, 3º dash |
-| Cavaleiro Mágico Sênior de 1ª Classe | Licht Desperto (voo em mana condensada), Espadas de Luz Invocadas, Explosão de Mana, Rajada do Clarão da Origem, Espada Habitante Demoníaca: Luz Protetora, Éon Conquistador |
-| Vice-Capitão | — |
-| Capitão de Esquadrão | — |
-| Grão-Cavaleiro Mágico | O Demônio (uma vez por vida), Raios das Palmas, Asas que Bebem Mana, O Feitiço sobre a Capital, Esmagamento dos Quatro Braços, Rajada Carregada |
-| Rei Mago | Domínio das formas (+15% de poder, gasto menor) |
-
-
-
-## Subordinados
-
-| Unidade | Função | Tier | Única |
-| --- | --- | ---: | --- |
-| Guerreiro Elfo (`elf`) | Soldier | 1 | não |
-| Patolli (`patolli`) | Caster | 2 | sim |
-| Rhya, o Desleal (`rhya`) | Elite | 3 | sim |
-
-## Quests da jornada
-
-### licht_awakened
-
-> canon: the massacre of the elf tribe after Licht's wedding to Tetia; Patolli reincarnates the elves from the dungeon's magic stones; Licht, unresponsive, wakes at the sight of Klaus and Hamon falling, steals the Demon-Dweller Sword from Asta and faces Asta and Yuno (Elf Reincarnation arc). Grave-robber waves inv.
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `ruins` | goto | `elf_ruins` | 30 | `—` | strength 1280, merits 640 |
-| `robbers` | trial | `elf_ruins` | 36 | `—` | strength 5130, merits 2560, mastery 300 |
-| `dungeon` | goto | `ancient_dungeon` | 42 | `—` | strength 1510, merits 750 |
-| `patolli` | talk | `ancient_dungeon` | 46 | `—` | strength 1050, merits 520 |
-| `kin` | trial | `ancient_dungeon` | 54 | `—` | strength 6240, merits 3120, mastery 300 |
-| `asta` | boss | `ancient_dungeon` | 60 | `npc:asta` | strength 8360, merits 4180, mastery 500 |
-
-### licht_demon
-
-> canon: Zagred planned the elf massacre to corrupt Licht's grimoire and take his body; Licht turned demon and was slain by Lemiel; in the Shadow Palace, Secre unseals his soul, Licht draws on the underworld's Forbidden Magic and fights Zagred with Lemiel, Asta and Yuno (Elf Reincarnation arc). Waves and the hold trial inv.
-
-Requer: `licht_awakened`
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `wedding` | goto | `elf_ruins` | 80 | `—` | strength 2060, merits 1030 |
-| `zagred` | talk | `elf_ruins` | 82 | `—` | strength 1390, merits 700 |
-| `monsters` | trial | `shadow_altar` | 85 | `—` | strength 7790, merits 3890, mastery 300 |
-| `lemiel` | talk | `shadow_altar` | 87 | `—` | strength 1430, merits 720 |
-| `grimoire` | trial | `shadow_altar` | 89 | `—` | strength 7970, merits 3980, mastery 300 |
-| `end` | boss | `shadow_altar` | 91 | `npc:julius` | strength 10250, merits 5130, mastery 500 |
-
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.

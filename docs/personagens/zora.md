@@ -1,105 +1,11 @@
+---
+aside: false
+---
+
 # Zora Ideale
 
-**Magia de Armadilha (Ash)** · Touros Negros
+<CharacterProfile v-bind='{"name": "Zora Ideale", "magic": "Magia de Armadilha (Ash)", "squad": "Touros Negros", "role": "Armadilheiro", "description": "Trap Counter, Grand Seal e Ash Labyrinth.", "color": "#6b5344", "grimoire": "Grimório de Cinzas do Zora", "forms": ["Base", "Grand Seal", "Ash Labyrinth"], "geo": "/models/geo/character/zora.geo.json", "skins": [{"id": "base", "label": "Base", "texture": "/models/textures/character/zora_base.png"}, {"id": "seal", "label": "Grand Seal", "texture": "/models/textures/character/zora_seal.png"}, {"id": "labyrinth", "label": "Ash Labyrinth", "texture": "/models/textures/character/zora_labyrinth.png"}], "progression": ["Jornada: força 28–62. Configuração padrão: 5★ da Base.", "Jornada: força 78–91. Configuração padrão: 5★ da forma anterior."], "peculiar": ""}' />
 
-<ClientOnly>
-<GeoViewer geo="/models/geo/character/zora.geo.json" skins='[{"id": "base", "label": "Base", "texture": "/models/textures/character/zora_base.png"}, {"id": "labyrinth", "label": "Ash Labyrinth", "texture": "/models/textures/character/zora_labyrinth.png"}, {"id": "seal", "label": "Grand Seal", "texture": "/models/textures/character/zora_seal.png"}]' />
-</ClientOnly>
+<CharacterDetails v-bind='{"skills": [{"form": "base", "formLabel": "Base", "slot": 1, "name": "Armadilha Paralisante", "duration": "1.3 s", "damage": "armadilha: 18,2", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 5ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 2, "name": "Contra-ataque: Magia Fraca", "duration": "1.5 s", "damage": "", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 3, "name": "Revelação do Covarde", "duration": "1.7 s", "damage": "", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 1ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 4, "name": "Passo de Fumaça de Cinzas", "duration": "1.2 s", "damage": "", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Intermediário de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 5, "name": "Detonação em Cadeia de Armadilhas", "duration": "2.7 s", "damage": "armadilha: 31,2", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 3ª Classe"}, {"form": "seal", "formLabel": "Grand Seal", "slot": 1, "name": "Armadilha de Contra-ataque Secreta", "duration": "1.6 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "seal", "formLabel": "Grand Seal", "slot": 2, "name": "Rede de Selamento", "duration": "1.5 s", "damage": "armadilha: 13,4", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "seal", "formLabel": "Grand Seal", "slot": 3, "name": "Manoplas-Espelho", "duration": "1.5 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "seal", "formLabel": "Grand Seal", "slot": 4, "name": "Passo Selado", "duration": "1.3 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "seal", "formLabel": "Grand Seal", "slot": 5, "name": "Grande Selo", "duration": "2.9 s", "damage": "armadilha: 57,6", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "labyrinth", "formLabel": "Ash Labyrinth", "slot": 1, "name": "Paredes do Labirinto", "duration": "1.7 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "labyrinth", "formLabel": "Ash Labyrinth", "slot": 2, "name": "Campo de Contra-ataque", "duration": "1.7 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "labyrinth", "formLabel": "Ash Labyrinth", "slot": 3, "name": "Sepultamento de Cinzas", "duration": "1.5 s", "damage": "armadilha: 21,6", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "labyrinth", "formLabel": "Ash Labyrinth", "slot": 4, "name": "Boneco de Cinzas Isca", "duration": "1.4 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "labyrinth", "formLabel": "Ash Labyrinth", "slot": 5, "name": "Labirinto de Cinzas: a Espiral", "duration": "3.7 s", "damage": "armadilha: 9,0 × 12 (até 108,0)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}], "unlocks": [{"rank": "Cavaleiro Mágico Júnior de 5ª Classe", "entries": ["Armadilha Paralisante"]}, {"rank": "Cavaleiro Mágico Júnior de 3ª Classe", "entries": ["Contra-ataque: Magia Fraca"]}, {"rank": "Cavaleiro Mágico Júnior de 1ª Classe", "entries": ["Revelação do Covarde"]}, {"rank": "Cavaleiro Mágico Intermediário de 3ª Classe", "entries": ["Passo de Fumaça de Cinzas"]}, {"rank": "Cavaleiro Mágico Sênior de 3ª Classe", "entries": ["Detonação em Cadeia de Armadilhas", "3º dash"]}, {"rank": "Cavaleiro Mágico Sênior de 1ª Classe", "entries": ["Armadilha de Contra-ataque Secreta (forma Selo: palmas, marcas, espelhos)", "Armadilha de Contra-ataque Secreta", "Rede de Selamento", "Manoplas-Espelho", "Passo Selado", "Grande Selo"]}, {"rank": "Grão-Cavaleiro Mágico", "entries": ["Labirinto de Cinzas (medidor 70)", "Paredes do Labirinto", "Campo de Contra-ataque", "Sepultamento de Cinzas", "Boneco de Cinzas Isca", "Labirinto de Cinzas: a Espiral"]}, {"rank": "Rei Mago", "entries": ["Domínio das formas (+15% de poder de forma)"]}], "journeys": [{"name": "Grand Seal", "requires": [], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Esconderijo dos Touros Negros", "minimum": 28, "boss": "", "reward": "força +830 · méritos +410"}, {"label": "Etapa 2", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 38, "boss": "", "reward": "força +5260 · méritos +2630 · maestria +300"}, {"label": "Etapa 3", "kind": "Converse", "place": "Fortaleza de Spade", "minimum": 48, "boss": "", "reward": "força +1070 · méritos +540"}, {"label": "Etapa 4", "kind": "Conclua a provação", "place": "Arena de treino", "minimum": 54, "boss": "", "reward": "força +6240 · méritos +3120 · maestria +300"}, {"label": "Etapa 5", "kind": "Converse", "place": "Fortaleza de Spade", "minimum": 58, "boss": "", "reward": "força +1170 · méritos +590"}, {"label": "Etapa 6", "kind": "Derrote", "place": "Fortaleza de Spade", "minimum": 62, "boss": "Onda de inimigos", "reward": "força +8490 · méritos +4250 · maestria +500"}]}, {"name": "Ash Labyrinth", "requires": ["Jornada anterior"], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Exam Colosseum", "minimum": 78, "boss": "", "reward": "força +1360 · méritos +680"}, {"label": "Etapa 2", "kind": "Converse", "place": "Exam Colosseum", "minimum": 82, "boss": "", "reward": "força +1390 · méritos +700"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Ancient Dungeon", "minimum": 86, "boss": "", "reward": "força +7830 · méritos +3920 · maestria +300"}, {"label": "Etapa 4", "kind": "Converse", "place": "Ancient Dungeon", "minimum": 89, "boss": "", "reward": "força +1450 · méritos +720"}, {"label": "Etapa 5", "kind": "Derrote", "place": "Ancient Dungeon", "minimum": 91, "boss": "Mereoleona Vermillion", "reward": "força +10250 · méritos +5130 · maestria +500"}]}], "summons": [{"name": "Boneco de Cinzas", "role": "Bruiser", "tier": 1, "unique": false}, {"name": "Percevejo Arco-Íris", "role": "Skirmisher", "tier": 2, "unique": true}, {"name": "Armadilha Rúnica", "role": "Caster", "tier": 3, "unique": false}]}' />
 
-Armadilheiro. Trap Counter, Grand Seal e Ash Labyrinth.
-
-- Grimório: **Grimório de Cinzas do Zora**
-- Magia de Cinzas, Magia de Armadilhas e um medo muito sensato de tudo. Use para virar Zora Ideale.
-- Formas: **Base** (`base`), **Grand Seal** (`seal`), **Ash Labyrinth** (`labyrinth`)
-- Vincular: use o grimório (mensagem `O grimório escolheu você. Você é Zora Ideale dos Touros Negros!`)
-
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-### Base
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `paralytic_trap` | Armadilha Paralisante | — | 26 |
-| 2 | `counterattack_weak` | Contra-ataque: Magia Fraca | — | 30 |
-| 3 | `revelation_cowardly` | Revelação do Covarde | — | 34 |
-| 4 | `ash_smoke_step` | Passo de Fumaça de Cinzas | — | 24 |
-| 5 | `trap_chain_detonation` | Detonação em Cadeia de Armadilhas | — | 54 |
-### Grand Seal
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `seal/secret_counter_trap` | Armadilha de Contra-ataque Secreta | — | 32 |
-| 2 | `seal/sealing_net` | Rede de Selamento | — | 30 |
-| 3 | `seal/mirror_gauntlet` | Manoplas-Espelho | — | 30 |
-| 4 | `seal/sealed_step` | Passo Selado | — | 26 |
-| 5 | `seal/grand_seal` | Grande Selo | — | 58 |
-### Ash Labyrinth
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `labyrinth/labyrinth_walls` | Paredes do Labirinto | — | 34 |
-| 2 | `labyrinth/counter_field` | Campo de Contra-ataque | — | 34 |
-| 3 | `labyrinth/ash_burial` | Sepultamento de Cinzas | — | 30 |
-| 4 | `labyrinth/decoy_ash_doll` | Boneco de Cinzas Isca | — | 28 |
-| 5 | `labyrinth/ash_labyrinth` | Labirinto de Cinzas: a Espiral | — | 74 |
-
-## Desbloqueio por rank
-
-| Rank | Desbloqueios |
-| --- | --- |
-| Aspirante a Cavaleiro Mágico | — |
-| Cavaleiro Mágico Júnior de 5ª Classe | Armadilha Paralisante |
-| Cavaleiro Mágico Júnior de 3ª Classe | Contra-ataque: Magia Fraca |
-| Cavaleiro Mágico Júnior de 1ª Classe | Revelação do Covarde |
-| Cavaleiro Mágico Intermediário de 3ª Classe | Passo de Fumaça de Cinzas |
-| Cavaleiro Mágico Intermediário de 1ª Classe | — |
-| Cavaleiro Mágico Sênior de 3ª Classe | Detonação em Cadeia de Armadilhas, 3º dash |
-| Cavaleiro Mágico Sênior de 1ª Classe | Armadilha de Contra-ataque Secreta (forma Selo: palmas, marcas, espelhos), Armadilha de Contra-ataque Secreta, Rede de Selamento, Manoplas-Espelho, Passo Selado, Grande Selo |
-| Vice-Capitão | — |
-| Capitão de Esquadrão | — |
-| Grão-Cavaleiro Mágico | Labirinto de Cinzas (medidor 70), Paredes do Labirinto, Campo de Contra-ataque, Sepultamento de Cinzas, Boneco de Cinzas Isca, Labirinto de Cinzas: a Espiral |
-| Rei Mago | Domínio das formas (+15% de poder, gasto menor) |
-
-
-
-## Subordinados
-
-| Unidade | Função | Tier | Única |
-| --- | --- | ---: | --- |
-| Boneco de Cinzas (`ash_doll`) | Bruiser | 1 | não |
-| Percevejo Arco-Íris (`stink_bug`) | Skirmisher | 2 | sim |
-| Armadilha Rúnica (`rune_trap`) | Caster | 3 | não |
-
-## Quests da jornada
-
-### zora_seal
-
-> canon: Zora's Trap Magic and Ash Magic carry the Black Bulls' ambushes (Spade raid, ch. 275-285), where Secre's Sealing Magic is shared with him as a union (solo adaptation here). The training talks with Magna and the gate keeper's staging inv.
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `magna` | talk | `black_bulls_hideout` | 28 | `—` | strength 830, merits 410 |
-| `cloud` | trial | `spade_fortress` | 38 | `—` | strength 5260, merits 2630, mastery 300 |
-| `secre` | talk | `spade_fortress` | 48 | `—` | strength 1070, merits 540 |
-| `mark` | trial | `training_ring` | 54 | `—` | strength 6240, merits 3120, mastery 300 |
-| `form` | talk | `spade_fortress` | 58 | `—` | strength 1170, merits 590 |
-| `gate` | boss | `spade_fortress` | 62 | `foe:clovercraft:spade_soldier@A` | strength 8490, merits 4250, mastery 500 |
-
-### zora_labyrinth
-
-> canon: during the Royal Knights Selection Test the Black Bulls' Zora laid his rune traps for the examinees (Asta, Mimosa, Kirsch and Langris share that arc, ch. 120s). The Ash Labyrinth's staging and Mereoleona's dungeon trial inv.
-
-Requer: `zora_seal`
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `exam` | talk | `exam_colosseum` | 78 | `—` | strength 1360, merits 680 |
-| `rivals` | talk | `exam_colosseum` | 82 | `—` | strength 1390, merits 700 |
-| `maze` | trial | `ancient_dungeon` | 86 | `—` | strength 7830, merits 3920, mastery 300 |
-| `mereoleona` | talk | `ancient_dungeon` | 89 | `—` | strength 1450, merits 720 |
-| `spiral` | boss | `ancient_dungeon` | 91 | `npc:mereoleona` | strength 10250, merits 5130, mastery 500 |
-
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.

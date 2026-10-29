@@ -1,6 +1,6 @@
 # Raças
 
-Sorteadas na cerimônia (pesos somam 100). Reroll com **Race Scroll**.
+Sorteadas na cerimônia (pesos somam 100). A raça ajusta atributos passivos desde o começo; ela não troca seu grimório nem suas formas. Reroll com **Race Scroll**.
 
 | Raça | Peso na roleta | Vida | Velocidade | Mana | Regen / maestria | Extra |
 | --- | --- | --- | --- | --- | --- | --- |

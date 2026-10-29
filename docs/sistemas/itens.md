@@ -2,7 +2,7 @@
 
 ## Grimórios
 
-Um por personagem (ver páginas em [Personagens](/personagens/)). Botão direito vincula se você ainda não tem mago. Bound items não saem do inventário.
+Um por personagem (ver páginas em [Personagens](/personagens/)). Botão direito vincula se você ainda não tem mago. O grimório vinculado não sai do inventário: ele é a identidade do cavaleiro, não uma arma descartável.
 
 ## Espadas de Asta
 

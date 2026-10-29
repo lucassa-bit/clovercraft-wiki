@@ -4,6 +4,7 @@ import { withBase } from 'vitepress'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { applyMaterial, disposeObject, loadBedrockGeo } from './bedrockGeo'
+import { applyCharacterAppearance } from './characterAppearance'
 
 export interface Skin {
   id: string
@@ -24,6 +25,7 @@ const props = withDefaults(
     skins?: Skin[] | string
     catalog?: CatalogItem[] | string
     height?: number
+    formButtons?: boolean
   }>(),
   { height: 420 },
 )
@@ -60,6 +62,8 @@ const activeGeo = computed(() => {
   return cat?.geo || props.geo || ''
 })
 
+const characterId = computed(() => activeGeo.value.split('/').pop()?.replace('.geo.json', '') ?? '')
+
 const activeSkins = computed<Skin[]>(() => {
   const cat = parsedCatalog.value.find((c) => c.id === catalogId.value)
   if (cat) {
@@ -67,6 +71,8 @@ const activeSkins = computed<Skin[]>(() => {
   }
   return parsedSkins.value
 })
+
+const activeSkin = computed(() => activeSkins.value.find((skin) => skin.id === skinId.value) ?? activeSkins.value[0])
 
 let renderer: THREE.WebGLRenderer | null = null
 let scene: THREE.Scene | null = null
@@ -76,6 +82,7 @@ let model: THREE.Group | null = null
 let material: THREE.MeshBasicMaterial | null = null
 let frame = 0
 let disposed = false
+let textureRequest = 0
 
 function url(path: string): string {
   if (!path) return ''
@@ -87,8 +94,18 @@ function fitCamera(object: THREE.Object3D): void {
   const box = new THREE.Box3().setFromObject(object)
   const size = box.getSize(new THREE.Vector3())
   const center = box.getCenter(new THREE.Vector3())
-  const max = Math.max(size.x, size.y, size.z, 8)
-  camera.position.set(center.x, center.y + max * 0.15, center.z + max * 1.8)
+  let max = Math.max(size.x, size.y, size.z, 8)
+  // Character framing follows the body, so long weapons don't shrink the mage.
+  const hips = props.formButtons && object.getObjectByName('hips')
+  const head = props.formButtons && object.getObjectByName('head')
+  if (hips && head) {
+    const origin = object.getWorldPosition(new THREE.Vector3())
+    const top = head.getWorldPosition(new THREE.Vector3())
+    hips.getWorldPosition(center)
+    max = Math.max(Math.abs(top.y - origin.y) + 8, 24)
+    center.y += max * 0.08
+  }
+  camera.position.set(center.x, center.y + max * 0.08, center.z + max * 1.8)
   camera.near = max / 100
   camera.far = max * 20
   camera.updateProjectionMatrix()
@@ -128,12 +145,15 @@ async function rebuild(): Promise<void> {
     const skin = activeSkins.value.find((s) => s.id === skinId.value) ?? activeSkins.value[0]
     if (skin) {
       const tex = await loadTexture(skin.texture)
+      if (disposed) { tex.dispose(); return }
       if (material.map) material.map.dispose()
       material.map = tex
       material.needsUpdate = true
     }
+    if (disposed) return
     model = loadBedrockGeo(json, material)
     model.rotation.y = Math.PI
+    applyCharacterAppearance(model, characterId.value, skin?.id ?? '')
     scene.add(model)
     fitCamera(model)
     status.value = ''
@@ -151,6 +171,10 @@ function resize(): void {
   camera.updateProjectionMatrix()
 }
 
+function resetView(): void {
+  if (model) fitCamera(model)
+}
+
 function tick(): void {
   if (disposed) return
   frame = requestAnimationFrame(tick)
@@ -161,16 +185,16 @@ function tick(): void {
 onMounted(() => {
   if (!host.value) return
   scene = new THREE.Scene()
-  scene.background = new THREE.Color(0x101610)
   camera = new THREE.PerspectiveCamera(40, host.value.clientWidth / props.height, 0.1, 500)
-  renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false })
+  renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setSize(host.value.clientWidth, props.height)
   host.value.appendChild(renderer.domElement)
   controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
-  controls.autoRotate = true
-  controls.autoRotateSpeed = 1.4
+  // The viewer is intentionally static: forms are easier to compare without
+  // motion constantly changing their silhouette.
+  controls.autoRotate = false
   material = new THREE.MeshBasicMaterial({ map: null, transparent: true, alphaTest: 0.1 })
   window.addEventListener('resize', resize)
   if (parsedCatalog.value[0]) {
@@ -185,15 +209,28 @@ onMounted(() => {
 watch(skinId, async () => {
   const skin = activeSkins.value.find((s) => s.id === skinId.value)
   if (!skin || !material) return
-  const tex = await loadTexture(skin.texture)
-  if (material.map) material.map.dispose()
-  material.map = tex
-  material.needsUpdate = true
+  const request = ++textureRequest
+  try {
+    const tex = await loadTexture(skin.texture)
+    if (disposed || request !== textureRequest) { tex.dispose(); return }
+    if (material.map) material.map.dispose()
+    material.map = tex
+    material.needsUpdate = true
+    if (model) applyCharacterAppearance(model, characterId.value, skin.id)
+    status.value = ''
+  } catch {
+    if (!disposed && request === textureRequest) status.value = 'Falha ao carregar este visual. Selecione outra forma para tentar novamente.'
+  }
 })
 
 watch(catalogId, async () => {
   const cat = parsedCatalog.value.find((c) => c.id === catalogId.value)
   if (cat) skinId.value = cat.id
+})
+
+// A roster can supply a new geo/texture pair directly. Reload when that
+// selected entry changes as well as when this component's own picker changes.
+watch(activeGeo, async () => {
   await rebuild()
 })
 
@@ -212,7 +249,11 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="geo-viewer">
-    <div class="geo-toolbar" v-if="parsedCatalog.length || parsedSkins.length > 1">
+    <header class="geo-heading">
+      <span>Modelo 3D</span>
+      <strong v-if="activeSkin">{{ activeSkin.label }}</strong>
+    </header>
+    <div class="geo-toolbar">
       <label v-if="parsedCatalog.length">
         Modelo
         <select v-model="catalogId">
@@ -221,7 +262,10 @@ onBeforeUnmount(() => {
           </option>
         </select>
       </label>
-      <label v-if="parsedSkins.length > 1">
+      <div v-if="formButtons && parsedSkins.length > 1" class="geo-forms" role="group" aria-label="Forma ou visual do modelo">
+        <button v-for="skin in parsedSkins" :key="skin.id" :aria-pressed="skinId === skin.id" @click="skinId = skin.id">{{ skin.label }}</button>
+      </div>
+      <label v-else-if="parsedSkins.length > 1">
         Forma / skin
         <select v-model="skinId">
           <option v-for="skin in parsedSkins" :key="skin.id" :value="skin.id">
@@ -229,8 +273,9 @@ onBeforeUnmount(() => {
           </option>
         </select>
       </label>
-      <span class="hint">arraste para girar · scroll para zoom</span>
+      <button class="geo-reset" type="button" @click="resetView">Redefinir visão</button>
     </div>
+    <p class="hint">Arraste para girar · role para aproximar · selecione uma forma para comparar o visual</p>
     <div ref="host" class="geo-stage" :style="{ height: height + 'px' }">
       <p v-if="status" class="geo-status">{{ status }}</p>
     </div>
@@ -243,7 +288,29 @@ onBeforeUnmount(() => {
   border: 1px solid var(--vp-c-divider);
   border-radius: 12px;
   overflow: hidden;
-  background: #0b0f0c;
+  background: radial-gradient(ellipse 75% 65% at 50% 46%, color-mix(in srgb, var(--character-accent, #3dba6e) 25%, var(--vp-c-bg)), var(--vp-c-bg-alt) 70%);
+}
+.geo-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0.7rem 0.9rem 0.55rem;
+  color: var(--vp-c-text-1);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.geo-heading strong {
+  max-width: 68%;
+  overflow: hidden;
+  color: var(--character-accent, var(--vp-c-brand-1));
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
 }
 .geo-toolbar {
   display: flex;
@@ -251,7 +318,7 @@ onBeforeUnmount(() => {
   gap: 0.75rem 1.25rem;
   align-items: center;
   padding: 0.65rem 0.9rem;
-  background: #161c16;
+  background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-2);
   font-size: 0.85rem;
 }
@@ -264,13 +331,20 @@ onBeforeUnmount(() => {
   padding: 0.2rem 0.4rem;
 }
 .hint {
-  margin-left: auto;
-  opacity: 0.65;
+  margin: 0;
+  padding: 0.4rem 0.9rem;
+  color: var(--vp-c-text-2);
   font-size: 0.78rem;
 }
+.geo-forms { display: flex; flex-wrap: wrap; gap: 6px; }
+.geo-forms button, .geo-reset { padding: 5px 9px; border: 1px solid var(--vp-c-divider); border-radius: 6px; color: var(--vp-c-text-1); background: var(--vp-c-bg); font: inherit; }
+.geo-forms button[aria-pressed="true"] { border-color: var(--character-accent, var(--vp-c-brand-1)); background: var(--vp-c-bg); box-shadow: inset 0 -2px var(--character-accent, var(--vp-c-brand-1)); }
+.geo-reset { margin-left: auto; color: var(--vp-c-text-2); font-size: 0.8rem; }
+.geo-forms button:focus-visible, .geo-reset:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 2px; }
 .geo-stage {
   position: relative;
   width: 100%;
+  background: radial-gradient(ellipse 52% 8% at 50% 86%, color-mix(in srgb, var(--character-accent, #3dba6e) 20%, transparent), transparent 72%);
 }
 .geo-stage :deep(canvas) {
   display: block;
@@ -285,4 +359,5 @@ onBeforeUnmount(() => {
   color: var(--vp-c-text-2);
   pointer-events: none;
 }
+@media (max-width: 480px) { .geo-reset { width: 100%; margin-left: 0; } }
 </style>

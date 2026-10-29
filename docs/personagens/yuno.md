@@ -1,108 +1,11 @@
+---
+aside: false
+---
+
 # Yuno
 
-**Magia de Vento** · Alvorecer Dourado
+<CharacterProfile v-bind='{"name": "Yuno", "magic": "Magia de Vento", "squad": "Alvorecer Dourado", "role": "Mago aéreo", "description": "Lâminas de vento, tornados e o espírito Sylph (Bell).", "color": "#7fe0b0", "grimoire": "Grimório de Quatro Folhas", "forms": ["Base", "Spirit Dive", "Complete Spirit Dive"], "geo": "/models/geo/character/yuno.geo.json", "skins": [{"id": "base", "label": "Base", "texture": "/models/textures/character/yuno_base.png"}, {"id": "dive", "label": "Spirit Dive", "texture": "/models/textures/character/yuno_dive.png"}, {"id": "zephyr", "label": "Complete Spirit Dive", "texture": "/models/textures/character/yuno_zephyr.png"}], "progression": ["Jornada: força 30–62. Configuração padrão: 5★ da Base.", "Jornada: força 68–82. Configuração padrão: 5★ da forma anterior."], "peculiar": ""}' />
 
-<ClientOnly>
-<GeoViewer geo="/models/geo/character/yuno.geo.json" skins='[{"id": "base", "label": "Base", "texture": "/models/textures/character/yuno_base.png"}, {"id": "dive", "label": "Spirit Dive", "texture": "/models/textures/character/yuno_dive.png"}, {"id": "zephyr", "label": "Complete Spirit Dive", "texture": "/models/textures/character/yuno_zephyr.png"}]' />
-</ClientOnly>
+<CharacterDetails v-bind='{"skills": [{"form": "base", "formLabel": "Base", "slot": 1, "name": "Chuva de Lâminas de Vento", "duration": "1.5 s", "damage": "lâmina de vento: 3,0 × 8 (até 24,0) · lâmina de vento: 3,0 × 8 (até 24,0) · lâmina de vento: 3,0 × 8 (até 24,0)", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 5ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 2, "name": "Presa do Tornado", "duration": "1.6 s", "damage": "tornado: 3,2", "mastery": "Base: ×1,00", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Júnior de 1ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 3, "name": "Tornado Colossal", "duration": "1.7 s", "damage": "tornado: 4,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Intermediário de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 4, "name": "Sopro da Sílfide", "duration": "1.5 s", "damage": "efeito: 14,0", "mastery": "Base: ×1,00", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Sênior de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 5, "name": "Tempestade Espiritual", "duration": "2.0 s", "damage": "linha: 31,0 · lâmina de vento: 9,7 × 3 (até 29,0)", "mastery": "Base: ×1,00", "effect": "Avança durante a ação.", "rank": "Vice-Capitão"}, {"form": "dive", "formLabel": "Spirit Dive", "slot": 1, "name": "Crescent Kamaitachi", "duration": "1.3 s", "damage": "lâmina de vento: 9,5 · lâmina de vento: 3,2 × 2 (até 6,4)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "dive", "formLabel": "Spirit Dive", "slot": 2, "name": "Swift White Hawk", "duration": "1.7 s", "damage": "investida: 7,4 × 3 (até 22,3)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "dive", "formLabel": "Spirit Dive", "slot": 3, "name": "Gale White Bow", "duration": "1.8 s", "damage": "lâmina de vento: 6,4 × 6 (até 38,2)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "dive", "formLabel": "Spirit Dive", "slot": 4, "name": "Spirits Hushed Dance", "duration": "1.2 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "dive", "formLabel": "Spirit Dive", "slot": 5, "name": "Spirit Of Boreas", "duration": "2.1 s", "damage": "linha: 46,6 · tornado: 7,4", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "zephyr", "formLabel": "Complete Spirit Dive", "slot": 1, "name": "Conjunction", "duration": "1.4 s", "damage": "12,0 por golpe · onda de choque: 8,0 · efeito: 3,5 × 2 (até 7,0)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Atinge em combate direto.", "rank": "Capitão de Esquadrão"}, {"form": "zephyr", "formLabel": "Complete Spirit Dive", "slot": 2, "name": "Quartile Hasta", "duration": "1.6 s", "damage": "linha: 20,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Avança durante a ação.", "rank": "Capitão de Esquadrão"}, {"form": "zephyr", "formLabel": "Complete Spirit Dive", "slot": 3, "name": "Quartile Flagellum", "duration": "1.6 s", "damage": "efeito: 10,0 · efeito: 12,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Capitão de Esquadrão"}, {"form": "zephyr", "formLabel": "Complete Spirit Dive", "slot": 4, "name": "Quartile Scutum", "duration": "1.3 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Gera proteção.", "rank": "Capitão de Esquadrão"}, {"form": "zephyr", "formLabel": "Complete Spirit Dive", "slot": 5, "name": "Never-Never Land (Terra do Nunca)", "duration": "3.0 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Capitão de Esquadrão"}], "unlocks": [{"rank": "Cavaleiro Mágico Júnior de 5ª Classe", "entries": ["Chuva de Lâminas de Vento"]}, {"rank": "Cavaleiro Mágico Júnior de 3ª Classe", "entries": ["Voo do vento"]}, {"rank": "Cavaleiro Mágico Júnior de 1ª Classe", "entries": ["Presa do Tornado"]}, {"rank": "Cavaleiro Mágico Intermediário de 3ª Classe", "entries": ["Tornado Colossal"]}, {"rank": "Cavaleiro Mágico Intermediário de 1ª Classe", "entries": ["Bell, a Espírito do Vento"]}, {"rank": "Cavaleiro Mágico Sênior de 3ª Classe", "entries": ["Sopro da Sílfide", "3º dash"]}, {"rank": "Cavaleiro Mágico Sênior de 1ª Classe", "entries": ["Mergulho Espiritual"]}, {"rank": "Vice-Capitão", "entries": ["Tempestade Espiritual"]}, {"rank": "Capitão de Esquadrão", "entries": ["Spirit Dive Completo + Espírito de Zéfiro (espada de vento)"]}, {"rank": "Grão-Cavaleiro Mágico", "entries": ["Never-Never Land (Terra do Nunca)"]}, {"rank": "Rei Mago", "entries": ["Domínio das formas (+15% de poder de forma)"]}], "journeys": [{"name": "Spirit Dive", "requires": [], "steps": [{"label": "Etapa 1", "kind": "Vá até", "place": "Ancient Dungeon", "minimum": 30, "boss": "", "reward": "força +1280 · méritos +640"}, {"label": "Etapa 2", "kind": "Derrote", "place": "Ancient Dungeon", "minimum": 34, "boss": "Mars", "reward": "força +3630 · méritos +1810 · maestria +500"}, {"label": "Etapa 3", "kind": "Converse", "place": "Capital Real", "minimum": 40, "boss": "", "reward": "força +980 · méritos +490"}, {"label": "Etapa 4", "kind": "Vá até", "place": "Acampamento do Vulcão", "minimum": 44, "boss": "", "reward": "força +1540 · méritos +770"}, {"label": "Etapa 5", "kind": "Conclua a provação", "place": "Acampamento do Vulcão", "minimum": 49, "boss": "", "reward": "força +5950 · méritos +2980 · maestria +300"}, {"label": "Etapa 6", "kind": "Conclua a provação", "place": "Acampamento do Vulcão", "minimum": 54, "boss": "", "reward": "força +6240 · méritos +3120 · maestria +300"}, {"label": "Etapa 7", "kind": "Conclua a provação", "place": "Exam Colosseum", "minimum": 58, "boss": "", "reward": "força +6460 · méritos +3230 · maestria +300"}, {"label": "Etapa 8", "kind": "Derrote", "place": "Exam Colosseum", "minimum": 62, "boss": "Onda de inimigos", "reward": "força +8490 · méritos +4250 · maestria +500"}]}, {"name": "Complete Spirit Dive", "requires": ["Jornada anterior"], "steps": [{"label": "Etapa 1", "kind": "Conclua a provação", "place": "Capital Real", "minimum": 68, "boss": "", "reward": "força +6980 · méritos +3490 · maestria +300"}, {"label": "Etapa 2", "kind": "Converse", "place": "Capital Real", "minimum": 71, "boss": "", "reward": "força +1300 · méritos +650"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Arena de treino", "minimum": 74, "boss": "", "reward": "força +7280 · méritos +3640 · maestria +300"}, {"label": "Etapa 4", "kind": "Vá até", "place": "Fortaleza de Spade", "minimum": 77, "boss": "", "reward": "força +2020 · méritos +1010"}, {"label": "Etapa 5", "kind": "Converse", "place": "Fortaleza de Spade", "minimum": 79, "boss": "", "reward": "força +1370 · méritos +680"}, {"label": "Etapa 6", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 80, "boss": "", "reward": "força +7560 · méritos +3780 · maestria +300"}, {"label": "Etapa 7", "kind": "Derrote", "place": "Fortaleza de Spade", "minimum": 82, "boss": "Zenon Zogratis", "reward": "força +9740 · méritos +4870 · maestria +500"}]}], "summons": [{"name": "Bell", "role": "Caster", "tier": 1, "unique": true}, {"name": "Cavaleiro da Aurora Dourada", "role": "Soldier", "tier": 2, "unique": false}]}' />
 
-Mago aéreo. Lâminas de vento, tornados e o espírito Sylph (Bell).
-
-- Grimório: **Grimório de Quatro Folhas**
-- O vento responde a quem o carrega. Use para se tornar o Yuno.
-- Formas: **Base** (`base`), **Spirit Dive** (`dive`), **Complete Spirit Dive** (`zephyr`)
-- Vincular: use o grimório (mensagem `O grimório de quatro folhas escolheu você. Você é o Yuno!`)
-
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-### Base
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `wind_blade_shower` | Chuva de Lâminas de Vento | — | 30 |
-| 2 | `tornado_fang` | Presa do Tornado | — | 32 |
-| 3 | `towering_tornado` | Tornado Colossal | — | 34 |
-| 4 | `sylphs_breath` | Sopro da Sílfide | — | 30 |
-| 5 | `spirit_storm` | Tempestade Espiritual | — | 40 |
-### Spirit Dive
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `dive/crescent_kamaitachi` | Crescent Kamaitachi | — | 26 |
-| 2 | `dive/swift_white_hawk` | Swift White Hawk | — | 34 |
-| 3 | `dive/gale_white_bow` | Gale White Bow | — | 36 |
-| 4 | `dive/spirits_hushed_dance` | Spirits Hushed Dance | — | 24 |
-| 5 | `dive/spirit_of_boreas` | Spirit Of Boreas | — | 42 |
-### Complete Spirit Dive
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `zephyr/conjunction` | Conjunction | 12.0 | 28 |
-| 2 | `zephyr/quartile_hasta` | Quartile Hasta | — | 32 |
-| 3 | `zephyr/quartile_flagellum` | Quartile Flagellum | — | 32 |
-| 4 | `zephyr/quartile_scutum` | Quartile Scutum | — | 26 |
-| 5 | `zephyr/never_never_land` | Never-Never Land (Terra do Nunca) | — | 60 |
-
-## Desbloqueio por rank
-
-| Rank | Desbloqueios |
-| --- | --- |
-| Aspirante a Cavaleiro Mágico | — |
-| Cavaleiro Mágico Júnior de 5ª Classe | Chuva de Lâminas de Vento |
-| Cavaleiro Mágico Júnior de 3ª Classe | Voo do vento |
-| Cavaleiro Mágico Júnior de 1ª Classe | Presa do Tornado |
-| Cavaleiro Mágico Intermediário de 3ª Classe | Tornado Colossal |
-| Cavaleiro Mágico Intermediário de 1ª Classe | Bell, a Espírito do Vento |
-| Cavaleiro Mágico Sênior de 3ª Classe | Sopro da Sílfide, 3º dash |
-| Cavaleiro Mágico Sênior de 1ª Classe | Mergulho Espiritual |
-| Vice-Capitão | Tempestade Espiritual |
-| Capitão de Esquadrão | Spirit Dive Completo + Espírito de Zéfiro (espada de vento) |
-| Grão-Cavaleiro Mágico | Never-Never Land (Terra do Nunca) |
-| Rei Mago | Domínio das formas (+15% de poder, gasto menor) |
-
-
-
-## Subordinados
-
-| Unidade | Função | Tier | Única |
-| --- | --- | ---: | --- |
-| Bell (`bell`) | Caster | 1 | sim |
-| Cavaleiro da Aurora Dourada (`golden_dawn`) | Soldier | 2 | não |
-
-## Quests da jornada
-
-### yuno_dive
-
-> canon: Yuno found Sylph's scroll in the dungeon's treasure room and she saved Asta from Mars; the Star Awards; Mereoleona's Ultime-Volcano training; Spirit Dive, Mana Zone plus Mana Skin, debuts in the Royal Knights Selection final against Rill. Waves and the Rill stand-in inv.
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `dungeon` | goto | `ancient_dungeon` | 30 | `—` | strength 1280, merits 640 |
-| `mars` | boss | `ancient_dungeon` | 34 | `mars` | strength 3630, merits 1810, mastery 500 |
-| `stars` | talk | `royal_capital` | 40 | `—` | strength 980, merits 490 |
-| `volcano` | goto | `volcano_camp` | 44 | `—` | strength 1540, merits 770 |
-| `lava` | trial | `volcano_camp` | 49 | `—` | strength 5950, merits 2980, mastery 300 |
-| `dive` | trial | `volcano_camp` | 54 | `—` | strength 6240, merits 3120, mastery 300 |
-| `exam` | trial | `exam_colosseum` | 58 | `—` | strength 6460, merits 3230, mastery 300 |
-| `rill` | boss | `exam_colosseum` | 62 | `foe:clovercraft:diamond_mage@S/water` | strength 8490, merits 4250, mastery 500 |
-
-### yuno_zephyr
-
-> canon: Zenon's raid on the Golden Dawn base, Yuno impaled at 55 %; six months of training and Langris's help against Spatial Magic; Ralph's Resistance and the Spade grimoire found in a Grimoire Tower in the Spade raid; Yuno and Langris against Zenon at 80 % and 100 %. Wave contents inv.
-
-Requer: `yuno_dive`
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `raid` | trial | `royal_capital` | 68 | `—` | strength 6980, merits 3490, mastery 300 |
-| `langris` | talk | `royal_capital` | 71 | `—` | strength 1300, merits 650 |
-| `training` | trial | `training_ring` | 74 | `—` | strength 7280, merits 3640, mastery 300 |
-| `fortress` | goto | `spade_fortress` | 77 | `—` | strength 2020, merits 1010 |
-| `grimoire` | talk | `spade_fortress` | 79 | `—` | strength 1370, merits 680 |
-| `stars` | trial | `spade_fortress` | 80 | `—` | strength 7560, merits 3780, mastery 300 |
-| `zenon` | boss | `spade_fortress` | 82 | `npc:zenon` | strength 9740, merits 4870, mastery 500 |
-
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.

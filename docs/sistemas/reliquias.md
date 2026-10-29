@@ -1,6 +1,6 @@
 # Relíquias
 
-Itens `relic_*` com raridade Rare → Mythic. Ativas disparam um **burst** (cooldown em segundos × 20 ticks). Passivas ficam sempre ligadas. First kill de um chefe tende a dropar a relíquia assinatura dele.
+Relíquias são o equipamento de efeito especial: escolha entre um burst ativo, uma passiva ou os dois. Itens `relic_*` vão de Rare a Mythic; ativas disparam um **burst** (cooldown em segundos × 20 ticks), passivas ficam sempre ligadas. A primeira vitória contra um chefe tende a render a relíquia assinatura dele.
 
 | Relíquia | Raridade | Tipo | Band mín. | CD (s) | Origem |
 | --- | --- | --- | ---: | ---: | --- |

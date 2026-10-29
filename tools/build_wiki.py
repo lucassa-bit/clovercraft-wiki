@@ -203,24 +203,6 @@ RACES = [
     ("dwarf", "Anão", "13%", "+4 vida", "-4% velocidade", "—", "—", "+10% resistência a knockback"),
     ("witch", "Bruxa", "13%", "—", "—", "—", "+25% regen, +5% maestria", "—"),
 ]
-KEYS = [
-    ("skill_1–5", "Habilidades 1 a 5 (a 5ª é o ultimate da forma)"),
-    ("transform", "Transformar / avançar forma"),
-    ("dash", "Dash nas quatro direções"),
-    ("guard", "Guardar (segurar) / parry (toque no timing)"),
-    ("lock_on", "Travar alvo"),
-    ("stance", "Empunhar / embainhar (Asta e espadachins)"),
-    ("swap", "Trocar espada (Asta)"),
-    ("fly", "Voar (espada, asas, espírito, etc.)"),
-    ("meditate", "Meditar para regenerar mana (segurar, fora de combate)"),
-    ("summon", "Toque: invocar subordinado · Segurar: ordens"),
-    ("awaken", "Forçar despertar dos subordinados"),
-    ("journey", "Tela da jornada / missões"),
-    ("quest_hud", "Minimizar painel de quest"),
-    ("shoulder_camera", "Câmera no ombro"),
-]
-
-
 def load_json(path: Path) -> dict | list:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -585,6 +567,305 @@ def step_label(step: dict) -> str:
     return f"{kind}: `{extra}` (força {step.get('min', 0)}+)"
 
 
+def raw_kit_forms(cid: str) -> list[str]:
+    """Names exposed to the client. Staged forms use FORM_NAMES, not only FORMS."""
+    path = KITS / f"{cid.title()}Kit.java"
+    text = path.read_text(encoding="utf-8")
+    return parse_string_list(text, "FORM_NAMES") or parse_string_list(text, "FORMS")
+
+
+def kit_form_group(cid: str, index: int) -> str:
+    """Map the numeric kit group to a player-visible form.
+
+    Some kits expose cosmetic/intermediate names that intentionally reuse one
+    numeric action group. They must not shift the final group in the UI.
+    """
+    groups = {
+        "asta": ("base", "ba1", "du"),
+        "mereoleona": ("base", "hellfire", "leonum"),
+    }.get(cid)
+    if groups:
+        return groups[min(index, len(groups) - 1)]
+    forms = raw_kit_forms(cid)
+    return forms[min(index, len(forms) - 1)] if forms else str(index)
+
+
+def technical_rank(cid: str, sid: str, data: dict) -> int | None:
+    """The Asta base kit uses the explicit fallback rules in Ranks.java."""
+    if data.get("rank") is not None:
+        return data["rank"]
+    return {
+        "slayer_slash": 1,
+        "meteorite": 4,
+        "dweller_slash": 3,
+        "causality_break": 5,
+        "black_divider": 7,
+        "du_ultimate": 9,
+    }.get(sid) if cid == "asta" else None
+
+
+def technical_skill_rows(cid: str, kit: dict) -> list[dict]:
+    """Action records used by a kit, without translating their effects into prose."""
+    rows = []
+    for group_index, group in enumerate(kit.get("skills") or []):
+        # Kits select groups by numeric form (0 / 1 / 2). A staged visual form
+        # such as ba2 remains in group 1.
+        form = kit_form_group(cid, group_index)
+        for slot, sid in enumerate(group, 1):
+            aid = f"{cid}/skill/{sid}"
+            path = ACTIONS / (aid.replace("/", "__") + ".json")
+            data = load_json(path) if path.exists() else {}
+            hits = data.get("hits") or []
+            rows.append(
+                {
+                    "form": form,
+                    "slot": slot,
+                    "id": aid,
+                    "file": f"clover/actions/{path.name}",
+                    "duration": data.get("duration"),
+                    "rank": technical_rank(cid, sid, data),
+                    "hits": len(hits),
+                    "max_damage": max((h.get("damage") or 0 for h in hits), default=0),
+                    "tags": ", ".join(data.get("tags") or []) or "—",
+                }
+            )
+    if cid == "asta":
+        for form, sid in (("ba1–ba3", "black_divider"), ("du", "du_ultimate")):
+            aid = f"asta/skill/{sid}"
+            path = ACTIONS / (aid.replace("/", "__") + ".json")
+            data = load_json(path) if path.exists() else {}
+            hits = data.get("hits") or []
+            rows.append({"form": form, "slot": 5, "id": aid, "file": f"clover/actions/{path.name}", "duration": data.get("duration"), "rank": technical_rank(cid, sid, data), "hits": len(hits), "max_damage": max((h.get("damage") or 0 for h in hits), default=0), "tags": ", ".join(data.get("tags") or []) or "—"})
+    return rows
+
+
+def fmt_number(value: float | int) -> str:
+    return f"{value:.1f}".replace(".", ",")
+
+
+def skill_damage(data: dict) -> str:
+    """Show only damage numbers explicitly declared by the action JSON."""
+    parts = []
+    hits = [hit.get("damage") for hit in data.get("hits") or [] if (hit.get("damage") or 0) > 0]
+    if hits:
+        total = sum(hits)
+        if len(hits) == 1:
+            parts.append(f"{fmt_number(hits[0])} por golpe")
+        elif len(set(hits)) == 1:
+            parts.append(f"{fmt_number(hits[0])} × {len(hits)} golpes (até {fmt_number(total)})")
+        else:
+            parts.append(f"{len(hits)} golpes (até {fmt_number(total)})")
+
+    labels = {
+        "barrage": "rajada", "binding": "amarra", "dark_slash": "corte à distância",
+        "fire_burst": "explosão", "fire_cone": "cone de fogo", "fire_line": "linha de fogo",
+        "fire_paw": "garra", "gauche": "raio", "hawk": "investida", "jaws": "mordida",
+        "julius": "efeito temporal", "line": "linha", "luck": "contra-ataque",
+        "nacht": "golpe de sombra", "sea_dragon": "dragão", "shockwave": "onda de choque",
+        "tornado": "tornado", "vanica": "golpe de sangue", "waterball": "orbe de água",
+        "wind_blades": "lâmina de vento", "yami": "golpe sombrio", "zenon": "golpe espacial",
+        "zora": "armadilha",
+    }
+    for event in data.get("events") or []:
+        if not isinstance(event, dict) or not isinstance(event.get("damage"), (int, float)) or event["damage"] <= 0:
+            continue
+        count = event.get("count", event.get("passes", 1))
+        count = count if isinstance(count, int) and count > 1 else 1
+        label = labels.get(event.get("type"), "efeito")
+        if count > 1:
+            parts.append(f"{label}: {fmt_number(event['damage'])} × {count} (até {fmt_number(event['damage'] * count)})")
+        else:
+            parts.append(f"{label}: {fmt_number(event['damage'])}")
+    return " · ".join(parts)
+
+
+def skill_effect(data: dict) -> str:
+    """A conservative player-facing summary derived only from action events."""
+    events = [event for event in data.get("events") or [] if isinstance(event, dict)]
+    kinds = {event.get("type") for event in events}
+    pieces = []
+    if data.get("lunges"):
+        pieces.append("avança durante a ação")
+    if data.get("hits"):
+        pieces.append("atinge em combate direto")
+    cancel = next((event for event in events if event.get("type") == "cancel_magic"), None)
+    if cancel:
+        radius = cancel.get("radius")
+        pieces.append(f"cancela magia{f' em raio de {fmt_number(radius)}' if isinstance(radius, (int, float)) else ''}")
+    if "anti_field" in kinds:
+        pieces.append("cria campo anti-magia")
+    if "black_hole" in kinds:
+        pieces.append("puxa inimigos em uma zona")
+    if "binding" in kinds:
+        pieces.append("prende o alvo")
+    if "blink" in kinds or "blink_behind" in kinds or "teleport" in kinds:
+        pieces.append("se reposiciona")
+    if "buff" in kinds:
+        pieces.append("aplica um bônus temporário")
+    if "mana_skin" in kinds or "water_shell" in kinds or "scutum" in kinds or "cocoon" in kinds:
+        pieces.append("gera proteção")
+    if "summon" in kinds or "comrades" in kinds:
+        pieces.append("chama aliados")
+    if "mimosa" in kinds:
+        pieces.append("ativa magia de plantas")
+    if not pieces:
+        pieces.append("não declara dano direto; a action aplica um efeito de kit")
+    return "; ".join(pieces).capitalize() + "."
+
+
+def display_place(raw: str | None) -> str:
+    labels = {
+        "black_bulls_hideout": "Esconderijo dos Touros Negros",
+        "royal_capital": "Capital Real",
+        "grimoire_tower": "Torre dos Grimórios",
+        "witches_forest": "Floresta das Bruxas",
+        "seabed_temple": "Templo Submarino",
+        "volcano_camp": "Acampamento do Vulcão",
+        "spade_fortress": "Fortaleza de Spade",
+        "faust_estate": "Propriedade Faust",
+        "shadow_altar": "Altar das Sombras",
+        "heart_sanctuary": "Santuário de Heart",
+        "wind_shrine": "Santuário do Vento",
+        "training_ring": "Arena de treino",
+    }
+    return labels.get(raw or "", pretty(raw or "local não declarado"))
+
+
+def display_boss(raw: str | None, bosses: dict[str, str]) -> str:
+    if not raw:
+        return ""
+    if raw.startswith("npc:"):
+        cid = raw.split(":", 1)[1]
+        return t("character.clovercraft." + cid, pretty(cid))
+    if raw.startswith("foe:"):
+        return "Onda de inimigos"
+    return bosses.get(raw, pretty(raw))
+
+
+def display_reward(reward: dict) -> str:
+    labels = {"strength": "força", "merits": "méritos", "mastery": "maestria"}
+    return " · ".join(f"{labels.get(key, key)} +{value}" for key, value in reward.items()) or "Sem recompensa declarada"
+
+
+def display_unlock(name: str) -> str:
+    """Correct the one mastery label whose language file overstates its effect."""
+    if name == "forms_mastery":
+        return "Domínio das formas (+15% de poder de forma)"
+    return skill_name(name)
+
+
+def write_technical_reference(kits: dict, summons: list, bosses: list, relics: list, quests: list, tree: list) -> None:
+    """Write an evidence layer. It deliberately contains no canonical/editorial claims."""
+    ref = DOCS / "referencia-tecnica"
+    write(
+        ref / "index.md",
+        """# Referência técnica
+
+Esta seção é a base verificável da wiki. Ela é regenerada por `tools/build_wiki.py` diretamente dos arquivos extraídos do **Clover Craft 0.4.0**.
+
+Não há aqui classificação de papel, esquadrão canônico, interpretação de efeito, nem texto de lore. Cada tabela conserva IDs, números e arquivo de origem para que qualquer afirmação editorial possa ser conferida.
+
+| Área | Fonte primária |
+| --- | --- |
+| Personagens e kits | `decompiled/dev/clovercraft/combat/*Kit.java` |
+| Ações | `clover/actions/*.json` |
+| Rank e maestria | `decompiled/dev/clovercraft/combat/Ranks.java` e `Mastery.java` |
+| Jornadas | `clover/quests/*.json` |
+| Invocações | `decompiled/dev/clovercraft/summon/pool/*Units.java` |
+
+O servidor pode alterar números que dependem de configuração; esta referência descreve os valores presentes no JAR analisado.
+
+- [Personagens e kits](/referencia-tecnica/personagens)
+- [Habilidades](/referencia-tecnica/habilidades)
+- [Ranks e maestria](/referencia-tecnica/ranks-e-maestria)
+- [Mecânicas de kit](/referencia-tecnica/mecanicas)
+- [Jornadas](/referencia-tecnica/jornadas)
+- [Invocações](/referencia-tecnica/invocacoes)
+- [Chefes e relíquias](/referencia-tecnica/chefes-e-reliquias)
+- [Árvore](/referencia-tecnica/arvore)
+""",
+    )
+    grimoire_src = (DECOMP / "registry" / "ModItems.java").read_text(encoding="utf-8")
+    grimoire_by_char = {character: item for item, character in re.findall(r'ITEMS\.register\("([^"]+)", \(\) -> new GrimoireItem\("([^"]+)"\)', grimoire_src)}
+    kit_rows = ["| ID | Grimório registrado | Formas expostas | Grupos de skills | Fonte |", "| --- | --- | --- | ---: | --- |"]
+    for cid in kits:
+        forms = raw_kit_forms(cid)
+        kit_rows.append(f"| `{cid}` | `{grimoire_by_char.get(cid, '—')}` | {', '.join('`' + f + '`' for f in forms)} | {len(kits[cid].get('skills') or [])} | `combat/{cid.title()}Kit.java` |")
+    write(ref / "personagens.md", "# Personagens e kits\n\nIDs e estrutura exatamente como o mod registra. Os nomes de forma são IDs internos; não são uma tradução editorial.\n\n" + "\n".join(kit_rows) + "\n\n**Observação sobre estágios:** Asta expõe `ba1`, `ba2` e `ba3`; Mereoleona expõe `hellfire`, `hellfire2` e `hellfire3`. Em ambos os casos o kit mantém três grupos de skills numéricos (base, forma 1, forma 2).")
+
+    skill_md = ["# Habilidades", "", "Uma linha por ação chamada pelo kit. `dano máximo` é o maior campo `hits[].damage` daquele JSON; zero significa que o JSON não declara hit direto, não que a ação não tenha efeito.", "", "| Personagem | Forma/grupo | Slot | Action ID | Rank | Duração (ticks) | Hits | Dano máximo | Tags | Arquivo |", "| --- | --- | ---: | --- | ---: | ---: | ---: | ---: | --- | --- |"]
+    for cid, kit in kits.items():
+        for row in technical_skill_rows(cid, kit):
+            skill_md.append(f"| `{cid}` | `{row['form']}` | {row['slot']} | `{row['id']}` | {row['rank'] if row['rank'] is not None else '—'} | {row['duration'] if row['duration'] is not None else '—'} | {row['hits']} | {row['max_damage'] or '—'} | {md_escape(row['tags'])} | `{row['file']}` |")
+    write(ref / "habilidades.md", "\n".join(skill_md))
+
+    rank_rows = ["| Índice | ID | Méritos-base | Desbloqueios genéricos |", "| ---: | --- | ---: | --- |"]
+    default_unlocks = [[], ["slayer_slash"], ["flight"], ["dweller", "dweller_slash"], ["meteorite"], ["destroyer", "causality_break"], ["slasher", "third_dash"], ["black_asta", "black_divider"], [], ["devil_union", "du_ultimate"], [], ["forms_mastery"]]
+    for index, (rank_id, merits, unlocks) in enumerate(zip(RANK_IDS, RANK_MERITS, default_unlocks)):
+        rank_rows.append(f"| {index} | `{rank_id}` | {merits} | {', '.join('`' + x + '`' for x in unlocks) or '—'} |")
+    write(ref / "ranks-e-maestria.md", """# Ranks e maestria
+
+## Rank
+
+Tabela de `Ranks.LADDER`. Os limiares efetivos ainda passam por `merit_scale` e dificuldade do servidor.
+
+""" + "\n".join(rank_rows) + """
+
+## Constantes de maestria
+
+| Campo | Valor no código |
+| --- | --- |
+| Nível máximo | 5 |
+| XP acumulado por nível 0–5 | `0, 1000, 3000, 7000, 14000, 25000` |
+| Multiplicador de dreno por nível 0–5 | `1.8, 1.45, 1.2, 1.0, 0.85, 0.6` |
+| Multiplicador de poder por nível 0–5 | `0.86, 0.92, 0.97, 1.0, 1.05, 1.1` |
+| Multiplicador de exaustão por nível 0–5 | `1.6, 1.4, 1.2, 1.0, 0.85, 0.7` |
+
+## Portão de transformação
+
+`formMasteryGate` (`FORM_GATE`) vem **ligado por padrão** no `BalanceConfig`. Nessa configuração, a primeira transformação exige maestria 5★ da forma base; cada transformação seguinte exige 5★ da forma anterior. A checagem usa o XP real salvo para a forma — o piso de nível concedido por rank não a substitui.
+
+O servidor pode desligar `formMasteryGate`; só nesse caso a maestria deixa de bloquear a transformação. `masteryScale` também vem em `4.0`: alcançar 5★ pede `25.000 × escala × custo de dificuldade` XP da forma. Fontes: `config/BalanceConfig.java`, `combat/Mastery.java` e `combat/Ranks.java`.
+""")
+
+    mechanic_rows = ["# Mecânicas de kit", "", "Campos que alteram regras do kit, lidos das implementações `CharacterKit`. `true` só aparece quando a classe substitui o comportamento padrão.", "", "| Personagem | Guarda anti-magia | Escudo de mana | Formas de maestria | Fonte |", "| --- | --- | --- | --- | --- |"]
+    for cid in kits:
+        text = (KITS / f"{cid.title()}Kit.java").read_text(encoding="utf-8")
+        anti = "sim" if re.search(r"boolean antiMagicGuard\(\)\s*\{\s*return true", text) else "não"
+        shield = "sim" if re.search(r"boolean manaShield\(\)\s*\{\s*return true", text) else "não"
+        mastery = re.search(r"masteryForms\(\)\s*\{\s*return List\.of\((.*?)\)", text, re.S)
+        keys = ", ".join("`" + key + "`" for key in re.findall(r'"([^"]+)"', mastery.group(1))) if mastery else "formas expostas"
+        mechanic_rows.append(f"| `{cid}` | {anti} | {shield} | {keys} | `combat/{cid.title()}Kit.java` |")
+    mechanic_rows.extend(["", "## Regras comuns", "", "| Regra | Valor/fonte |", "| --- | --- |", "| Ranks de mérito | 12 degraus, índices `0`–`11`; `Ranks.LADDER` |", "| Força | máximo de 100; `strengthXpFor` usa topo 200000 e expoente 1,5 antes de escalas de configuração |", "| 3º dash | índice de rank 6 (`Sênior 3º`) |", "| Voo padrão do kit | índice de rank 2 (`Júnior 3º`), salvo kits que sobrescrevem `flightRank()` |", "| Transformação e 5★ | a checagem depende da configuração `FORM_GATE` |", "", "Fontes: `combat/CharacterKit.java`, `combat/Ranks.java` e `combat/Mastery.java`."])
+    write(ref / "mecanicas.md", "\n".join(mechanic_rows))
+
+    journey = ["# Jornadas", "", "Cadeias lidas dos JSONs. `boss` e `place` são IDs técnicos, preservados sem inferir nome ou local canônico.", "", "| Cadeia | Personagem | Forma | Etapa | Tipo | Place | Força mín. | Boss | Recompensa | Fonte |", "| --- | --- | ---: | --- | --- | --- | ---: | --- | --- | --- |"]
+    for chain in quests:
+        for step in chain["steps"]:
+            reward = ", ".join(f"{key}={value}" for key, value in step["reward"].items()) or "—"
+            journey.append(f"| `{chain['id']}` | `{chain['character'] or '—'}` | {chain['form'] if chain['form'] is not None else '—'} | `{step['id']}` | `{step['type']}` | `{step['place'] or '—'}` | {step['min'] or 0} | `{step['boss'] or '—'}` | {reward} | `clover/quests/{chain['file']}` |")
+    write(ref / "jornadas.md", "\n".join(journey))
+
+    unit_rows = ["# Invocações", "", "Unidades declaradas nos pools. Função, tier e exclusividade são campos extraídos; a coluna não descreve comportamento em linguagem editorial.", "", "| Personagem | Unidade | ID | Função | Tier | Única |", "| --- | --- | --- | --- | ---: | --- |"]
+    for unit in summons:
+        unit_rows.append(f"| `{unit['character']}` | {md_escape(unit['name'])} | `{unit['id']}` | `{unit['role']}` | {unit['tier']} | {'sim' if unit['unique'] else 'não'} |")
+    write(ref / "invocacoes.md", "\n".join(unit_rows))
+
+    boss_rows = ["# Chefes e relíquias", "", "Registros extraídos, sem descrição de lore. `band` é o campo numérico do `BossSpec` usado pelo mod.", "", "## Chefes", "", "| ID | Nome localizado | Band | Movimentos declarados | Fonte |", "| --- | --- | ---: | --- | --- |"]
+    for boss in bosses:
+        moves = ", ".join("`" + move["id"] + "`" for move in boss["moves"]) or "—"
+        boss_rows.append(f"| `{boss['id']}` | {md_escape(boss['name'])} | {boss['band']} | {moves} | `boss/BossRoster.java` |")
+    boss_rows.extend(["", "## Relíquias", "", "| ID | Raridade | Canônica | Cooldown | Band mín. | Passiva | Fonte |", "| --- | --- | --- | ---: | ---: | --- | --- |"])
+    for relic in relics:
+        boss_rows.append(f"| `{relic['id']}` | {relic['rarity']} | {relic['canon']} | {relic['cooldown']} | {relic['min_band']} | {'sim' if relic['passive'] else 'não'} | `relic/Relic.java` |")
+    write(ref / "chefes-e-reliquias.md", "\n".join(boss_rows))
+
+    tree_rows = ["# Árvore", "", "Nós estruturais extraídos da implementação da árvore. Os nomes permanecem IDs para evitar atribuir efeito sem a ação/fonte correspondente.", "", "| ID | Ramo | Tier | Ranks | Stat | Por rank | Fonte |", "| --- | --- | ---: | ---: | --- | --- |"]
+    for node in tree:
+        tree_rows.append(f"| `{node['id']}` | `{node['branch']}` | {node['tier']} | {node['ranks']} | `{node['stat']}` | {node['per']} | `progress/SkillTree.java` |")
+    write(ref / "arvore.md", "\n".join(tree_rows))
+
+
 def generate(kits: dict, summons: list, bosses: list, relics: list, quests: list, tree: list) -> None:
     chars = list(CHAR_META)
     character_links = {c: f"/personagens/{c}" for c in chars}
@@ -626,9 +907,11 @@ Projeto fã não oficial. **Black Clover** pertence a Yūki Tabata / Shueisha. O
 
     write(
         DOCS / "guia" / "comecar.md",
-        f"""# Começar a jogar
+        """# Começar a jogar
 
-Clover Craft transforma o mundo vanilla num Reino Clover: você nasce sem grimório, é chamado à **Torre dos Grimórios** em Hage, gira a roleta e recebe um dos 16 magos.
+Clover Craft começa com a cerimônia do grimório e termina no loop de força, mérito, maestria e jornadas. Esta é a rota prática para a primeira sessão; depois, use as fichas de [personagens](/personagens/) para escolher um kit e acompanhar sua evolução.
+
+> Os passos abaixo descrevem o padrão do 0.4.0. Um servidor pode mudar custos, dificuldade e o portão de maestria nas configurações.
 
 ## Requisitos
 
@@ -640,59 +923,118 @@ Clover Craft transforma o mundo vanilla num Reino Clover: você nasce sem grimó
 | Photon | 2.2.7+ (cliente — partículas e pós-FX) |
 | O mod | `clovercraft-0.4.0-neoforge-1.21.1.jar` |
 
-## Loop inicial
+## Os primeiros minutos
 
-1. Entre no mundo. A **cerimônia** aponta o altar da Torre dos Grimórios.
-2. Chegue perto do altar: a **roleta** sorteia personagem, raça e potencial.
-3. Use o grimório (botão direito) para se **vincular** — isso é permanente até a próxima temporada ou comando de admin.
-4. Siga o tutorial e fale com os NPCs de Hage.
-5. Vá ao **Coliseu do Exame** (`/exam`) para virar Cavaleiro Mágico e escolher um esquadrão.
-6. Suba **força** (combate) e **méritos de guerra** (ranks). Cadeias de quest liberam a primeira e a segunda transformação.
+1. Entre no mundo. **Padre Orsi** fala no overlay (não há NPC no chão) e um marcador aponta a Torre.
+2. Chegue a uns 10 blocos do altar. Abre a **Cerimônia do Grimório**: grimório, sangue ([raça](/sistemas/racas)) e berço. É uma vez só.
+3. Use o grimório (botão direito) para **vincular**. O mago não troca depois — Grimoire Scroll rerola o grimório; um admin também pode resetar.
+4. Complete as **Lições de Hage** no HUD — ou digite `/tutorial skip`.
+5. Em **sobrevivência**, digite `/exam`. O jogo te leva ao Coliseu e spawna um examinador (clone NPC de outro mago).
+6. Escolha um [esquadrão](/sistemas/squads). O fluxo do exame entrega a **vassoura mágica**; use `J` para voar.
 
-## O que sobe com você
+Asta usa o voo próprio liberado após o exame; a vassoura é recusada por ele. Regras de voo: [Combate](/guia/combate#voo).
 
-- **Força (1–100)** — poder bruto. Quests, chefes e inimigos pagam XP de força.
-- **Méritos** — definem o [rank](/guia/progressao) (Aspirante → Rei Mago) e desbloqueiam skills/formas.
-- **Maestria** — 5 estrelas por forma. A forma seguinte só abre com 5★ na anterior (configurável).
-- **Árvore de skills** — pontos vindos de força, cadeias, firsts de chefes e rank de mérito.
+## Lições de Hage
 
-## Dificuldade e temporada
+O tutorial não é conversa com villagers. São cinco ações, nessa ordem:
 
-O servidor tem dificuldade própria (`/clover difficulty`) além da vanilla. Uma **nova temporada** zera a jornada de todo cavaleiro na Torre.
+| # | Lição | O que fazer | Default |
+| --- | --- | --- | --- |
+| 1 | Combo | Acerte um combo completo (três hits) | clique esquerdo |
+| 2 | Dash | Dash | `Alt` esquerdo |
+| 3 | Guarda | Segure a guarda | `F` |
+| 4 | Heavy | Segure o ataque e solte | clique esquerdo (segurar) |
+| 5 | Magia | Lance uma skill | `Z` (`X` `C` `V` ao lado) |
 
-Personagens já escolhidos por outro jogador no servidor podem ficar bloqueados (claims). Roleta e claims são configuráveis.
+Ao terminar, aparece o convite clicável para `/exam`. Lista completa de teclas: [Controles](/guia/controles).
+
+## Depois do exame
+
+Você já é Cavaleiro Mágico. O resto do jogo é ficar mais forte.
+
+Aperte **K** para abrir a **Jornada**. É o hub: força, rank, maestria, diário de quests, missões, história do reino e árvore. Três coisas diferentes saem daí:
+
+| O quê | Para quê | Como abrir |
+| --- | --- | --- |
+| **Missões** | Caçadas e defesas, várias diárias. Pagam **méritos** (rank) | `/missions`, quadro de madeira, ou o botão na Jornada |
+| **Diário** | Cadeia da **transformação** do seu mago (viajar, trial, boss) | botão de quests na Jornada |
+| **História** | Capítulos do reino (Saussey, masmorra, Capital) | `/story` — não é a tela da Jornada |
+
+Combate e jornadas também sobem **força**. A cadeia e os requisitos variam por personagem; veja a seção **Jornada** na ficha de cada [personagem](/personagens/). No padrão do mod, a primeira transformação exige 5★ da Base e as seguintes exigem 5★ da forma anterior.
+
+O primeiro marco comum de voo é **Júnior 3º** (12.000 méritos). A vassoura permite voo a magos com mana; Asta segue a exceção do próprio kit.
+
+Detalhe de força, méritos, maestria e ranks: [Progressão](/guia/progressao).
+
+## Se travar
+
+| Situação | O que fazer |
+| --- | --- |
+| A roleta não abriu | Vá até a Torre e digite `/roulette` |
+| `/exam` recusa | Grimório vinculado, cerimônia feita, modo sobrevivência, chão plano à frente |
+| “Treine e volte” | Espere ~2 min e tente de novo |
+| Personagem já pego no servidor | Claims — outro jogador vinculou aquele mago |
+| Pular o tutorial | `/tutorial skip` |
+
+Admin pode avançar a temporada (`/clover season wipe`): no próximo login todo mundo recomeça na Torre, sem mago. Roleta e claims são configuráveis no servidor.
 """,
     )
 
-    key_rows = "\n".join(f"| `{k}` | {d} |" for k, d in KEYS)
     write(
         DOCS / "guia" / "controles.md",
-        f"""# Controles
+        """# Controles
 
-Categoria no Minecraft: **Clover Craft**. Rebind no menu vanilla.
+Rebind em **Opções → Controles → Clover Craft**. Abaixo estão os defaults do 0.4.0, definidos em `ClientInput.java`; um servidor não altera essas teclas.
 
-| Tecla (id) | Função |
+Como se luta com essas teclas: [Combate](/guia/combate).
+
+## Clique vanilla
+
+O mod não troca os botões do Minecraft.
+
+| Botão | Uso |
 | --- | --- |
-{key_rows}
+| Clique esquerdo (toque) | Combo |
+| Clique esquerdo (segurar) | Heavy / charge |
+| Clique direito | Usar item — é assim que você **vincula o grimório** |
 
-## Combate básico
+## Combate
 
-- **Ataque básico** — combo de 3–5 hits no chão. No ar, um air attack. Depois de um dash, **dash slash**.
-- **Segurar ataque** — charge / heavy. Soltar no timing faz a versão *release*.
-- **Guard** — reduz dano no arco frontal e gasta stamina. No frame certo, **parry** (atordoa o atacante e gera meter).
-- **Guard break** — stamina zerada: você fica aberto.
-- **Lock-on** — câmera e skills seguem o alvo. Essencial contra chefes.
-- **Clash** — dois golpes pesados se encontram: mini-game de círculos (Perfect / Good / Miss). O vencedor perpassa com dano extra.
+| Tecla | Ação |
+| --- | --- |
+| `Z` `X` `C` `V` | Habilidades 1–4 |
+| `R` | Skill 5 da forma atual — em geral, a ação de maior impacto do kit |
+| `B` | Transformar / avançar forma |
+| `Alt` esquerdo | Dash nas quatro direções |
+| `F` | Guarda (segurar) ou parry (toque no timing) |
+| Botão do meio | Travar alvo (lock-on) |
+| `Y` | Meditar (segurar, fora de combate) |
 
-## Meter (mana / anti-magia)
+## Movimento e câmera
 
-A barra enche com hits, dano sofrido (exceto quem usa escudo de mana) e meditação. Transformar e skills caras gastam a barra. Sem meter, skills recusam (`Out of mana`).
+| Tecla | Ação |
+| --- | --- |
+| `J` | Voar (vassoura, espada, asas, espírito) |
+| `O` | Câmera no ombro |
 
-Asta não tem mana: a barra é **Anti-Magia**. Guard dele **anula magia** em vez de só bloquear.
+## Asta e espadachins
 
-## Câmera e feedback
+| Tecla | Ação |
+| --- | --- |
+| `H` | Sacar / guardar a arma |
+| `G` | Trocar espada (Asta) |
 
-Câmera no ombro, shake e FOV são opções de cliente. Personagens têm braços em primeira pessoa com motion própria.
+## Menus e subordinados
+
+| Tecla | Ação |
+| --- | --- |
+| `K` | Jornada (hub de força, rank, quests, missões, árvore) |
+| `N` | Subordinado: toque invoca, segurar abre ordens |
+| `U` | Forçar despertar dos subordinados |
+
+`N` também está em **minimizar o painel de quest**. As duas ações usam a mesma tecla — rebind uma delas se o summon ou o HUD não responder.
+
+As fichas de [personagens](/personagens/) mostram os cinco slots, seus efeitos e os requisitos relevantes de cada kit.
 """,
     )
 
@@ -700,102 +1042,148 @@ Câmera no ombro, shake e FOV são opções de cliente. Personagens têm braços
         DOCS / "guia" / "combate.md",
         """# Combate
 
-O combate é de ação, não de cooldown de hotbar. Cada personagem tem um **kit** (`CharacterKit`) com combo, charge, dash, guard, 4–5 skills e 2 transformações.
+O kit de combate combina combo, heavy, guarda, dash e cinco slots de magia. Transformar (`B`) pode trocar o conjunto de actions disponível.
 
-## Estrutura de um kit
+Teclas: [Controles](/guia/controles). O que destrava cada forma: [Progressão](/guia/progressao).
 
-| Slot | O que é |
-| --- | --- |
-| Combo 1–4 (às vezes 5) | String leve. Cancela no `cancel_at` para o próximo hit |
-| Charge / tap / release | Heavy. Segurar aumenta o golpe |
-| Dash F/L/B/R | I-frames curtos + deslocamento |
-| Air | Um golpe aéreo |
-| Dash slash | Conversão depois do dash |
-| Skill 1–4 | Magias do grimório |
-| Skill 5 | Ultimate da forma atual |
-| Transform | Gasta meter e troca o kit inteiro |
-| Exhausted | Stun curto se a forma acabar no zero |
+## Como se luta
 
-Dano dos hits vem dos JSON em `clover/actions/` (campo `hits[].damage`), depois multiplicado por **força**, **forma**, **rank**, **esquadrão**, **árvore** e **PvE/PvP**.
+1. **Toque no clique esquerdo** — combo de 3–5 hits no chão. No ar, um golpe só. Depois de um dash, o clique vira **dash slash**.
+2. **Segure o clique** — heavy / charge. Soltar no timing faz a versão mais forte (*release*).
+3. **Segure `F`** — guarda no arco da frente. Gasta **stamina**. Stamina no zero = **guard break**: você fica aberto.
+4. **Toque no `F` no timing** — **parry**: atordoa quem bateu e enche a barra de mana.
+5. **`Z` `X` `C` `V` `R`** — os cinco slots de magia. Consulte a ficha do seu [personagem](/personagens/) para entender o efeito de cada um.
+6. **Botão do meio** — lock-on. Câmera e skills seguem o alvo. Use no exame e em chefe.
 
-## Formas
+Ordem prática: lock-on → combo/guarda → magia. Não fique parado enchendo skill.
 
-Quase todo mago tem forma 0 (base), 1 e 2. Mereoleona e Asta têm **estágios** internos (Black Asta 1–3, Hellfire 1–3). A forma 2 em geral pede:
+## Duas barras
 
-- forma 1 com **maestria 5★**
-- meter ≥ 70
-- ainda não gasta nesta vida (várias ultimates são *once per life*)
+Há dois recursos, e eles não são a mesma coisa.
 
-Sair da forma (`revert`) devolve o kit base. Meter no zero aplica **exhausted**.
+**Stamina** alimenta a guarda. Acabou = guard break.
 
-## Guard, parry, selo
+**Mana** (a barra do grimório) alimenta skills e transformação. Ela é recuperada por combate e meditação; kits com escudo de mana têm regras próprias. Sem recurso suficiente, a action pode ser recusada.
 
-- Guard reduz dano (config `guard_reduction`) num arco em graus.
-- Parry na janela (`parry_ticks`) stagger o atacante.
-- Hits de Asta **selam** magia do alvo por alguns ticks — o selado não lança.
+**Asta** não tem mana: a barra dele é **Anti-Magia**. A guarda **anula magia**. Hits **selam** o alvo por alguns instantes — o selado não lança.
+
+**Meditar (`Y`)** — segurar parado, fora de luta. Recupera mana / anti-magia mais rápido.
+
+**Dash (`Alt`)** — quatro direções, i-frames curtos. O 3º dash só abre no rank Sênior 3º.
+
+## Voo
+
+**Voo (`J`)** — a regra base de voo do kit começa no rank Júnior 3º. Alguns kits sobrescrevem essa regra. A vassoura exige mana e não funciona para Asta; depois do exame, Asta usa o voo próprio. A implementação também recusa voo durante estados inválidos, como exaustão, queda forçada ou uma action cinemática.
+
+## Transformar
+
+Cada kit tem suas próprias formas. Asta e Mereoleona têm estágios internos na primeira transformação; eles não ganham um grupo de skills novo a cada estágio. A ficha de cada personagem separa essas formas de modo jogável.
+
+Rank, jornada, recurso e maestria podem limitar uma transformação. `FORM_GATE` vem ligado na configuração padrão: 5★ da Base abre a primeira forma e 5★ da forma atual abre a próxima. Por isso, não trate força 30, força 80 ou barra 70 como regra universal — nem suponha que o servidor desligou o portão de maestria.
+
+Sair da forma devolve o kit base. Barra no zero pode aplicar `exhausted`; o comportamento final depende da action e da configuração.
 
 ## Clash
 
-Dois fighters com charge suficiente entram no minigame. Círculos aparecem; timing Perfect vence. Empate empurra os dois. Chefes e mobs têm “skill” de clash própria (mais fácil errar contra boss).
+Dois heavies se encontram: mini-game de círculos (Perfect / Good / Miss). O vencedor atravessa com dano extra. Empate empurra os dois.
 
-## Meditação
+Chefes e mobs também clasham. Errar contra boss dói mais.
 
-Segurar fora de combate, depois de alguns ticks de calma. Regenera mana/anti-magia mais rápido.
+## PvE e PvP
 
-## PvP vs PvE
+Dano a mobs e a jogadores escala separado. A [árvore](/sistemas/arvore) rende menos em PvP. Ultimates de forma têm multiplicador próprio contra jogador.
 
-A config separa dano a mobs e a jogadores, e a árvore aplica só uma fração dos bônus em PvP (`TREE_PVP`). Ultimates de forma têm multiplicador PvP próprio.
+O dano final pode combinar força, forma, rank, árvore, PvE/PvP e configuração do servidor. As fichas de personagem mostram o dano-base quando ele existe; esse número não é o dano final exibido em jogo.
 """,
     )
 
+    rank_unlock = {
+        2: "Voo do kit",
+        6: "3º dash",
+        11: "+15% de poder de forma",
+    }
     rank_rows = []
     for i, rid in enumerate(RANK_IDS):
+        merits = f"{RANK_MERITS[i]:,}".replace(",", ".")
         rank_rows.append(
-            f"| {i} | {t('rank.clovercraft.' + rid)} | {RANK_MERITS[i]:,} |".replace(",", ".")
+            f"| {i} | {t('rank.clovercraft.' + rid)} | {merits} | {rank_unlock.get(i, '—')} |"
         )
     write(
         DOCS / "guia" / "progressao.md",
-        f"""# Progressão
+        """# Progressão
 
-Há três eixos que sobem juntos — força, méritos/rank e maestria — mais a [árvore](/sistemas/arvore) e as [quests](/sistemas/quests).
+A primeira hora (Torre, tutorial, `/exam`) está em [Começar](/guia/comecar). Aqui é o que sobe depois — e as regras do exame.
 
-## Ranks (méritos de guerra)
-
-Limiares vanilla do mod (multiplicados por `merit_scale` e pela dificuldade):
-
-| # | Rank | Méritos |
-| --- | --- | ---: |
-{chr(10).join(rank_rows)}
-
-Cada rank desbloqueia skills/formas **do seu personagem** (veja a página dele). Coisas comuns a todos:
-
-- **Junior 3º** — voo do kit (rank 2)
-- **Senior 3º** — 3º dash
-- **Rei Mago** — *Form mastery* (+15% poder, forma drena mais devagar)
+Quatro sistemas aparecem juntos, mas não são a mesma moeda: **força**, **méritos** (rank), **maestria** e pontos da [árvore](/sistemas/arvore). Entender como eles se combinam evita investir no atributo errado.
 
 ## Força (1–100)
 
-XP de força vem de inimigos, chefes e recompensas de quest. A curva é exponencial (`STRENGTH_TOP = 200000`, expoente 1.5). Cada 9 níveis de força equivalem a um “tier” de rank para scaling de HP/dano.
+É o poder bruto. Sobe com inimigos, chefes e recompensas de quest.
 
-HP, regen, resistência e dano PvE/PvP interpolam entre o valor do Aspirante e o do Rei Mago (configs `health_min/max`, `damage_pve_*`, etc.).
+A curva é exponencial: os últimos níveis demoram bem mais. Cada 9 de força equivalem a um “tier” de rank para HP e dano.
 
-## Maestria
+Não existe um limiar universal de transformação: cada cadeia de jornada tem seus próprios mínimos de força. Consulte a seção **Jornada** na ficha do seu [personagem](/personagens/).
 
-Cada forma tem 5 níveis. Combate na forma, quests (`mastery` nas recompensas) e treinos enchem a barra. A config `form_gate` impede pular formas.
+## Méritos e rank
 
-## Cerimônia e roleta
+Méritos de guerra sobem o rank (Aspirante → Rei Mago). Algumas habilidades e transformações também pedem um rank mínimo; a ficha de cada personagem mostra os desbloqueios relevantes.
 
-Na Torre, a roleta escolhe personagem + [raça](/sistemas/racas). Há pergaminhos para rerolar raça (`race_scroll`) e grimório (`grimoire_scroll`) — drops raros de chefes mundiais (8% e 3%).
+Limiares do mod (o servidor pode multiplicar por dificuldade):
+
+| # | Rank | Méritos | O que muda para todo mundo |
+| --- | --- | ---: | --- |
+"""
+        + "\n".join(rank_rows)
+        + """
+
+O restante dos desbloqueios é por personagem e por action. A tabela de habilidades mostra o rank efetivo que cada JSON declara — incluindo as exceções do kit do Asta.
+
+## Maestria: requisito real das formas
+
+Cada forma tem no máximo 5 níveis. A maestria ganha XP em combate, jornadas e treinos — e é um requisito de transformação no padrão do mod: `formMasteryGate`/`FORM_GATE` vem **ligado**.
+
+Com a configuração padrão, faça nesta ordem:
+
+1. Leve a **forma base a 5★** para liberar a primeira transformação.
+2. Conclua a jornada, tenha a força/rank exigidos e o recurso pedido pelo kit.
+3. Leve a **forma atual a 5★** antes de tentar a próxima.
+
+O servidor pode desligar esse portão, mas não é seguro presumir isso. A maestria também melhora a forma: no código, 5★ reduz o multiplicador de dreno de `1,8` para `0,6`, eleva o poder de `0,86` para `1,10` e reduz exaustão. O limiar-base de 5★ é 25.000 XP, multiplicado por `masteryScale` (padrão 4,0) e pela dificuldade. Importante: o piso visual concedido por rank não substitui o XP de maestria que o portão testa.
+
+## Árvore
+
+Pontos vêm de força, cadeias concluídas, firsts de chefe e rank. Veja os efeitos e prioridades de cada ramo em [Árvore](/sistemas/arvore).
 
 ## Exame de Cavaleiro Mágico
 
-Comando `/exam` (ou o NPC no Coliseu). Requisitos: personagem vinculado, cerimônia feita, ainda não passou, modo sobrevivência, cooldown de retry (~2 min).
+`/exam` teleporta você ao Coliseu. Não existe NPC parado para conversar.
 
-Você luta contra um examinador NPC. Vitória oferece **três esquadrões**. A escolha aplica o bônus permanente do [esquadrão](/sistemas/squads).
+Precisa: grimório vinculado, cerimônia feita, ainda não passou, **sobrevivência**, chão plano. Se a estrutura ainda carrega, espera “Preparando o Coliseu…”.
 
-## Temporada
+1. Countdown de ~3 s. O examinador é um **NPC clone** de outro mago jogável, dificuldade Normal.
+2. Duelo de **90 s**. O primeiro a cair a **25% de vida** perde — ninguém morre de verdade. No tempo, ganha quem tiver mais % de HP.
+3. Nota 0–100. Em seguida você **escolhe qualquer um dos 9 [esquadrões](/sistemas/squads)**; a nota só muda a ordem dos cards.
+4. O capitão entrega a **vassoura** (`J`). Se fechar a tela sem escolher, `/exam` reabre a escolha.
 
-Admin pode avançar a temporada (`/clover season wipe`). Todo mundo recomeça na Torre no próximo login.
+Exame anulado (logout, longe demais, sem chão): tente de novo. “Treine e volte” é cooldown de ~2 min.
+
+## O que farmar
+
+Três filas diferentes — não misture:
+
+| Fila | O que é | Onde |
+| --- | --- | --- |
+| **Missões** | Caçadas, defesas, duelos do quadro. Várias diárias. Méritos | `/missions` ou o quadro |
+| **Diário do mago** | Cadeia da transformação (viajar, trial, boss) | Jornada (`K`) → quests |
+| **História** | Capítulos do reino: Saussey, masmorra antiga, Capital, ruínas élficas | `/story` |
+
+Treinos globais (`train_spar` na força 8, vulcão da Mereoleona na 25…) repetem e pagam maestria. Lista: [Quests](/sistemas/quests).
+
+## Reroll e temporada
+
+**Race Scroll** (8% em chefe mundial) rerola a [raça](/sistemas/racas). **Grimoire Scroll** (3%) rerola o mago.
+
+Admin: `/clover season wipe`. No próximo login todo cavaleiro recomeça na Torre, sem vínculo. Não é troca de personagem — é reset do servidor.
 """,
     )
 
@@ -804,17 +1192,31 @@ Admin pode avançar a temporada (`/clover season wipe`). Todo mundo recomeça na
     for c in chars:
         meta = CHAR_META[c]
         cards.append(
-            f"| [{t('character.clovercraft.' + c, pretty(c))}](/personagens/{c}) | {meta['magic']} | {meta['squad']} |"
+            {
+                "id": c,
+                "name": t('character.clovercraft.' + c, pretty(c)),
+                "magic": meta['magic'],
+                "squad": meta['squad'],
+                "role": meta['role'].split('. ', 1)[0],
+                "color": meta['color'],
+                "group": "bulls" if "Touros Negros" in meta['squad'] else "spade" if "Spade" in meta['squad'] else "other",
+                "geo": f"/models/geo/character/{c}.geo.json",
+                "texture": next((s['texture'] for s in character_skins(c) if s['id'] == 'base'), ''),
+            }
         )
     write(
         DOCS / "personagens" / "index.md",
-        f"""# Personagens
+        f"""---
+aside: false
+---
+
+# Personagens
 
 16 magos jogáveis. O grimório vincula você a um deles — não há troca sem reroll/admin/temporada.
 
-| Personagem | Magia | Esquadrão canônico |
-| --- | --- | --- |
-{chr(10).join(cards)}
+Compare magia, papel e esquadrão canônico. Abra uma ficha para explorar as formas e o kit.
+
+<CharacterRoster :characters='{attr_json(cards)}' />
 
 Cada página tem o **modelo 3D** GeckoLib (gire e troque a forma). Visão geral: [Galeria](/galeria).
 
@@ -829,40 +1231,39 @@ Skins: todos têm `own` e `classic`. Asta também tem `spade`. Troca: `/skin <id
     for q in quests:
         if q["character"]:
             quests_by_char[q["character"]].append(q)
+    boss_names = {boss["id"]: boss["name"] for boss in bosses}
 
     for c in chars:
         meta = CHAR_META[c]
         kit = kits.get(c, {"forms": [], "skills": [], "unlocks": []})
         name = t("character.clovercraft." + c, pretty(c))
         grim = t("item.clovercraft." + meta["grimoire"], meta["grimoire"])
-        grim_desc = t("item.clovercraft." + meta["grimoire"] + ".desc", "")
 
-        form_list = kit["forms"] or ["base"]
-        forms_md = ", ".join(f"**{form_label(f)}** (`{f}`)" for f in form_list)
+        form_list = raw_kit_forms(c) or kit["forms"] or ["base"]
 
-        skill_md = []
-        for i, group in enumerate(kit.get("skills") or []):
-            form_name = form_list[min(i, len(form_list) - 1)] if form_list else f"kit {i}"
-            # map ba1/dive etc: skills groups are base / form1 / form2
-            if i == 0:
-                form_name = "base"
-            elif i == 1 and len(form_list) > 1:
-                form_name = form_list[1]
-            elif i == 2 and len(form_list) > 2:
-                form_name = form_list[-1]
-            rows = ["| Slot | ID | Nome | Dano (hit) | Duração (ticks) |", "| ---: | --- | --- | ---: | ---: |"]
-            for slot, sid in enumerate(group, 1):
-                aid = f"{c}/skill/{sid}"
-                st = action_stats(aid)
-                dmg = f"{st['damage']:.1f}" if st.get("damage") else "—"
-                dur = str(st["duration"]) if st.get("duration") else "—"
-                rows.append(f"| {slot} | `{sid}` | {md_escape(skill_name(sid))} | {dmg} | {dur} |")
-            skill_md.append(f"### {form_label(form_name)}\n\n" + "\n".join(rows))
+        skill_cards = []
+        for row in technical_skill_rows(c, kit):
+            action_path = ACTIONS / Path(row["file"]).name
+            action = load_json(action_path) if action_path.exists() else {}
+            group_form = row["form"]
+            group_label = form_label(group_form)
+            if c == "asta" and group_form in {"ba1", "ba1–ba3"}:
+                group_form = "ba1"
+                group_label = "Black Asta I–III"
+            if c == "mereoleona" and group_form == "hellfire":
+                group_label = "Hellfire I–III"
+            skill_cards.append({
+                "form": group_form, "formLabel": group_label, "slot": row["slot"],
+                "name": skill_name(row["id"].split("/skill/", 1)[1]),
+                "duration": f"{row['duration'] / 20:.1f} s" if row["duration"] else "não declarada",
+                "damage": skill_damage(action),
+                "mastery": "Base: ×1,00" if group_form == "base" else "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10",
+                "effect": skill_effect(action),
+                "rank": t("rank.clovercraft." + RANK_IDS[row["rank"]], RANK_IDS[row["rank"]]) if row["rank"] is not None and row["rank"] < len(RANK_IDS) else "",
+            })
 
-        unlock_md = ["| Rank | Desbloqueios |", "| --- | --- |"]
         unlocks = kit.get("unlocks") or []
         if not unlocks:
-            # Asta usa a ladder global
             default_u = [
                 [],
                 ["slayer_slash"],
@@ -878,101 +1279,59 @@ Skins: todos têm `own` e `classic`. Asta também tem `spade`. Troca: `/skin <id
                 ["forms_mastery"],
             ]
             unlocks = default_u
+        unlock_cards = []
         for i, group in enumerate(unlocks):
+            if not group:
+                continue
             rname = t("rank.clovercraft." + RANK_IDS[i], RANK_IDS[i]) if i < len(RANK_IDS) else str(i)
-            names = ", ".join(skill_name(x) for x in group) if group else "—"
-            unlock_md.append(f"| {rname} | {md_escape(names)} |")
+            unlock_cards.append({"rank": rname, "entries": [display_unlock(x) for x in group]})
 
-        q_md = []
+        journey_cards = []
         for q in quests_by_char.get(c, []):
-            q_md.append(f"### {q['id']}\n")
-            if q["canon"]:
-                q_md.append(f"> {q['canon']}\n")
-            if q["requires"]:
-                q_md.append(f"Requer: {', '.join('`' + r + '`' for r in q['requires'])}\n")
-            q_md.append("| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |")
-            q_md.append("| --- | --- | --- | ---: | --- | --- |")
-            for s in q["steps"]:
-                rew = s["reward"]
-                bits = []
-                for k in ("strength", "merits", "mastery"):
-                    if k in rew:
-                        bits.append(f"{k} {rew[k]}")
-                q_md.append(
-                    f"| `{s['id']}` | {s['type']} | `{s.get('place') or '—'}` | {s.get('min') or 0} | `{s.get('boss') or '—'}` | {', '.join(bits) or '—'} |"
-                )
-            q_md.append("")
+            steps = []
+            for step_index, s in enumerate(q["steps"], 1):
+                kind = {"talk": "Converse", "goto": "Vá até", "boss": "Derrote", "trial": "Conclua a provação"}.get(s["type"], s["type"])
+                steps.append({"label": f"Etapa {step_index}", "kind": kind, "place": display_place(s.get("place")), "minimum": s.get("min") or 0, "boss": display_boss(s.get("boss"), boss_names), "reward": display_reward(s["reward"])})
+            journey_name = form_label(kit_form_group(c, q.get("form") or 0)) if q.get("kind") == "form" else pretty(q["id"])
+            journey_cards.append({"name": journey_name, "requires": ["Jornada anterior"] if q["requires"] else [], "steps": steps})
 
         su = summons_by_char.get(c, [])
-        if su:
-            srows = ["| Unidade | Função | Tier | Única |", "| --- | --- | ---: | --- |"]
-            for u in su:
-                srows.append(f"| {u['name']} (`{u['id']}`) | {u['role']} | {u['tier']} | {'sim' if u['unique'] else 'não'} |")
-            summons_md = "\n".join(srows)
-        else:
-            summons_md = "_Este personagem não tem pool de subordinados listado._"
-
-        extras = ""
-        if c == "asta":
-            extras = """
-## Espadas demoníacas
-
-Asta troca quatro armas (`swap`). Cada uma muda o combo, o dash slash e skills ligadas:
-
-| Espada | Item | Notas |
-| --- | --- | --- |
-| Demon-Slayer | `slayer_sword` | Kit inicial. One-Horn / Bull Thrust |
-| Demon-Dweller | `dweller_sword` | Absorve e devolve magia — Black Slash |
-| Demon-Destroyer | `destroyer_sword` | Causality Break (campo que anula magia) |
-| Demon-Slasher | `slasher_sword` | Katana. Black Divider, 5º hit no combo |
-
-Guard de Asta é **anti-magia**: selo no oponente em vez de escudo de mana.
-"""
+        summon_cards = [{"name": u["name"], "role": u["role"], "tier": u["tier"], "unique": u["unique"]} for u in su]
         skins = character_skins(c)
         geo_path = MODELS / "geo" / "character" / f"{c}.geo.json"
-        geo_block = ""
-        if geo_path.exists() and skins:
-            geo_block = (
-                "<ClientOnly>\n"
-                f'<GeoViewer geo="/models/geo/character/{c}.geo.json" '
-                f"skins='{attr_json(skins)}' />\n"
-                "</ClientOnly>\n"
-            )
+        # Keep model choices in gameplay order; alternate outfits follow the forms.
+        skins.sort(key=lambda s: form_list.index(s['id']) if s['id'] in form_list else len(form_list))
+        progression = []
+        for form in (1, 2):
+            chain = next((q for q in quests_by_char.get(c, []) if q['kind'] == 'form' and q['form'] == form), None)
+            if chain and chain['steps']:
+                start = chain['steps'][0].get('min') or 0
+                finish = max(s.get('min') or 0 for s in chain['steps'])
+                previous = "Base" if form == 1 else "forma anterior"
+                progression.append(f"Jornada: força {start}–{finish}. Configuração padrão: 5★ da {previous}.")
+        profile = {
+            "name": name, "magic": meta['magic'], "squad": meta['squad'],
+            "role": meta['role'].split('. ', 1)[0],
+            "description": meta['role'].split('. ', 1)[-1],
+            "color": meta['color'], "grimoire": grim,
+            "forms": [form_label(f) for f in form_list],
+            "geo": f"/models/geo/character/{c}.geo.json" if geo_path.exists() else '',
+            "skins": skins, "progression": progression,
+            "peculiar": "Troque entre 4 espadas com G; a guarda anula magia e os hits selam o alvo." if c == 'asta' else '',
+        }
         write(
             DOCS / "personagens" / f"{c}.md",
-            f"""# {name}
+            f"""---
+aside: false
+---
 
-**{meta['magic']}** · {meta['squad']}
+# {name}
 
-{geo_block}
-{meta['role']}
+<CharacterProfile v-bind='{attr_json(profile)}' />
 
-- Grimório: **{grim}**
-- {grim_desc}
-- Formas: {forms_md}
-- Vincular: use o grimório (mensagem `{t('message.clovercraft.bound_' + c, '')}`)
+<CharacterDetails v-bind='{attr_json({"skills": skill_cards, "unlocks": unlock_cards, "journeys": journey_cards, "summons": summon_cards})}' />
 
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-{chr(10).join(skill_md) if skill_md else "_Kit sem lista SKILLS (ver actions JSON)._"}
-
-## Desbloqueio por rank
-
-{chr(10).join(unlock_md)}
-
-{extras}
-
-## Subordinados
-
-{summons_md}
-
-## Quests da jornada
-
-{chr(10).join(q_md) if q_md else "_Sem cadeia própria além dos treinos globais._"}
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.
 """,
         )
 
@@ -1006,44 +1365,63 @@ Chefes: viewer na página de [Chefes](/mundo/bosses).
 
     # world
     places = load_json(QUESTS / "places.json").get("places", [])
-    place_rows = ["| ID | Tipo | Alvo |", "| --- | --- | --- |"]
+    site_notes = {
+        "wind_shrine": ("Montanhas, colinas, prados e windswept hills", "Ponto de jornada ligado às rotas de vento."),
+        "witches_forest": ("Floresta escura, pântano ou floresta", "Ponto de jornada da Floresta das Bruxas."),
+        "heart_sanctuary": ("Flower forest, cherry grove, prado ou floresta", "Ponto de jornada do Reino Heart."),
+        "seabed_temple": ("Manguezal, pântano ou costa pedregosa", "Ponto de jornada costeiro; usa o template Heart Spring no JAR."),
+        "volcano_camp": ("Badlands, deserto ou savana", "Acampamento de treino e jornadas de fogo."),
+        "spade_fortress": ("Biomas nevados, taiga, ice spikes ou grove", "Fortaleza usada nas jornadas finais de Spade."),
+        "training_ring": ("Planície, sunflower plains ou prado", "Arena para provas e treino."),
+        "faust_estate": ("Floresta escura, taiga antiga ou pântano", "Ponto de jornada da propriedade Faust."),
+        "shadow_altar": ("Floresta escura, pântano ou taiga antiga", "Altar e provas de sombra."),
+        "gravito_zone": ("Montanhas, colinas de cascalho ou picos rochosos", "Área de gravidade e rochas."),
+        "forgotten_obelisk": ("Ponto de site definido pelo servidor", "Obelisco usado por etapas específicas."),
+    }
+    site_rows = ["| Destino | Terreno preferido | Para que serve |", "| --- | --- | --- |"]
     for p in places:
-        place_rows.append(f"| `{p['id']}` | {p.get('kind','')} | `{p.get('target','')}` |")
+        if p.get("kind") == "site":
+            terrain, purpose = site_notes.get(p["id"], ("Bioma definido pelo site", "Destino de jornada."))
+            site_rows.append(f"| {display_place(p['id'])} | {terrain} | {purpose} |")
 
     write(
         DOCS / "mundo" / "index.md",
         f"""# Mundo
 
-O overworld ganha estruturas do Reino Clover, sites de quest e eventos de **world boss**. Três dimensões extras formam o [Submundo](/mundo/underworld).
+O mundo é a rota prática da progressão: cerimônia e exame no começo, destinos da Jornada para formas e chefes, eventos em grupo e a descida ao [Submundo](/mundo/underworld). Abra a **Jornada** (`K`) para receber o destino da sua própria cadeia.
 
-## Estruturas (worldgen)
+## Para onde ir
 
-| Estrutura | Onde aparece |
+| Momento | Vá para | O que fazer lá |
+| --- | --- | --- |
+| Começo | Vila de Hage e Torre dos Grimórios | Faça a cerimônia e vincule o grimório. |
+| Após o vínculo | Coliseu do Exame | Use `/exam` para iniciar o duelo de admissão; não é uma missão de NPC parada no mapa. |
+| Evolução | Capital, Esconderijo e destinos da Jornada | Complete conversas, provas e chefes exigidos pelas transformações. |
+| Grupo / endgame | Evento de chefe e Submundo | Enfrente conteúdo escalável, obtenha relíquias e abra camadas da Qliphoth. |
+
+## Estruturas permanentes
+
+| Estrutura | Função prática |
 | --- | --- |
-| `hage_village` | Vila inicial, Torre dos Grimórios |
-| `royal_capital` | Capital Real |
-| `black_bulls_hideout` | Esconderijo dos Touros Negros |
-| `squad_hall` | Salão de esquadrão |
-| `exam_colosseum` | Coliseu do exame |
-| `saussey_village` | Vila Saussey |
-| `ancient_dungeon` | Masmorra antiga (primeiro dungeon do anime) |
-| `elf_ruins` | Ruínas élficas |
+| Vila de Hage / Torre dos Grimórios | Início e cerimônia do grimório. |
+| Capital Real | Destino recorrente de conversas e jornadas. |
+| Esconderijo dos Touros Negros | Destino de cadeias dos Touros, incluindo partes da rota do Asta. |
+| Salão de esquadrão | Estrutura de esquadrão no mundo. |
+| Coliseu do Exame | Arena do `/exam`. |
+| Vila Saussey | Estrutura da história do reino. |
+| Masmorra antiga e Ruínas élficas | Estruturas usadas por rotas de história e jornadas. |
 
-## Locais de quest
+## Como funcionam os destinos de jornada
 
-Sites são peças templated (`quest_wind_shrine`, `quest_witch_grove`, `quest_heart_spring`, `quest_volcano_camp`…) plantadas em biomas certos, 300–1500 blocos da origem.
+Sites não têm uma coordenada global fixa. Quando uma jornada precisa de um deles, o servidor escolhe um ponto a partir de quem iniciou a etapa, normalmente entre **300 e 1.500 blocos**, tenta respeitar o terreno preferido e guarda aquela posição para o servidor. O template só é construído quando alguém se aproxima a cerca de **112 blocos**. Portanto, siga o marcador da Jornada — procurar uma coordenada publicada por outro servidor não é confiável.
 
-{chr(10).join(place_rows)}
+{chr(10).join(site_rows)}
 
-## Inimigos de mundo
+## Ameaças e proteção
 
-Factions spawnam via biome modifiers: bandidos, Reino Diamond, Olho do Sol da Meia-Noite, bruxas, elfos, paladinos, bestas, Spade e rogue knights. No Submundo, só demônios (imp → high devil / devil host).
+No overworld, os biome modifiers colocam facções como bandidos, Diamond, Olho do Sol da Meia-Noite, bruxas, elfos, paladinos, bestas, Spade e rogue knights. As waves da Jornada usam tiers `A`, `B`, `C` e `S`; elites rendem mais méritos.
 
-Tiers de foe `A/B/C/S` nas waves de quest. Elites dropam mais méritos.
-
-## Proteção
-
-Áreas de estrutura são `Protected`: grief de vanilla é limitado para não destruir capital/esconderijo. Guard posts invisíveis defendem NPCs.
+Capital, esconderijos e outras estruturas protegidas limitam grief de vanilla e usam postos de guarda para preservar NPCs. Para eventos, faixas de força e recompensas, veja [Chefes](/mundo/bosses).
 """,
     )
 
@@ -1051,32 +1429,32 @@ Tiers de foe `A/B/C/S` nas waves de quest. Elites dropam mais méritos.
         DOCS / "mundo" / "underworld.md",
         """# Submundo (Qliphoth)
 
-Três dimensões: `clovercraft:underworld_1` (Rim), `underworld_2` (Depths), `underworld_3` (Throne). Entrada pelo **Altar da Qliphoth**.
+O Submundo é o ciclo de endgame: três dimensões separadas, só com demônios, mais pressão de inimigos e progressão travada por camadas. Não entre como se fosse uma nova caverna comum: leve cura, rota de retorno e o grupo pronto para uma luta de domínio.
 
-## Como entrar
+## Antes de atravessar
 
-1. Crafte o altar (`qliphoth_altar`: ouro, livro, essência de mana, diamante, obsidiana).
-2. Realize o **ritual** com o item de ritual e selos (`SealRecipes`) — cada camada pede materiais mais raros.
-3. O portão (`QliphothGate`) abre para a camada correspondente.
-4. **Return Sigil** (`return_sigil`: 4 essências + ender pearl + ouro → 2 sigilos) traz de volta ao overworld.
+1. Encontre o santuário/altar da Qliphoth. `/qliphoth` ou `/submundo` mostra o altar, a próxima camada e o que falta para o selo.
+2. Coloque no altar os ingredientes do **selo** da próxima camada e realize o ritual. As camadas precisam ser abertas em ordem.
+3. Entre pelo portão do altar. Se a camada ainda não estiver liberada para você, o portão recusa a passagem e indica o requisito faltante.
+4. Leve um **Return Sigil**. Ele só funciona dentro do Submundo, exige 40 ticks de canalização e é consumido ao levar você de volta.
 
-Hosts de demônio no elenco jogável (Asta, Dante, Vanica, Zenon, Nacht) têm +5% de vantagem (`HOST_EDGE`) no Submundo.
+## Progressão das camadas
 
-## Camadas
-
-| Camada | Dimensão | Bioma | Chefes de domínio |
+| Camada | Dimensão | O que muda | Domínios e chefes |
 | ---: | --- | --- | --- |
-| 1 Rim | `underworld_1` | `qliphoth_rim` | **Zagred** |
-| 2 Depths | `underworld_2` | `qliphoth_depths` | **Megicula**, **Lilith / Nahamah** |
-| 3 Throne | `underworld_3` | `qliphoth_throne` | **Beelzebub**, **Lucifero** |
+| 1 · Rim | `clovercraft:underworld_1` | Primeiro contato com imps, low/mid devils, gazers e tendrils. | Zagred — domínio em `(0, -260)`, raio 30. |
+| 2 · Depths | `clovercraft:underworld_2` | Sobem mid/high devils, curse wraiths e twin fiends. | Megicula `(280, 0)`, raio 32; Lilith e Nahamah `(-280, 0)`, raio 34. |
+| 3 · Throne | `clovercraft:underworld_3` | Mid/high devils e devil hosts; é a camada mais severa. | Belzebu `(0, -270)`, raio 34; Lucifero `(0, 290)`, raio 48. |
 
-Cada domínio é uma arena circular com raio 30–48 e um dais. Baús `domain_*` dropam relíquias temáticas.
+Cada domínio é uma arena reservada: o chefe nasce no dais, a luta tem estado próprio por jogador e o domínio entra em descanso após ser concluído. As relíquias e os chefes correspondentes estão em [Chefes](/mundo/bosses).
 
-## Ilhas, santuários, essência
+## Por que vale o risco
 
-O gerador cria ilhas de `black_mana` / `qliphoth_root` / `dark_qliphoth_root`. Santuários e landmarks servem de âncora. `mana_essence` é o recurso de craft do conteúdo endgame.
+Por padrão, as três camadas multiplicam por **3×** os ganhos de força, méritos e maestria. Elas também aumentam a presença de demônios para cada jogador (`capMultiplier` padrão 2,5). Asta, Dante, Vanica, Zenon e Nacht recebem **+5% no dano PvE** enquanto estão no Submundo.
 
-Void guard teleporta de volta se você cair no vazio (`The void spat you back onto the landing`).
+`mana_essence`, raízes e blocos de mana negra sustentam rituais e crafts de endgame. O gerador cria ilhas e santuários; cair no vazio não é uma rota rápida de volta — o Void Guard devolve você ao ponto de chegada.
+
+> Os multiplicadores, vida dos chefes e quantidade de inimigos podem mudar conforme a configuração do servidor. Use estes valores como referência de progressão.
 """,
     )
 
@@ -1099,47 +1477,48 @@ Void guard teleporta de volta se você cair no vazio (`The void spat you back on
             f"- Moves: {moves}\n"
         )
 
-    catalog = boss_catalog(bosses)
-    catalog_block = ""
-    if catalog:
-        catalog_block = (
-            "<ClientOnly>\n"
-            f"<GeoViewer catalog='{attr_json(catalog)}' :height=\"460\" />\n"
-            "</ClientOnly>\n"
-        )
     write(
         DOCS / "mundo" / "bosses.md",
-        f"""# Chefes
+        """# Chefes
 
-{catalog_block}
-Chefes de quest, eventos mundiais e senhores da Qliphoth compartilham o mesmo cérebro (`BossBrain`): fases, cura interrompível, stagger, clash e persona (agressivo, caster, summoner…).
+<BossRoster />
 
-## Eventos mundiais
+## Como uma luta de chefe funciona
 
-Com `clovercraft-world.toml` → `boss_events`. A cada ciclo o servidor escolhe um headliner conforme a força média dos online:
+Chefes alternam ataques, momentos de pressão e uma janela de recuperação. A luta não é uma sequência de dano livre: golpes pesados, invocações, controle de arena e mobilidade pedem respostas diferentes.
 
-| Força dos jogadores | Headliners (peso 6×) |
+- **Leia a arena.** Zonas no chão, cargas, portais e invocações costumam anunciar o próximo perigo. Dash é uma ferramenta de sobrevivência, não apenas de aproximação.
+- **Interrompa a recuperação.** Quando o chefe abre uma janela de cura, concentre dano e controle. É o melhor momento para usar ultimate em grupo.
+- **Use stagger e clash.** Guarda, parry e o choque entre ataques ajudam a criar uma abertura; errar contra um chefe deixa menos margem do que contra mobs comuns.
+- **Ajuste a equipe.** Um jogador chama o padrão, outro limpa invocações/zonas e os demais evitam gastar tudo ao mesmo tempo. O lock-on facilita acompanhar alvos com teleporte ou voo.
+
+## Eventos do mundo
+
+Eventos selecionam chefes de acordo com a força média dos jogadores online. Os inimigos do Qliphoth pertencem à progressão do Submundo e não entram nos eventos normais do overworld.
+
+| Força média do grupo | Exemplos de encontro |
 | --- | --- |
-| &lt; 40 | Sally, Rades, Heath Graice, Dominante Code |
-| 40–61 | Vetto, Fana, Witch Queen, Ratri |
-| 62–84 | Witch Queen, Vetto, Rhya, Gaderois |
-| 85+ | Witch Queen, Vetto, Damnatio Kira |
+| Abaixo de 40 | Sally, Rades, Heath Graice, Dominante Code |
+| 40–61 | Fana, Vetto, Rainha das Bruxas, Ratri |
+| 62–84 | Rainha das Bruxas, Vetto, Rhya, Gaderois |
+| 85+ | Rainha das Bruxas, Vetto, Damnatio Kira |
 
-Outros bosses cujo `band` está entre `força-25` e `força+6` entram com peso 1. Demônios da Qliphoth **não** spawnam no overworld.
-
-Recompensas: força, méritos, chance de `race_scroll` (8%) e `grimoire_scroll` (3%), relíquia assinatura do chefe, título *Vanquisher of X*. Duo (dois chefs) paga 60% extra. Sair da arena faz o chefe *withdraw*.
-
-## Roster
-
-{chr(10).join(boss_rows)}
-
-{chr(10).join(boss_pages)}
-
-IA: o boss lê ki (percepts), evita cheese (teto, pillar, kiting infinito) e troca de move por utilidade (`BossUtility`). Fairness reduz dano se o grupo está muito abaixo do band.
+As recompensas podem incluir força, méritos, uma relíquia ligada ao chefe e títulos. Servidores podem ajustar vida, dano, frequência de eventos e recompensas.
 """,
     )
 
     # systems
+    write(
+        DOCS / "sistemas" / "index.md",
+        """---
+aside: false
+---
+
+# Sistemas
+
+<SystemsHub />
+""",
+    )
     squad_rows = ["| Esquadrão | Capitão | Prestígio | Bônus |", "| --- | --- | ---: | --- |"]
     for key, nome, cap, pres, bonus in SQUADS:
         squad_rows.append(f"| {nome} (`{key}`) | {cap} | {pres} | {bonus} |")
@@ -1147,7 +1526,7 @@ IA: o boss lê ki (percepts), evita cheese (teto, pillar, kiting infinito) e tro
         DOCS / "sistemas" / "squads.md",
         f"""# Esquadrões
 
-Escolhidos no [exame](/guia/progressao). Prestígio alto (3) é o “top squad” do cânone; o bônus é pequeno de propósito.
+Escolha um esquadrão ao passar no [exame](/guia/progressao). É uma decisão de identidade e bônus leve — não bloqueia personagem, forma ou skill. Prestígio alto (3) marca o “top squad” do cânone, não um multiplicador obrigatório de poder.
 
 {chr(10).join(squad_rows)}
 
@@ -1179,7 +1558,7 @@ O líder é o criador; se sair, o próximo membro online herda. Time vazio é di
         DOCS / "sistemas" / "racas.md",
         f"""# Raças
 
-Sorteadas na cerimônia (pesos somam 100). Reroll com **Race Scroll**.
+Sorteadas na cerimônia (pesos somam 100). A raça ajusta atributos passivos desde o começo; ela não troca seu grimório nem suas formas. Reroll com **Race Scroll**.
 
 {chr(10).join(race_rows)}
 
@@ -1206,7 +1585,7 @@ Humanos são o default e os mais comuns — compensados com maestria mais rápid
         DOCS / "sistemas" / "arvore.md",
         f"""# Árvore de skills
 
-Cinco ramos. Pontos = `(força - 1) + cadeias concluídas + firsts de chefe (cap) + rank de mérito`, limitados por config.
+Cinco ramos para escolher uma direção de build: dano, sobrevivência, resistência, subordinados ou recurso. Pontos = `(força - 1) + cadeias concluídas + firsts de chefe (cap) + rank de mérito`, limitados por config.
 
 Tiers abrem com pontos já gastos no ramo: **0 / 6 / 15 / 27 / 42**. Keystone (tier 3, custo 3) muda o playstyle. Capstone (tier 5, custo 12) é **exclusivo** — só um por ramo.
 
@@ -1227,7 +1606,7 @@ Em PvP os bônus da árvore são atenuados (`TREE_PVP`). Caps de dano/redução/
         DOCS / "sistemas" / "quests.md",
         f"""# Quests
 
-Definidas em JSON (`clover/quests/`). Tipos de cadeia: `form` (libera transformação), `training` (repeatable), `secret` (condição `reveal`).
+Abra a Jornada (`K`) para acompanhar o objetivo ativo. As cadeias são definidas em JSON: `form` libera transformação, `training` é repetível e `secret` aparece sob uma condição de revelação.
 
 Etapas: `talk`, `goto`, `boss`, `trial` (survive / duel / dodge / nohit). Trials spawnam waves `id@tier*n`.
 
@@ -1249,7 +1628,7 @@ Painel: tecla Journey. `/story` reabre a jornada. `/missions` o quadro de missõ
         DOCS / "sistemas" / "invocacoes.md",
         f"""# Subordinados (summons)
 
-Cada mago tem um pool (`*Units.java`). Precisa do nó **Pact** na árvore (`sum_pact`) para invocar. Toque na tecla Summon chama; segurar abre ordens; Awaken força o próximo estágio.
+Cada mago tem um pool próprio (`*Units.java`). Invocação é uma build: pegue **Pact** na árvore (`sum_pact`), escolha a unidade e use ordens para posicioná-la. Toque na tecla Summon chama; segurar abre ordens; Awaken força o próximo estágio.
 
 Unidades têm estágios 1–3, habilidades por estágio, custo de mana e tempo de permanência. Unique = um só (Liebe, Bell, Undine…). Não-únicas empilham até o cap da config.
 
@@ -1280,7 +1659,7 @@ Capstone **Commander**: subordinados mais fortes, você causa 12% a menos. **Sid
         DOCS / "sistemas" / "reliquias.md",
         f"""# Relíquias
 
-Itens `relic_*` com raridade Rare → Mythic. Ativas disparam um **burst** (cooldown em segundos × 20 ticks). Passivas ficam sempre ligadas. First kill de um chefe tende a dropar a relíquia assinatura dele.
+Relíquias são o equipamento de efeito especial: escolha entre um burst ativo, uma passiva ou os dois. Itens `relic_*` vão de Rare a Mythic; ativas disparam um **burst** (cooldown em segundos × 20 ticks), passivas ficam sempre ligadas. A primeira vitória contra um chefe tende a render a relíquia assinatura dele.
 
 {chr(10).join(rel_rows)}
 
@@ -1294,7 +1673,7 @@ Itens `relic_*` com raridade Rare → Mythic. Ativas disparam um **burst** (cool
 
 ## Grimórios
 
-Um por personagem (ver páginas em [Personagens](/personagens/)). Botão direito vincula se você ainda não tem mago. Bound items não saem do inventário.
+Um por personagem (ver páginas em [Personagens](/personagens/)). Botão direito vincula se você ainda não tem mago. O grimório vinculado não sai do inventário: ele é a identidade do cavaleiro, não uma arma descartável.
 
 ## Espadas de Asta
 
@@ -1423,7 +1802,7 @@ export default defineConfig({{
       {{ text: 'Personagens', link: '/personagens/' }},
       {{ text: 'Galeria 3D', link: '/galeria' }},
       {{ text: 'Mundo', link: '/mundo/' }},
-      {{ text: 'Sistemas', link: '/sistemas/squads' }},
+      {{ text: 'Sistemas', link: '/sistemas/' }},
       {{ text: 'Sobre', link: '/sobre' }},
     ],
     sidebar: {{
@@ -1461,6 +1840,7 @@ export default defineConfig({{
         {{
           text: 'Sistemas',
           items: [
+            {{ text: 'Visão geral', link: '/sistemas/' }},
             {{ text: 'Esquadrões', link: '/sistemas/squads' }},
             {{ text: 'Guildas', link: '/sistemas/guildas' }},
             {{ text: 'Raças', link: '/sistemas/racas' }},
@@ -1491,12 +1871,21 @@ export default defineConfig({{
         """import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
 import GeoViewer from './GeoViewer.vue'
+import CharacterRoster from './CharacterRoster.vue'
+import CharacterProfile from './CharacterProfile.vue'
+import CharacterDetails from './CharacterDetails.vue'
+import SystemsHub from './SystemsHub.vue'
 import './custom.css'
+import './characters.css'
 
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
     app.component('GeoViewer', GeoViewer)
+    app.component('CharacterRoster', CharacterRoster)
+    app.component('CharacterProfile', CharacterProfile)
+    app.component('CharacterDetails', CharacterDetails)
+    app.component('SystemsHub', SystemsHub)
   },
 } satisfies Theme
 """,
@@ -1568,16 +1957,11 @@ tr:hover td {
         """node_modules/
 docs/.vitepress/cache/
 docs/.vitepress/dist/
-classes/
 tools/vineflower-1.12.0.jar
-extracted/
-tmp_geo/
 *.jar
 decompiled/
 assets/
 clover/
-data/
-META-INF/
 clovercraft.mixins.json
 """,
     )
@@ -1585,7 +1969,7 @@ clovercraft.mixins.json
         ROOT / "README.md",
         """# Clover Craft Wiki
 
-Wiki do mod **Clover Craft 0.4.0** (NeoForge 1.21.1), gerada a partir do JAR descompilado. Inclui viewer 3D dos modelos GeckoLib.
+Wiki do mod **Clover Craft 0.4.0** (NeoForge 1.21.1). Inclui visualizador 3D dos modelos GeckoLib, sem distribuir arquivos de implementação do mod.
 
 ## Local
 
@@ -1604,13 +1988,13 @@ http://localhost:5173/
 
 A URL fica `https://<user>.github.io/<repo>/` (o `base` do VitePress é calculado no CI). Se o repo se chamar `<user>.github.io`, o site sobe na raiz.
 
-Não commite o `.jar` nem `decompiled/` (já estão no `.gitignore`). Os modelos em `docs/public/models/` (~11 MB) vão no git — são o que o viewer usa.
+Os modelos e texturas em `docs/public/models/` vão no git — são o que o visualizador usa. Arquivos do mod, código descompilado e dados de extração ficam excluídos pelo `.gitignore`.
 
-## Regenerar conteúdo
+## Manutenção
 
 ```bash
-python tools/extract_models.py   # geos + texturas do JAR
-python tools/build_wiki.py       # markdown a partir do descompilado
+python tools/extract_models.py   # atualiza geos + texturas de uma fonte autorizada
+python tools/build_wiki.py       # atualiza os markdowns com uma fonte autorizada
 ```
 """,
     )
@@ -1637,15 +2021,6 @@ def main() -> None:
     print("  ", len(tree))
     generate(kits, summons, bosses, relics, quests, tree)
     write_vitepress(list(CHAR_META))
-    dump = {
-        "kits": kits,
-        "summons": summons,
-        "bosses": [{"id": b["id"], "band": b["band"], "name": b["name"]} for b in bosses],
-        "relics": len(relics),
-        "quests": len(quests),
-        "tree": len(tree),
-    }
-    (ROOT / "tools" / "extract-summary.json").write_text(json.dumps(dump, indent=2, ensure_ascii=False), encoding="utf-8")
     print("Wiki written to docs/")
 
 

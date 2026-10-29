@@ -1,102 +1,11 @@
+---
+aside: false
+---
+
 # Gauche Adlai
 
-**Magia de Espelho** · Touros Negros
+<CharacterProfile v-bind='{"name": "Gauche Adlai", "magic": "Magia de Espelho", "squad": "Touros Negros", "role": "Duelista de espelhos", "description": "Reflect Ray, Kaleidoscope e Mirror Sea.", "color": "#9ad0e8", "grimoire": "Grimório do Gauche", "forms": ["Base", "Kaleidoscope", "Mirror Sea"], "geo": "/models/geo/character/gauche.geo.json", "skins": [{"id": "base", "label": "Base", "texture": "/models/textures/character/gauche_base.png"}, {"id": "kaleidoscope", "label": "Kaleidoscope", "texture": "/models/textures/character/gauche_kaleidoscope.png"}, {"id": "sea", "label": "Mirror Sea", "texture": "/models/textures/character/gauche_sea.png"}], "progression": ["Jornada: força 30–60. Configuração padrão: 5★ da Base.", "Jornada: força 80–91. Configuração padrão: 5★ da forma anterior."], "peculiar": ""}' />
 
-<ClientOnly>
-<GeoViewer geo="/models/geo/character/gauche.geo.json" skins='[{"id": "base", "label": "Base", "texture": "/models/textures/character/gauche_base.png"}, {"id": "kaleidoscope", "label": "Kaleidoscope", "texture": "/models/textures/character/gauche_kaleidoscope.png"}, {"id": "sea", "label": "Mirror Sea", "texture": "/models/textures/character/gauche_sea.png"}]' />
-</ClientOnly>
+<CharacterDetails v-bind='{"skills": [{"form": "base", "formLabel": "Base", "slot": 1, "name": "Raio Refletido", "duration": "1.7 s", "damage": "raio: 5,0 × 5 (até 25,0)", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 5ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 2, "name": "Duplo Real", "duration": "1.6 s", "damage": "", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 3, "name": "Passagem de Espelho", "duration": "1.3 s", "damage": "", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 1ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 4, "name": "Reflexão Total", "duration": "1.5 s", "damage": "", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Intermediário de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 5, "name": "Refrão Refletido", "duration": "3.2 s", "damage": "raio: 6,5 × 8 (até 52,0)", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 3ª Classe"}, {"form": "kaleidoscope", "formLabel": "Kaleidoscope", "slot": 1, "name": "Refrão Refletido Duplo", "duration": "2.0 s", "damage": "raio: 4,1 × 5 (até 20,5)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "kaleidoscope", "formLabel": "Kaleidoscope", "slot": 2, "name": "Brigada de Espelhos", "duration": "1.9 s", "damage": "raio: 4,5 × 4 (até 18,0)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "kaleidoscope", "formLabel": "Kaleidoscope", "slot": 3, "name": "Espelho Rastreador", "duration": "1.3 s", "damage": "raio: 4,9", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "kaleidoscope", "formLabel": "Kaleidoscope", "slot": 4, "name": "Grande Raio Refletido", "duration": "1.7 s", "damage": "raio: 18,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "kaleidoscope", "formLabel": "Kaleidoscope", "slot": 5, "name": "Espelho Gigante", "duration": "3.6 s", "damage": "raio: 26,2", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "sea", "formLabel": "Mirror Sea", "slot": 1, "name": "Grande Refrão Refletido", "duration": "2.3 s", "damage": "raio: 3,3 × 7 (até 23,0)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "sea", "formLabel": "Mirror Sea", "slot": 2, "name": "Meteorito de Espelhos", "duration": "2.0 s", "damage": "raio: 4,5 × 6 (até 27,1)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "sea", "formLabel": "Mirror Sea", "slot": 3, "name": "Legião de Espelhos", "duration": "1.7 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "sea", "formLabel": "Mirror Sea", "slot": 4, "name": "Troca de Espelho", "duration": "1.4 s", "damage": "raio: 4,9", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "sea", "formLabel": "Mirror Sea", "slot": 5, "name": "Mar de Espelhos: a cúpula", "duration": "3.9 s", "damage": "raio: 3,3 × 10 (até 32,8)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}], "unlocks": [{"rank": "Cavaleiro Mágico Júnior de 5ª Classe", "entries": ["Raio Refletido"]}, {"rank": "Cavaleiro Mágico Júnior de 3ª Classe", "entries": ["Duplo Real"]}, {"rank": "Cavaleiro Mágico Júnior de 1ª Classe", "entries": ["Passagem de Espelho"]}, {"rank": "Cavaleiro Mágico Intermediário de 3ª Classe", "entries": ["Reflexão Total"]}, {"rank": "Cavaleiro Mágico Sênior de 3ª Classe", "entries": ["Refrão Refletido", "3º dash"]}, {"rank": "Cavaleiro Mágico Sênior de 1ª Classe", "entries": ["Olho Caleidoscópio (o olho de espelho se abre, rank 7)", "Refrão Refletido Duplo", "Brigada de Espelhos", "Espelho Rastreador", "Grande Raio Refletido", "Espelho Gigante"]}, {"rank": "Grão-Cavaleiro Mágico", "entries": ["Mar de Espelhos (medidor 70)", "Grande Refrão Refletido", "Meteorito de Espelhos", "Legião de Espelhos", "Troca de Espelho", "Mar de Espelhos: a cúpula"]}, {"rank": "Rei Mago", "entries": ["Domínio das formas (+15% de poder de forma)"]}], "journeys": [{"name": "Kaleidoscope", "requires": [], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Esconderijo dos Touros Negros", "minimum": 30, "boss": "", "reward": "força +850 · méritos +430"}, {"label": "Etapa 2", "kind": "Vá até", "place": "Capital Real", "minimum": 38, "boss": "", "reward": "força +1440 · méritos +720"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Capital Real", "minimum": 46, "boss": "", "reward": "força +5770 · méritos +2890 · maestria +300"}, {"label": "Etapa 4", "kind": "Derrote", "place": "Capital Real", "minimum": 60, "boss": "Licht", "reward": "força +8360 · méritos +4180 · maestria +500"}]}, {"name": "Mirror Sea", "requires": ["Jornada anterior"], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Esconderijo dos Touros Negros", "minimum": 80, "boss": "", "reward": "força +1370 · méritos +690"}, {"label": "Etapa 2", "kind": "Vá até", "place": "Fortaleza de Spade", "minimum": 84, "boss": "", "reward": "força +2110 · méritos +1060"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 87, "boss": "", "reward": "força +7880 · méritos +3940 · maestria +300"}, {"label": "Etapa 4", "kind": "Derrote", "place": "Fortaleza de Spade", "minimum": 91, "boss": "Dante Zogratis", "reward": "força +10250 · méritos +5130 · maestria +500"}]}], "summons": [{"name": "Enxame de Cacos", "role": "Skirmisher", "tier": 1, "unique": false}, {"name": "Espelho Prisma", "role": "Support", "tier": 2, "unique": true}, {"name": "Duplo de Espelho", "role": "Elite", "tier": 3, "unique": true}]}' />
 
-Duelista de espelhos. Reflect Ray, Kaleidoscope e Mirror Sea.
-
-- Grimório: **Grimório do Gauche**
-- Magia de Espelho: raios ricocheteando em painéis de vidro, cópias que repetem seus golpes, uma janela que devolve feitiços, o Olho Caleidoscópio e o Mar de Espelhos. Use para se tornar Gauche Adlai.
-- Formas: **Base** (`base`), **Kaleidoscope** (`kaleidoscope`), **Mirror Sea** (`sea`)
-- Vincular: use o grimório (mensagem `O grimório escolheu você. Você é Gauche Adlai dos Touros Negros!`)
-
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-### Base
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `reflect_ray` | Raio Refletido | — | 34 |
-| 2 | `real_double` | Duplo Real | — | 32 |
-| 3 | `mirrors_shift` | Passagem de Espelho | — | 26 |
-| 4 | `full_reflection` | Reflexão Total | — | 30 |
-| 5 | `reflect_refrain` | Refrão Refletido | — | 64 |
-### Kaleidoscope
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `kaleidoscope/double_reflect_refrain` | Refrão Refletido Duplo | — | 40 |
-| 2 | `kaleidoscope/mirrors_brigade` | Brigada de Espelhos | — | 38 |
-| 3 | `kaleidoscope/tracing_mirror` | Espelho Rastreador | — | 26 |
-| 4 | `kaleidoscope/large_reflect_ray` | Grande Raio Refletido | — | 34 |
-| 5 | `kaleidoscope/giant_mirror` | Espelho Gigante | — | 72 |
-### Mirror Sea
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `sea/large_reflect_refrain` | Grande Refrão Refletido | — | 46 |
-| 2 | `sea/mirrors_meteorite` | Meteorito de Espelhos | — | 40 |
-| 3 | `sea/mirror_legion` | Legião de Espelhos | — | 34 |
-| 4 | `sea/mirror_exchange` | Troca de Espelho | — | 28 |
-| 5 | `sea/mirror_sea` | Mar de Espelhos: a cúpula | — | 78 |
-
-## Desbloqueio por rank
-
-| Rank | Desbloqueios |
-| --- | --- |
-| Aspirante a Cavaleiro Mágico | — |
-| Cavaleiro Mágico Júnior de 5ª Classe | Raio Refletido |
-| Cavaleiro Mágico Júnior de 3ª Classe | Duplo Real |
-| Cavaleiro Mágico Júnior de 1ª Classe | Passagem de Espelho |
-| Cavaleiro Mágico Intermediário de 3ª Classe | Reflexão Total |
-| Cavaleiro Mágico Intermediário de 1ª Classe | — |
-| Cavaleiro Mágico Sênior de 3ª Classe | Refrão Refletido, 3º dash |
-| Cavaleiro Mágico Sênior de 1ª Classe | Olho Caleidoscópio (o olho de espelho se abre, rank 7), Refrão Refletido Duplo, Brigada de Espelhos, Espelho Rastreador, Grande Raio Refletido, Espelho Gigante |
-| Vice-Capitão | — |
-| Capitão de Esquadrão | — |
-| Grão-Cavaleiro Mágico | Mar de Espelhos (medidor 70), Grande Refrão Refletido, Meteorito de Espelhos, Legião de Espelhos, Troca de Espelho, Mar de Espelhos: a cúpula |
-| Rei Mago | Domínio das formas (+15% de poder, gasto menor) |
-
-
-
-## Subordinados
-
-| Unidade | Função | Tier | Única |
-| --- | --- | ---: | --- |
-| Enxame de Cacos (`shard_swarm`) | Skirmisher | 1 | não |
-| Espelho Prisma (`prism_mirror`) | Support | 2 | sim |
-| Duplo de Espelho (`mirror_double`) | Elite | 3 | sim |
-
-## Quests da jornada
-
-### gauche_kaleidoscope
-
-> canon: ch. 42-50 (ep. 33-35) -- Marie punches her brother and he goes back for Asta and Theresa; Theresa, the children, Neige and Marie lend him their mana; with the mirror in his left eye he multiplies Asta and raises the giant mirror that returns Licht's Light Shaft (gauche-canon.md). The form itself, the places, the waves and the talk lines inv.
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `photo` | talk | `black_bulls_hideout` | 30 | `—` | strength 850, merits 430 |
-| `church` | goto | `royal_capital` | 38 | `—` | strength 1440, merits 720 |
-| `church_guard` | trial | `royal_capital` | 46 | `—` | strength 5770, merits 2890, mastery 300 |
-| `light_shaft` | boss | `royal_capital` | 60 | `npc:licht` | strength 8360, merits 4180, mastery 500 |
-
-### gauche_sea
-
-> canon: Large Reflect Refrain over Dante with Henry (ch. 240, ep. 162), Mirrors Meteorite and the Spade-arc multiplications (ch. 314-315), the elf mana Drowa left in him (gauche-canon.md). The form itself, the waves and the talk lines inv.
-
-Requer: `gauche_kaleidoscope`
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `henry` | talk | `black_bulls_hideout` | 80 | `—` | strength 1370, merits 690 |
-| `gate` | goto | `spade_fortress` | 84 | `—` | strength 2110, merits 1060 |
-| `array` | trial | `spade_fortress` | 87 | `—` | strength 7880, merits 3940, mastery 300 |
-| `dante_sky` | boss | `spade_fortress` | 91 | `npc:dante` | strength 10250, merits 5130, mastery 500 |
-
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.

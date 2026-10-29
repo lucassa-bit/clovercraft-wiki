@@ -1,104 +1,11 @@
+---
+aside: false
+---
+
 # Julius Novachrono
 
-**Magia do Tempo** · Rei Mago
+<CharacterProfile v-bind='{"name": "Julius Novachrono", "magic": "Magia do Tempo", "squad": "Rei Mago", "role": "Controle de tempo", "description": "Chrono Stasis, Mana Zone e a forma Lucius.", "color": "#c9a227", "grimoire": "Grimório sem Capa de Novachrono", "forms": ["Base", "Mana Zone", "Lucius"], "geo": "/models/geo/character/julius.geo.json", "skins": [{"id": "base", "label": "Base", "texture": "/models/textures/character/julius_base.png"}, {"id": "zone", "label": "Mana Zone", "texture": "/models/textures/character/julius_zone.png"}, {"id": "lucius", "label": "Lucius", "texture": "/models/textures/character/julius_lucius.png"}], "progression": ["Jornada: força 30–58. Configuração padrão: 5★ da Base.", "Jornada: força 80–91. Configuração padrão: 5★ da forma anterior."], "peculiar": ""}' />
 
-<ClientOnly>
-<GeoViewer geo="/models/geo/character/julius.geo.json" skins='[{"id": "base", "label": "Base", "texture": "/models/textures/character/julius_base.png"}, {"id": "lucius", "label": "Lucius", "texture": "/models/textures/character/julius_lucius.png"}, {"id": "zone", "label": "Mana Zone", "texture": "/models/textures/character/julius_zone.png"}]' />
-</ClientOnly>
+<CharacterDetails v-bind='{"skills": [{"form": "base", "formLabel": "Base", "slot": 1, "name": "Magia do Tempo: Chrono Stasis", "duration": "1.3 s", "damage": "", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 5ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 2, "name": "Magia do Tempo: Reversão do Tempo (desfaz os ferimentos recentes)", "duration": "1.5 s", "damage": "", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 3, "name": "Magia do Tempo: Passo Acelerado", "duration": "1.1 s", "damage": "efeito temporal: 12,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 1ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 4, "name": "Magia do Tempo: Envelhecimento Rápido", "duration": "1.4 s", "damage": "efeito temporal: 14,0", "mastery": "Base: ×1,00", "effect": "Avança durante a ação.", "rank": "Cavaleiro Mágico Intermediário de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 5, "name": "Magia do Tempo: Chrono Anastasis", "duration": "3.1 s", "damage": "efeito temporal: 6,0 · efeito temporal: 6,0 · efeito temporal: 6,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 3ª Classe"}, {"form": "zone", "formLabel": "Mana Zone", "slot": 1, "name": "Mana Zone: Chrono Stasis Grigora (captura feitiços)", "duration": "1.3 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "zone", "formLabel": "Mana Zone", "slot": 2, "name": "Mana Zone: Previsão (contra-ataca o golpe que vê)", "duration": "1.2 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "zone", "formLabel": "Mana Zone", "slot": 3, "name": "Mana Zone: Rajada de Chrono Stasis", "duration": "1.3 s", "damage": "", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "zone", "formLabel": "Mana Zone", "slot": 4, "name": "Mana Zone: Retorno Acelerado (devolve os feitiços capturados)", "duration": "1.2 s", "damage": "efeito temporal: 9,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "zone", "formLabel": "Mana Zone", "slot": 5, "name": "Mana Zone: Chrono Anastasis sobre o campo", "duration": "3.1 s", "damage": "efeito temporal: 7,0 · efeito temporal: 7,0 · efeito temporal: 7,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "lucius", "formLabel": "Lucius", "slot": 1, "name": "Lucius: Toque da Alma (sela a magia do inimigo)", "duration": "1.5 s", "damage": "efeito temporal: 11,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "lucius", "formLabel": "Lucius", "slot": 2, "name": "Lucius: Restrição do Tempo (prende todos à frente)", "duration": "1.4 s", "damage": "efeito temporal: 6,0 × 4 (até 24,0)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "lucius", "formLabel": "Lucius", "slot": 3, "name": "Lucius: Purificação da Alma (arremessa inimigos, cura aliados)", "duration": "1.6 s", "damage": "efeito temporal: 12,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "lucius", "formLabel": "Lucius", "slot": 4, "name": "Lucius: Lâmina de Numerais (uma faixa de numerais pelo campo)", "duration": "1.5 s", "damage": "efeito temporal: 16,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "lucius", "formLabel": "Lucius", "slot": 5, "name": "Lucius: Stasis do Julgamento (o campo inteiro parado)", "duration": "2.8 s", "damage": "efeito temporal: 18,0", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}], "unlocks": [{"rank": "Cavaleiro Mágico Júnior de 5ª Classe", "entries": ["Magia do Tempo: Chrono Stasis"]}, {"rank": "Cavaleiro Mágico Júnior de 3ª Classe", "entries": ["Magia do Tempo: Reversão do Tempo (desfaz os ferimentos recentes)"]}, {"rank": "Cavaleiro Mágico Júnior de 1ª Classe", "entries": ["Magia do Tempo: Passo Acelerado"]}, {"rank": "Cavaleiro Mágico Intermediário de 3ª Classe", "entries": ["Magia do Tempo: Envelhecimento Rápido"]}, {"rank": "Cavaleiro Mágico Sênior de 3ª Classe", "entries": ["Magia do Tempo: Chrono Anastasis", "3º dash"]}, {"rank": "Cavaleiro Mágico Sênior de 1ª Classe", "entries": ["Mana Zone (fica no ar, pós-imagens golpeiam de novo)", "Mana Zone: Chrono Stasis Grigora (captura feitiços)", "Mana Zone: Previsão (contra-ataca o golpe que vê)", "Mana Zone: Rajada de Chrono Stasis", "Mana Zone: Retorno Acelerado (devolve os feitiços capturados)", "Mana Zone: Chrono Anastasis sobre o campo"]}, {"rank": "Grão-Cavaleiro Mágico", "entries": ["Lucius Zogratis (Magia da Alma, uma vez por vida)", "Lucius: Toque da Alma (sela a magia do inimigo)", "Lucius: Restrição do Tempo (prende todos à frente)", "Lucius: Purificação da Alma (arremessa inimigos, cura aliados)", "Lucius: Lâmina de Numerais (uma faixa de numerais pelo campo)", "Lucius: Stasis do Julgamento (o campo inteiro parado)"]}, {"rank": "Rei Mago", "entries": ["Domínio das formas (+15% de poder de forma)"]}], "journeys": [{"name": "Mana Zone", "requires": [], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Capital Real", "minimum": 30, "boss": "", "reward": "força +850 · méritos +430"}, {"label": "Etapa 2", "kind": "Derrote", "place": "Capital Real", "minimum": 36, "boss": "Valtos", "reward": "força +3730 · méritos +1860 · maestria +500"}, {"label": "Etapa 3", "kind": "Converse", "place": "Capital Real", "minimum": 42, "boss": "", "reward": "força +1000 · méritos +500"}, {"label": "Etapa 4", "kind": "Conclua a provação", "place": "Arena de treino", "minimum": 46, "boss": "", "reward": "força +5770 · méritos +2890 · maestria +300"}, {"label": "Etapa 5", "kind": "Conclua a provação", "place": "Capital Real", "minimum": 52, "boss": "", "reward": "força +6130 · méritos +3060 · maestria +300"}, {"label": "Etapa 6", "kind": "Derrote", "place": "Capital Real", "minimum": 58, "boss": "Onda de inimigos", "reward": "força +8220 · méritos +4110 · maestria +500"}]}, {"name": "Lucius", "requires": ["Jornada anterior"], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Capital Real", "minimum": 80, "boss": "", "reward": "força +1370 · méritos +690"}, {"label": "Etapa 2", "kind": "Converse", "place": "Capital Real", "minimum": 83, "boss": "", "reward": "força +1400 · méritos +700"}, {"label": "Etapa 3", "kind": "Vá até", "place": "Fortaleza de Spade", "minimum": 85, "boss": "", "reward": "força +2120 · méritos +1060"}, {"label": "Etapa 4", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 87, "boss": "", "reward": "força +7880 · méritos +3940 · maestria +300"}, {"label": "Etapa 5", "kind": "Derrote", "place": "Capital Real", "minimum": 91, "boss": "Asta", "reward": "força +10250 · méritos +5130 · maestria +500"}]}], "summons": [{"name": "Cavaleiro Mágico do Reino", "role": "Soldier", "tier": 1, "unique": false}, {"name": "Paladino", "role": "Paladin", "tier": 2, "unique": false}]}' />
 
-Controle de tempo. Chrono Stasis, Mana Zone e a forma Lucius.
-
-- Grimório: **Grimório sem Capa de Novachrono**
-- O tempo responde ao 28º Rei Mago. Use para virar Julius Novachrono.
-- Formas: **Base** (`base`), **Mana Zone** (`zone`), **Lucius** (`lucius`)
-- Vincular: use o grimório (mensagem `O grimório sem capa escolheu você. Você é Julius Novachrono, o Rei Mago!`)
-
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-### Base
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `chrono_stasis` | Magia do Tempo: Chrono Stasis | — | 26 |
-| 2 | `time_reversal` | Magia do Tempo: Reversão do Tempo (desfaz os ferimentos recentes) | — | 30 |
-| 3 | `accelerated_step` | Magia do Tempo: Passo Acelerado | — | 21 |
-| 4 | `rapid_aging` | Magia do Tempo: Envelhecimento Rápido | — | 28 |
-| 5 | `chrono_anastasis` | Magia do Tempo: Chrono Anastasis | — | 62 |
-### Mana Zone
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `zone/grigora` | Mana Zone: Chrono Stasis Grigora (captura feitiços) | — | 26 |
-| 2 | `zone/foresight` | Mana Zone: Previsão (contra-ataca o golpe que vê) | — | 24 |
-| 3 | `zone/stasis_volley` | Mana Zone: Rajada de Chrono Stasis | — | 26 |
-| 4 | `zone/accelerated_return` | Mana Zone: Retorno Acelerado (devolve os feitiços capturados) | — | 24 |
-| 5 | `zone/anastasis_field` | Mana Zone: Chrono Anastasis sobre o campo | — | 62 |
-### Lucius
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `lucius/soul_touch` | Lucius: Toque da Alma (sela a magia do inimigo) | — | 30 |
-| 2 | `lucius/time_restraint` | Lucius: Restrição do Tempo (prende todos à frente) | — | 28 |
-| 3 | `lucius/purification` | Lucius: Purificação da Alma (arremessa inimigos, cura aliados) | — | 32 |
-| 4 | `lucius/numeral_edge` | Lucius: Lâmina de Numerais (uma faixa de numerais pelo campo) | — | 30 |
-| 5 | `lucius/judgment_stasis` | Lucius: Stasis do Julgamento (o campo inteiro parado) | — | 56 |
-
-## Desbloqueio por rank
-
-| Rank | Desbloqueios |
-| --- | --- |
-| Aspirante a Cavaleiro Mágico | — |
-| Cavaleiro Mágico Júnior de 5ª Classe | Magia do Tempo: Chrono Stasis |
-| Cavaleiro Mágico Júnior de 3ª Classe | Magia do Tempo: Reversão do Tempo (desfaz os ferimentos recentes) |
-| Cavaleiro Mágico Júnior de 1ª Classe | Magia do Tempo: Passo Acelerado |
-| Cavaleiro Mágico Intermediário de 3ª Classe | Magia do Tempo: Envelhecimento Rápido |
-| Cavaleiro Mágico Intermediário de 1ª Classe | — |
-| Cavaleiro Mágico Sênior de 3ª Classe | Magia do Tempo: Chrono Anastasis, 3º dash |
-| Cavaleiro Mágico Sênior de 1ª Classe | Mana Zone (fica no ar, pós-imagens golpeiam de novo), Mana Zone: Chrono Stasis Grigora (captura feitiços), Mana Zone: Previsão (contra-ataca o golpe que vê), Mana Zone: Rajada de Chrono Stasis, Mana Zone: Retorno Acelerado (devolve os feitiços capturados), Mana Zone: Chrono Anastasis sobre o campo |
-| Vice-Capitão | — |
-| Capitão de Esquadrão | — |
-| Grão-Cavaleiro Mágico | Lucius Zogratis (Magia da Alma, uma vez por vida), Lucius: Toque da Alma (sela a magia do inimigo), Lucius: Restrição do Tempo (prende todos à frente), Lucius: Purificação da Alma (arremessa inimigos, cura aliados), Lucius: Lâmina de Numerais (uma faixa de numerais pelo campo), Lucius: Stasis do Julgamento (o campo inteiro parado) |
-| Rei Mago | Domínio das formas (+15% de poder, gasto menor) |
-
-
-
-## Subordinados
-
-| Unidade | Função | Tier | Única |
-| --- | --- | ---: | --- |
-| Cavaleiro Mágico do Reino (`kingdom_knight`) | Soldier | 1 | não |
-| Paladino (`paladin`) | Paladin | 2 | não |
-
-## Quests da jornada
-
-### julius_zone
-
-> canon: the Eye of the Midnight Sun's raid on the Royal Capital -- Julius appears between two mages and kills them, Valtos teleports; William's farewell at sunset; the tower duel with Patolli, Julius catching his light blades with Chrono Stasis Grigora and raising a giant clock over the city (Eye of the Midnight Sun Raid arc). Patolli is not in the mod: an S-rank elite stands in (inv.); drill and waves inv.
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `report` | talk | `royal_capital` | 30 | `—` | strength 850, merits 430 |
-| `valtos` | boss | `royal_capital` | 36 | `valtos` | strength 3730, merits 1860, mastery 500 |
-| `william` | talk | `royal_capital` | 42 | `—` | strength 1000, merits 500 |
-| `clock` | trial | `training_ring` | 46 | `—` | strength 5770, merits 2890, mastery 300 |
-| `blades` | trial | `royal_capital` | 52 | `—` | strength 6130, merits 3060, mastery 300 |
-| `patolli` | boss | `royal_capital` | 58 | `foe:clovercraft:midnight_sun_mage@S/light` | strength 8220, merits 4110, mastery 500 |
-
-### julius_lucius
-
-> canon: Julius is born in the Spade Kingdom with two souls, his own and his twin Lucius Zogratis's; Damnatio's doubts after the Spade raid, Julius's panic, the banquet where Lucius freezes the tower and Asta's anti-magic breaks the spell (Spade Raid aftermath and Judgment Day arcs). Trial contents inv.
-
-Requer: `julius_zone`
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `damnatio` | talk | `royal_capital` | 80 | `—` | strength 1370, merits 690 |
-| `voice` | talk | `royal_capital` | 83 | `—` | strength 1400, merits 700 |
-| `walk` | goto | `spade_fortress` | 85 | `—` | strength 2120, merits 1060 |
-| `gate` | trial | `spade_fortress` | 87 | `—` | strength 7880, merits 3940, mastery 300 |
-| `banquet` | boss | `royal_capital` | 91 | `npc:asta` | strength 10250, merits 5130, mastery 500 |
-
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.

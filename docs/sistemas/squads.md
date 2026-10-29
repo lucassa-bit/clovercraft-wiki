@@ -1,6 +1,6 @@
 # Esquadrões
 
-Escolhidos no [exame](/guia/progressao). Prestígio alto (3) é o “top squad” do cânone; o bônus é pequeno de propósito.
+Escolha um esquadrão ao passar no [exame](/guia/progressao). É uma decisão de identidade e bônus leve — não bloqueia personagem, forma ou skill. Prestígio alto (3) marca o “top squad” do cânone, não um multiplicador obrigatório de poder.
 
 | Esquadrão | Capitão | Prestígio | Bônus |
 | --- | --- | ---: | --- |

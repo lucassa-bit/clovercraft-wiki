@@ -1,28 +1,28 @@
 # Submundo (Qliphoth)
 
-Três dimensões: `clovercraft:underworld_1` (Rim), `underworld_2` (Depths), `underworld_3` (Throne). Entrada pelo **Altar da Qliphoth**.
+O Submundo é o ciclo de endgame: três dimensões separadas, só com demônios, mais pressão de inimigos e progressão travada por camadas. Não entre como se fosse uma nova caverna comum: leve cura, rota de retorno e o grupo pronto para uma luta de domínio.
 
-## Como entrar
+## Antes de atravessar
 
-1. Crafte o altar (`qliphoth_altar`: ouro, livro, essência de mana, diamante, obsidiana).
-2. Realize o **ritual** com o item de ritual e selos (`SealRecipes`) — cada camada pede materiais mais raros.
-3. O portão (`QliphothGate`) abre para a camada correspondente.
-4. **Return Sigil** (`return_sigil`: 4 essências + ender pearl + ouro → 2 sigilos) traz de volta ao overworld.
+1. Encontre o santuário/altar da Qliphoth. `/qliphoth` ou `/submundo` mostra o altar, a próxima camada e o que falta para o selo.
+2. Coloque no altar os ingredientes do **selo** da próxima camada e realize o ritual. As camadas precisam ser abertas em ordem.
+3. Entre pelo portão do altar. Se a camada ainda não estiver liberada para você, o portão recusa a passagem e indica o requisito faltante.
+4. Leve um **Return Sigil**. Ele só funciona dentro do Submundo, exige 40 ticks de canalização e é consumido ao levar você de volta.
 
-Hosts de demônio no elenco jogável (Asta, Dante, Vanica, Zenon, Nacht) têm +5% de vantagem (`HOST_EDGE`) no Submundo.
+## Progressão das camadas
 
-## Camadas
-
-| Camada | Dimensão | Bioma | Chefes de domínio |
+| Camada | Dimensão | O que muda | Domínios e chefes |
 | ---: | --- | --- | --- |
-| 1 Rim | `underworld_1` | `qliphoth_rim` | **Zagred** |
-| 2 Depths | `underworld_2` | `qliphoth_depths` | **Megicula**, **Lilith / Nahamah** |
-| 3 Throne | `underworld_3` | `qliphoth_throne` | **Beelzebub**, **Lucifero** |
+| 1 · Rim | `clovercraft:underworld_1` | Primeiro contato com imps, low/mid devils, gazers e tendrils. | Zagred — domínio em `(0, -260)`, raio 30. |
+| 2 · Depths | `clovercraft:underworld_2` | Sobem mid/high devils, curse wraiths e twin fiends. | Megicula `(280, 0)`, raio 32; Lilith e Nahamah `(-280, 0)`, raio 34. |
+| 3 · Throne | `clovercraft:underworld_3` | Mid/high devils e devil hosts; é a camada mais severa. | Belzebu `(0, -270)`, raio 34; Lucifero `(0, 290)`, raio 48. |
 
-Cada domínio é uma arena circular com raio 30–48 e um dais. Baús `domain_*` dropam relíquias temáticas.
+Cada domínio é uma arena reservada: o chefe nasce no dais, a luta tem estado próprio por jogador e o domínio entra em descanso após ser concluído. As relíquias e os chefes correspondentes estão em [Chefes](/mundo/bosses).
 
-## Ilhas, santuários, essência
+## Por que vale o risco
 
-O gerador cria ilhas de `black_mana` / `qliphoth_root` / `dark_qliphoth_root`. Santuários e landmarks servem de âncora. `mana_essence` é o recurso de craft do conteúdo endgame.
+Por padrão, as três camadas multiplicam por **3×** os ganhos de força, méritos e maestria. Elas também aumentam a presença de demônios para cada jogador (`capMultiplier` padrão 2,5). Asta, Dante, Vanica, Zenon e Nacht recebem **+5% no dano PvE** enquanto estão no Submundo.
 
-Void guard teleporta de volta se você cair no vazio (`The void spat you back onto the landing`).
+`mana_essence`, raízes e blocos de mana negra sustentam rituais e crafts de endgame. O gerador cria ilhas e santuários; cair no vazio não é uma rota rápida de volta — o Void Guard devolve você ao ponto de chegada.
+
+> Os multiplicadores, vida dos chefes e quantidade de inimigos podem mudar conforme a configuração do servidor. Use estes valores como referência de progressão.

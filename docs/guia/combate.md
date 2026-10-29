@@ -1,47 +1,54 @@
 # Combate
 
-O combate é de ação, não de cooldown de hotbar. Cada personagem tem um **kit** (`CharacterKit`) com combo, charge, dash, guard, 4–5 skills e 2 transformações.
+O kit de combate combina combo, heavy, guarda, dash e cinco slots de magia. Transformar (`B`) pode trocar o conjunto de actions disponível.
 
-## Estrutura de um kit
+Teclas: [Controles](/guia/controles). O que destrava cada forma: [Progressão](/guia/progressao).
 
-| Slot | O que é |
-| --- | --- |
-| Combo 1–4 (às vezes 5) | String leve. Cancela no `cancel_at` para o próximo hit |
-| Charge / tap / release | Heavy. Segurar aumenta o golpe |
-| Dash F/L/B/R | I-frames curtos + deslocamento |
-| Air | Um golpe aéreo |
-| Dash slash | Conversão depois do dash |
-| Skill 1–4 | Magias do grimório |
-| Skill 5 | Ultimate da forma atual |
-| Transform | Gasta meter e troca o kit inteiro |
-| Exhausted | Stun curto se a forma acabar no zero |
+## Como se luta
 
-Dano dos hits vem dos JSON em `clover/actions/` (campo `hits[].damage`), depois multiplicado por **força**, **forma**, **rank**, **esquadrão**, **árvore** e **PvE/PvP**.
+1. **Toque no clique esquerdo** — combo de 3–5 hits no chão. No ar, um golpe só. Depois de um dash, o clique vira **dash slash**.
+2. **Segure o clique** — heavy / charge. Soltar no timing faz a versão mais forte (*release*).
+3. **Segure `F`** — guarda no arco da frente. Gasta **stamina**. Stamina no zero = **guard break**: você fica aberto.
+4. **Toque no `F` no timing** — **parry**: atordoa quem bateu e enche a barra de mana.
+5. **`Z` `X` `C` `V` `R`** — os cinco slots de magia. Consulte a ficha do seu [personagem](/personagens/) para entender o efeito de cada um.
+6. **Botão do meio** — lock-on. Câmera e skills seguem o alvo. Use no exame e em chefe.
 
-## Formas
+Ordem prática: lock-on → combo/guarda → magia. Não fique parado enchendo skill.
 
-Quase todo mago tem forma 0 (base), 1 e 2. Mereoleona e Asta têm **estágios** internos (Black Asta 1–3, Hellfire 1–3). A forma 2 em geral pede:
+## Duas barras
 
-- forma 1 com **maestria 5★**
-- meter ≥ 70
-- ainda não gasta nesta vida (várias ultimates são *once per life*)
+Há dois recursos, e eles não são a mesma coisa.
 
-Sair da forma (`revert`) devolve o kit base. Meter no zero aplica **exhausted**.
+**Stamina** alimenta a guarda. Acabou = guard break.
 
-## Guard, parry, selo
+**Mana** (a barra do grimório) alimenta skills e transformação. Ela é recuperada por combate e meditação; kits com escudo de mana têm regras próprias. Sem recurso suficiente, a action pode ser recusada.
 
-- Guard reduz dano (config `guard_reduction`) num arco em graus.
-- Parry na janela (`parry_ticks`) stagger o atacante.
-- Hits de Asta **selam** magia do alvo por alguns ticks — o selado não lança.
+**Asta** não tem mana: a barra dele é **Anti-Magia**. A guarda **anula magia**. Hits **selam** o alvo por alguns instantes — o selado não lança.
+
+**Meditar (`Y`)** — segurar parado, fora de luta. Recupera mana / anti-magia mais rápido.
+
+**Dash (`Alt`)** — quatro direções, i-frames curtos. O 3º dash só abre no rank Sênior 3º.
+
+## Voo
+
+**Voo (`J`)** — a regra base de voo do kit começa no rank Júnior 3º. Alguns kits sobrescrevem essa regra. A vassoura exige mana e não funciona para Asta; depois do exame, Asta usa o voo próprio. A implementação também recusa voo durante estados inválidos, como exaustão, queda forçada ou uma action cinemática.
+
+## Transformar
+
+Cada kit tem suas próprias formas. Asta e Mereoleona têm estágios internos na primeira transformação; eles não ganham um grupo de skills novo a cada estágio. A ficha de cada personagem separa essas formas de modo jogável.
+
+Rank, jornada, recurso e maestria podem limitar uma transformação. `FORM_GATE` vem ligado na configuração padrão: 5★ da Base abre a primeira forma e 5★ da forma atual abre a próxima. Por isso, não trate força 30, força 80 ou barra 70 como regra universal — nem suponha que o servidor desligou o portão de maestria.
+
+Sair da forma devolve o kit base. Barra no zero pode aplicar `exhausted`; o comportamento final depende da action e da configuração.
 
 ## Clash
 
-Dois fighters com charge suficiente entram no minigame. Círculos aparecem; timing Perfect vence. Empate empurra os dois. Chefes e mobs têm “skill” de clash própria (mais fácil errar contra boss).
+Dois heavies se encontram: mini-game de círculos (Perfect / Good / Miss). O vencedor atravessa com dano extra. Empate empurra os dois.
 
-## Meditação
+Chefes e mobs também clasham. Errar contra boss dói mais.
 
-Segurar fora de combate, depois de alguns ticks de calma. Regenera mana/anti-magia mais rápido.
+## PvE e PvP
 
-## PvP vs PvE
+Dano a mobs e a jogadores escala separado. A [árvore](/sistemas/arvore) rende menos em PvP. Ultimates de forma têm multiplicador próprio contra jogador.
 
-A config separa dano a mobs e a jogadores, e a árvore aplica só uma fração dos bônus em PvP (`TREE_PVP`). Ultimates de forma têm multiplicador PvP próprio.
+O dano final pode combinar força, forma, rank, árvore, PvE/PvP e configuração do servidor. As fichas de personagem mostram o dano-base quando ele existe; esse número não é o dano final exibido em jogo.

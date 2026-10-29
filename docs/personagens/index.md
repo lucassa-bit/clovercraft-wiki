@@ -1,25 +1,14 @@
+---
+aside: false
+---
+
 # Personagens
 
 16 magos jogáveis. O grimório vincula você a um deles — não há troca sem reroll/admin/temporada.
 
-| Personagem | Magia | Esquadrão canônico |
-| --- | --- | --- |
-| [Asta](/personagens/asta) | Anti-Magia | Touros Negros |
-| [Yuno](/personagens/yuno) | Magia de Vento | Alvorecer Dourado |
-| [Yami Sukehiro](/personagens/yami) | Magia das Trevas | Touros Negros (capitão) |
-| [Noelle Silva](/personagens/noelle) | Magia de Água | Touros Negros |
-| [Mereoleona Vermillion](/personagens/mereoleona) | Magia de Fogo | Leão Carmesim |
-| [Julius Novachrono](/personagens/julius) | Magia do Tempo | Rei Mago |
-| [Nacht Faust](/personagens/nacht) | Magia das Sombras | Touros Negros (vice-capitão) |
-| [Licht](/personagens/licht) | Magia de Espada / Luz | Elfos / Olho do Sol da Meia-Noite |
-| [Dante Zogratis](/personagens/dante) | Magia Corporal / Gravidade | Tríade das Trevas (Spade) |
-| [Luck Voltia](/personagens/luck) | Magia de Relâmpago | Touros Negros |
-| [Mimosa Vermillion](/personagens/mimosa) | Magia de Plantas | Alvorecer Dourado |
-| [Vanica Zogratis](/personagens/vanica) | Magia de Sangue | Tríade das Trevas (Spade) |
-| [Zenon Zogratis](/personagens/zenon) | Magia de Ossos / Espacial | Tríade das Trevas (Spade) |
-| [Zora Ideale](/personagens/zora) | Magia de Armadilha (Ash) | Touros Negros |
-| [Vanessa Enoteca](/personagens/vanessa) | Magia de Fios | Touros Negros |
-| [Gauche Adlai](/personagens/gauche) | Magia de Espelho | Touros Negros |
+Compare magia, papel e esquadrão canônico. Abra uma ficha para explorar as formas e o kit.
+
+<CharacterRoster :characters='[{"id": "asta", "name": "Asta", "magic": "Anti-Magia", "squad": "Touros Negros", "role": "Duelista corpo-a-corpo", "color": "#c23b3b", "group": "bulls", "geo": "/models/geo/character/asta.geo.json", "texture": "/models/textures/character/asta_base.png"}, {"id": "yuno", "name": "Yuno", "magic": "Magia de Vento", "squad": "Alvorecer Dourado", "role": "Mago aéreo", "color": "#7fe0b0", "group": "other", "geo": "/models/geo/character/yuno.geo.json", "texture": "/models/textures/character/yuno_base.png"}, {"id": "yami", "name": "Yami Sukehiro", "magic": "Magia das Trevas", "squad": "Touros Negros (capitão)", "role": "Espadachim de trevas", "color": "#5b3a8c", "group": "bulls", "geo": "/models/geo/character/yami.geo.json", "texture": "/models/textures/character/yami_base.png"}, {"id": "noelle", "name": "Noelle Silva", "magic": "Magia de Água", "squad": "Touros Negros", "role": "Tanque/lanceira", "color": "#6ec8ff", "group": "bulls", "geo": "/models/geo/character/noelle.geo.json", "texture": "/models/textures/character/noelle_base.png"}, {"id": "mereoleona", "name": "Mereoleona Vermillion", "magic": "Magia de Fogo", "squad": "Leão Carmesim", "role": "Brawler de fogo", "color": "#ff8a3a", "group": "other", "geo": "/models/geo/character/mereoleona.geo.json", "texture": "/models/textures/character/mereoleona_base.png"}, {"id": "julius", "name": "Julius Novachrono", "magic": "Magia do Tempo", "squad": "Rei Mago", "role": "Controle de tempo", "color": "#c9a227", "group": "other", "geo": "/models/geo/character/julius.geo.json", "texture": "/models/textures/character/julius_base.png"}, {"id": "nacht", "name": "Nacht Faust", "magic": "Magia das Sombras", "squad": "Touros Negros (vice-capitão)", "role": "Assassino de sombras", "color": "#3d3558", "group": "bulls", "geo": "/models/geo/character/nacht.geo.json", "texture": "/models/textures/character/nacht_base.png"}, {"id": "licht", "name": "Licht", "magic": "Magia de Espada / Luz", "squad": "Elfos / Olho do Sol da Meia-Noite", "role": "Espadachim élfico", "color": "#f2e6a0", "group": "other", "geo": "/models/geo/character/licht.geo.json", "texture": "/models/textures/character/licht_base.png"}, {"id": "dante", "name": "Dante Zogratis", "magic": "Magia Corporal / Gravidade", "squad": "Tríade das Trevas (Spade)", "role": "Bruiser de gravidade", "color": "#8b1e3f", "group": "spade", "geo": "/models/geo/character/dante.geo.json", "texture": "/models/textures/character/dante_base.png"}, {"id": "luck", "name": "Luck Voltia", "magic": "Magia de Relâmpago", "squad": "Touros Negros", "role": "Assassino elétrico", "color": "#ffe566", "group": "bulls", "geo": "/models/geo/character/luck.geo.json", "texture": "/models/textures/character/luck_base.png"}, {"id": "mimosa", "name": "Mimosa Vermillion", "magic": "Magia de Plantas", "squad": "Alvorecer Dourado", "role": "Suporte/curandeira", "color": "#7bc47b", "group": "other", "geo": "/models/geo/character/mimosa.geo.json", "texture": "/models/textures/character/mimosa_base.png"}, {"id": "vanica", "name": "Vanica Zogratis", "magic": "Magia de Sangue", "squad": "Tríade das Trevas (Spade)", "role": "Agressora de sangue", "color": "#d02040", "group": "spade", "geo": "/models/geo/character/vanica.geo.json", "texture": "/models/textures/character/vanica_base.png"}, {"id": "zenon", "name": "Zenon Zogratis", "magic": "Magia de Ossos / Espacial", "squad": "Tríade das Trevas (Spade)", "role": "Controle espacial", "color": "#cfd8dc", "group": "spade", "geo": "/models/geo/character/zenon.geo.json", "texture": "/models/textures/character/zenon_base.png"}, {"id": "zora", "name": "Zora Ideale", "magic": "Magia de Armadilha (Ash)", "squad": "Touros Negros", "role": "Armadilheiro", "color": "#6b5344", "group": "bulls", "geo": "/models/geo/character/zora.geo.json", "texture": "/models/textures/character/zora_base.png"}, {"id": "vanessa", "name": "Vanessa Enoteca", "magic": "Magia de Fios", "squad": "Touros Negros", "role": "Suporte de destino", "color": "#e070a0", "group": "bulls", "geo": "/models/geo/character/vanessa.geo.json", "texture": "/models/textures/character/vanessa_base.png"}, {"id": "gauche", "name": "Gauche Adlai", "magic": "Magia de Espelho", "squad": "Touros Negros", "role": "Duelista de espelhos", "color": "#9ad0e8", "group": "bulls", "geo": "/models/geo/character/gauche.geo.json", "texture": "/models/textures/character/gauche_base.png"}]' />
 
 Cada página tem o **modelo 3D** GeckoLib (gire e troque a forma). Visão geral: [Galeria](/galeria).
 

@@ -1,6 +1,6 @@
 # Clover Craft Wiki
 
-Wiki do mod **Clover Craft 0.4.0** (NeoForge 1.21.1), gerada a partir do JAR descompilado. Inclui viewer 3D dos modelos GeckoLib.
+Wiki do mod **Clover Craft 0.4.0** (NeoForge 1.21.1). Inclui visualizador 3D dos modelos GeckoLib, sem distribuir arquivos de implementação do mod.
 
 ## Local
 
@@ -19,11 +19,11 @@ http://localhost:5173/
 
 A URL fica `https://<user>.github.io/<repo>/` (o `base` do VitePress é calculado no CI). Se o repo se chamar `<user>.github.io`, o site sobe na raiz.
 
-Não commite o `.jar` nem `decompiled/` (já estão no `.gitignore`). Os modelos em `docs/public/models/` (~11 MB) vão no git — são o que o viewer usa.
+Os modelos e texturas em `docs/public/models/` vão no git — são o que o visualizador usa. Arquivos do mod, código descompilado e dados de extração ficam excluídos pelo `.gitignore`.
 
-## Regenerar conteúdo
+## Manutenção
 
 ```bash
-python tools/extract_models.py   # geos + texturas do JAR
-python tools/build_wiki.py       # markdown a partir do descompilado
+python tools/extract_models.py   # atualiza geos + texturas de uma fonte autorizada
+python tools/build_wiki.py       # atualiza os markdowns com uma fonte autorizada
 ```

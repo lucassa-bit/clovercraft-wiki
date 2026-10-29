@@ -1,6 +1,6 @@
 # Quests
 
-Definidas em JSON (`clover/quests/`). Tipos de cadeia: `form` (libera transformação), `training` (repeatable), `secret` (condição `reveal`).
+Abra a Jornada (`K`) para acompanhar o objetivo ativo. As cadeias são definidas em JSON: `form` libera transformação, `training` é repetível e `secret` aparece sob uma condição de revelação.
 
 Etapas: `talk`, `goto`, `boss`, `trial` (survive / duel / dodge / nohit). Trials spawnam waves `id@tier*n`.
 

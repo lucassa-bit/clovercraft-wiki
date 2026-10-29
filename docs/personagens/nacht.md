@@ -1,107 +1,11 @@
+---
+aside: false
+---
+
 # Nacht Faust
 
-**Magia das Sombras** · Touros Negros (vice-capitão)
+<CharacterProfile v-bind='{"name": "Nacht Faust", "magic": "Magia das Sombras", "squad": "Touros Negros (vice-capitão)", "role": "Assassino de sombras", "description": "Devils Canis/Equinox, Hunting Ground e teleporte por sombra.", "color": "#3d3558", "grimoire": "Grimório de Quatro Folhas Faust", "forms": ["Base", "Unite: Canis", "Unite: Equinox"], "geo": "/models/geo/character/nacht.geo.json", "skins": [{"id": "base", "label": "Base", "texture": "/models/textures/character/nacht_base.png"}, {"id": "canis", "label": "Unite: Canis", "texture": "/models/textures/character/nacht_canis.png"}, {"id": "fourfold", "label": "Unite: Equinox", "texture": "/models/textures/character/nacht_fourfold.png"}], "progression": ["Jornada: força 30–60. Configuração padrão: 5★ da Base.", "Jornada: força 80–91. Configuração padrão: 5★ da forma anterior."], "peculiar": ""}' />
 
-<ClientOnly>
-<GeoViewer geo="/models/geo/character/nacht.geo.json" skins='[{"id": "base", "label": "Base", "texture": "/models/textures/character/nacht_base.png"}, {"id": "canis", "label": "Unite: Canis", "texture": "/models/textures/character/nacht_canis.png"}, {"id": "fourfold", "label": "Unite: Equinox", "texture": "/models/textures/character/nacht_fourfold.png"}]' />
-</ClientOnly>
+<CharacterDetails v-bind='{"skills": [{"form": "base", "formLabel": "Base", "slot": 1, "name": "Prisão das Sombras", "duration": "1.5 s", "damage": "golpe de sombra: 7,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 5ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 2, "name": "Mãos das Sombras", "duration": "1.8 s", "damage": "golpe de sombra: 5,0 · golpe de sombra: 4,0 · golpe de sombra: 5,0 · golpe de sombra: 9,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 3, "name": "Corredor das Sombras", "duration": "1.7 s", "damage": "golpe de sombra: 15,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Júnior de 1ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 4, "name": "Mergulho na Sombra", "duration": "1.8 s", "damage": "golpe de sombra: 18,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Intermediário de 3ª Classe"}, {"form": "base", "formLabel": "Base", "slot": 5, "name": "Magia das Sombras: Convite ao Jardim Sombrio", "duration": "2.3 s", "damage": "golpe de sombra: 10,0 · golpe de sombra: 20,0 · golpe de sombra: 6,0", "mastery": "Base: ×1,00", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 3ª Classe"}, {"form": "canis", "formLabel": "Unite: Canis", "slot": 1, "name": "Matilha de Cães das Sombras", "duration": "1.7 s", "damage": "golpe de sombra: 5,8 · golpe de sombra: 5,8 · golpe de sombra: 5,8 · golpe de sombra: 5,8", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "canis", "formLabel": "Unite: Canis", "slot": 2, "name": "Emboscada da Matilha", "duration": "1.7 s", "damage": "golpe de sombra: 18,9", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "canis", "formLabel": "Unite: Canis", "slot": 3, "name": "Isca da Matilha", "duration": "1.6 s", "damage": "golpe de sombra: 16,8", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "canis", "formLabel": "Unite: Canis", "slot": 4, "name": "Cerco da Matilha", "duration": "2.0 s", "damage": "golpe de sombra: 27,3", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "canis", "formLabel": "Unite: Canis", "slot": 5, "name": "Território de Caça (uma cúpula de trevas)", "duration": "2.2 s", "damage": "golpe de sombra: 6,3 · golpe de sombra: 6,3 · golpe de sombra: 6,3 · golpe de sombra: 6,3", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Cavaleiro Mágico Sênior de 1ª Classe"}, {"form": "fourfold", "formLabel": "Unite: Equinox", "slot": 1, "name": "Asas do Corvo", "duration": "1.7 s", "damage": "golpe de sombra: 9,3", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "fourfold", "formLabel": "Unite: Equinox", "slot": 2, "name": "Cabeças de Cão", "duration": "1.9 s", "damage": "golpe de sombra: 11,2 · golpe de sombra: 11,2", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "fourfold", "formLabel": "Unite: Equinox", "slot": 3, "name": "Agilidade do Gato", "duration": "1.7 s", "damage": "3 golpes (até 26,0)", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Atinge em combate direto.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "fourfold", "formLabel": "Unite: Equinox", "slot": 4, "name": "Monumento das Sombras", "duration": "2.1 s", "damage": "golpe de sombra: 27,9", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Não declara dano direto; a action aplica um efeito de kit.", "rank": "Grão-Cavaleiro Mágico"}, {"form": "fourfold", "formLabel": "Unite: Equinox", "slot": 5, "name": "Lâmina Sombria dos Quatro Demônios", "duration": "2.0 s", "damage": "27,9 por golpe", "mastery": "Forma: 0★ ×0,86 · 3★ ×1,00 · 5★ ×1,10", "effect": "Atinge em combate direto.", "rank": "Grão-Cavaleiro Mágico"}], "unlocks": [{"rank": "Cavaleiro Mágico Júnior de 5ª Classe", "entries": ["Prisão das Sombras"]}, {"rank": "Cavaleiro Mágico Júnior de 3ª Classe", "entries": ["Mãos das Sombras"]}, {"rank": "Cavaleiro Mágico Júnior de 1ª Classe", "entries": ["Corredor das Sombras"]}, {"rank": "Cavaleiro Mágico Intermediário de 3ª Classe", "entries": ["Mergulho na Sombra"]}, {"rank": "Cavaleiro Mágico Sênior de 3ª Classe", "entries": ["Magia das Sombras: Convite ao Jardim Sombrio", "3º dash"]}, {"rank": "Cavaleiro Mágico Sênior de 1ª Classe", "entries": ["Modo União: Canis", "Matilha de Cães das Sombras", "Emboscada da Matilha", "Isca da Matilha", "Cerco da Matilha", "Território de Caça (uma cúpula de trevas)"]}, {"rank": "Grão-Cavaleiro Mágico", "entries": ["Modo União: os quatro demônios", "Asas do Corvo", "Cabeças de Cão", "Agilidade do Gato", "Monumento das Sombras", "Lâmina Sombria dos Quatro Demônios"]}, {"rank": "Rei Mago", "entries": ["Domínio das formas (+15% de poder de forma)"]}], "journeys": [{"name": "Unite: Canis", "requires": [], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Esconderijo dos Touros Negros", "minimum": 30, "boss": "", "reward": "força +850 · méritos +430"}, {"label": "Etapa 2", "kind": "Vá até", "place": "Fortaleza de Spade", "minimum": 36, "boss": "", "reward": "força +1400 · méritos +700"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 42, "boss": "", "reward": "força +5520 · méritos +2760 · maestria +300"}, {"label": "Etapa 4", "kind": "Vá até", "place": "Propriedade Faust", "minimum": 48, "boss": "", "reward": "força +1610 · méritos +800"}, {"label": "Etapa 5", "kind": "Converse", "place": "Propriedade Faust", "minimum": 52, "boss": "", "reward": "força +1110 · méritos +560"}, {"label": "Etapa 6", "kind": "Conclua a provação", "place": "Propriedade Faust", "minimum": 56, "boss": "", "reward": "força +6350 · méritos +3180 · maestria +300"}, {"label": "Etapa 7", "kind": "Derrote", "place": "Propriedade Faust", "minimum": 60, "boss": "Asta", "reward": "força +8360 · méritos +4180 · maestria +500"}]}, {"name": "Unite: Equinox", "requires": ["Jornada anterior"], "steps": [{"label": "Etapa 1", "kind": "Converse", "place": "Capital Real", "minimum": 80, "boss": "", "reward": "força +1370 · méritos +690"}, {"label": "Etapa 2", "kind": "Vá até", "place": "Fortaleza de Spade", "minimum": 83, "boss": "", "reward": "força +2100 · méritos +1050"}, {"label": "Etapa 3", "kind": "Conclua a provação", "place": "Fortaleza de Spade", "minimum": 85, "boss": "", "reward": "força +7790 · méritos +3890 · maestria +300"}, {"label": "Etapa 4", "kind": "Derrote", "place": "Fortaleza de Spade", "minimum": 87, "boss": "Dante Zogratis", "reward": "força +5730 · méritos +2870 · maestria +500"}, {"label": "Etapa 5", "kind": "Derrote", "place": "Fortaleza de Spade", "minimum": 91, "boss": "Vanica Zogratis", "reward": "força +10250 · méritos +5130 · maestria +500"}]}], "summons": [{"name": "Gimodelo", "role": "Bruiser", "tier": 1, "unique": true}, {"name": "Plumede", "role": "Skirmisher", "tier": 2, "unique": true}, {"name": "Slotos", "role": "Tank", "tier": 3, "unique": true}, {"name": "Walgner", "role": "Support", "tier": 4, "unique": true}]}' />
 
-Assassino de sombras. Devils Canis/Equinox, Hunting Ground e teleporte por sombra.
-
-- Grimório: **Grimório de Quatro Folhas Faust**
-- A sombra responde ao Vice-Capitão dos Touros Negros. Use para virar Nacht Faust.
-- Formas: **Base** (`base`), **Unite: Canis** (`canis`), **Unite: Equinox** (`fourfold`)
-- Vincular: use o grimório (mensagem `O grimório de quatro folhas te escolheu. Você é Nacht Faust!`)
-
-## Skills por forma
-
-Dano é o maior hit do JSON da action, **antes** dos multiplicadores de força/forma/árvore.
-
-### Base
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `shadow_bind` | Prisão das Sombras | — | 30 |
-| 2 | `shadow_hands` | Mãos das Sombras | — | 36 |
-| 3 | `shadow_corridor` | Corredor das Sombras | — | 34 |
-| 4 | `shadow_dive` | Mergulho na Sombra | — | 36 |
-| 5 | `dark_garden` | Magia das Sombras: Convite ao Jardim Sombrio | — | 46 |
-### Unite: Canis
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `canis/pack` | Matilha de Cães das Sombras | — | 34 |
-| 2 | `canis/pack_ambush` | Emboscada da Matilha | — | 34 |
-| 3 | `canis/pack_decoy` | Isca da Matilha | — | 32 |
-| 4 | `canis/pack_encirclement` | Cerco da Matilha | — | 40 |
-| 5 | `canis/hunting_ground` | Território de Caça (uma cúpula de trevas) | — | 44 |
-### Unite: Equinox
-
-| Slot | ID | Nome | Dano (hit) | Duração (ticks) |
-| ---: | --- | --- | ---: | ---: |
-| 1 | `fourfold/crow` | Asas do Corvo | — | 34 |
-| 2 | `fourfold/dog_heads` | Cabeças de Cão | — | 38 |
-| 3 | `fourfold/agility` | Agilidade do Gato | 11.2 | 34 |
-| 4 | `fourfold/monument` | Monumento das Sombras | — | 42 |
-| 5 | `fourfold/shadow_blade` | Lâmina Sombria dos Quatro Demônios | 27.9 | 40 |
-
-## Desbloqueio por rank
-
-| Rank | Desbloqueios |
-| --- | --- |
-| Aspirante a Cavaleiro Mágico | — |
-| Cavaleiro Mágico Júnior de 5ª Classe | Prisão das Sombras |
-| Cavaleiro Mágico Júnior de 3ª Classe | Mãos das Sombras |
-| Cavaleiro Mágico Júnior de 1ª Classe | Corredor das Sombras |
-| Cavaleiro Mágico Intermediário de 3ª Classe | Mergulho na Sombra |
-| Cavaleiro Mágico Intermediário de 1ª Classe | — |
-| Cavaleiro Mágico Sênior de 3ª Classe | Magia das Sombras: Convite ao Jardim Sombrio, 3º dash |
-| Cavaleiro Mágico Sênior de 1ª Classe | Modo União: Canis, Matilha de Cães das Sombras, Emboscada da Matilha, Isca da Matilha, Cerco da Matilha, Território de Caça (uma cúpula de trevas) |
-| Vice-Capitão | — |
-| Capitão de Esquadrão | — |
-| Grão-Cavaleiro Mágico | Modo União: os quatro demônios, Asas do Corvo, Cabeças de Cão, Agilidade do Gato, Monumento das Sombras, Lâmina Sombria dos Quatro Demônios |
-| Rei Mago | Domínio das formas (+15% de poder, gasto menor) |
-
-
-
-## Subordinados
-
-| Unidade | Função | Tier | Única |
-| --- | --- | ---: | --- |
-| Gimodelo (`gimodelo`) | Bruiser | 1 | sim |
-| Plumede (`plumede`) | Skirmisher | 2 | sim |
-| Slotos (`slotos`) | Tank | 3 | sim |
-| Walgner (`walgner`) | Support | 4 | sim |
-
-## Quests da jornada
-
-### nacht_canis
-
-> canon: Nacht and Morgen, the four devils bound in House Faust's underground chamber (Gimodelo, Slotos, Plumede, Walgner), Morgen's death and Yami's vice-captain promise at the grave; Nacht spying in Spade, pulling a Dark Disciple into his shadow; then Unite Mode: Canis with Gimodelo as the next stage of Asta and Liebe's training (Spade Kingdom Raid arc). Trial waves inv.
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `grave` | talk | `black_bulls_hideout` | 30 | `—` | strength 850, merits 430 |
-| `spy` | goto | `spade_fortress` | 36 | `—` | strength 1400, merits 700 |
-| `unseen` | trial | `spade_fortress` | 42 | `—` | strength 5520, merits 2760, mastery 300 |
-| `estate` | goto | `faust_estate` | 48 | `—` | strength 1610, merits 800 |
-| `gimodelo` | talk | `faust_estate` | 52 | `—` | strength 1110, merits 560 |
-| `bind` | trial | `faust_estate` | 56 | `—` | strength 6350, merits 3180, mastery 300 |
-| `asta` | boss | `faust_estate` | 60 | `npc:asta` | strength 8360, merits 4180, mastery 500 |
-
-### nacht_fourfold
-
-> canon: the captains' meeting and Julius's vouching; the Spade raid -- Nacht in Unite Mode: Equus against Dante's gravity with Jack's Slash Magic; the first gate opens, Nahamah and Lilith appear, Nacht merges with Walgner and then with Plumede to cast Monument of Atonement and seal himself with them (Spade Kingdom Raid arc). Waves inv.
-
-Requer: `nacht_canis`
-
-| Etapa | Tipo | Local | Força mín. | Chefe | Recompensa |
-| --- | --- | --- | ---: | --- | --- |
-| `meeting` | talk | `royal_capital` | 80 | `—` | strength 1370, merits 690 |
-| `gate` | goto | `spade_fortress` | 83 | `—` | strength 2100, merits 1050 |
-| `equus` | trial | `spade_fortress` | 85 | `—` | strength 7790, merits 3890, mastery 300 |
-| `dante` | boss | `spade_fortress` | 87 | `npc:dante` | strength 5730, merits 2870, mastery 500 |
-| `twins` | boss | `spade_fortress` | 91 | `npc:vanica` | strength 10250, merits 5130, mastery 500 |
-
-
-Veja também: [combate](/guia/combate) · [progressão](/guia/progressao) · [invocações](/sistemas/invocacoes)
+Os valores mostrados descrevem o comportamento padrão do mod. Configurações do servidor podem ajustar custos, duração e dano.
